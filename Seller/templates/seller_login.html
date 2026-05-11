@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Seller - Login</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo3_RW8_icon.ico' %}" sizes="128x128" class="favicon">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            top: 20px;
+            right: 20px;
+            width: auto;
+            height: auto;
+            background-color: transparent;
+            /* No background for the overall modal */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: white;
+            /* Red background for error */
+            /* padding: 15px 20px; */
+            border-radius: 10px;
+            width: 230px;
+            box-shadow: 10px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-content p {
+            color: red;
+            padding-top: 10%;
+            padding-left: 2%;
+            font-size: 15px;
+        }
+
+        /* The Close Button */
+        .close {
+            margin-left: auto;
+            margin-bottom: auto;
+            /* Push to the right */
+            padding-right: 5%;
+            color: #5b3e31;
+            font-size: 22px;
+            font-weight: bold;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        close:hover,
+        .close:focus {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .modal {
+                height: 60%;
+            }
+
+            .modal-content {
+                width: 90%;
+                height: 15%;
+                /* Full width on smaller screens */
+                right: 5%;
+            }
+        }
+
+        .modal-content i {
+            color: red;
+            font-size: 20px;
+            padding-left: 5%;
+        }
+
+        #success-message {
+            display: none;
+            background-color: #28a745; /* Green background for success */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'css/slogin.css' %}">
+</head>
+
+<body>
+
+
+
+    <div class="main">
+
+        <div id="success-message"></div>
+
+
+        <div id="logins" class="modal">
+            <div class="modal-content">
+                <i class="fa fa-exclamation-triangle"></i>
+                <p id="messages"></p>
+                <span class="close">&times;</span>
+            </div>
+
+        </div>
+
+        <!-- Sign in form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="{% static 'images/seller.png' %}" alt="sing up image"></figure>
+
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">Login</h2>
+                        <form method="POST" class="register-form" id="login-form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="email" name="your_email" id="your_email" placeholder="Your Email" />
+                            </div>
+                            <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
+                            </div>
+                            <p class="forgot"><a href="{% url 'Sforgot_password' %}"><u>Forgot Password</u></a></p>
+                            <div class="form-group form-button">
+                                <button type="submit" name="signin" id="signin" class="form-submit">Log In</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="{% static 'js/slogin.js' %}"></script>
+
+
+</body>
+
+</html>

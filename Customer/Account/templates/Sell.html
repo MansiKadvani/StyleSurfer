@@ -1,0 +1,305 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    /* Button Theme */
+    .btn-custom {
+        background-color: #3b2415;
+        color: white;
+        opacity: 0.85;
+    }
+
+    .btn-custom:hover {
+        background-color: #3b2415;
+        color: white;
+        opacity: 1;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumb {
+        background-color: #f8f9fa;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0.25rem;
+    }
+
+    .breadcrumb a {
+        color: #3b2415;
+        text-decoration: none;
+    }
+
+    /* Responsive Button Group */
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    @media (max-width: 576px) {
+        .btn-group {
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+
+    /* Table Styling */
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .head-work {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+    }
+
+    .head-work::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7%;
+        height: 2px;
+        background-color: #000;
+    }
+
+    .search-wrapper {
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    .search-box1 {
+        position: relative;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .search-box1:focus-within {
+        box-shadow: 0 3px 20px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+
+    .search-input1 {
+        border-radius: 50px;
+        padding-left: 45px;
+        padding-right: 20px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        height: 50px;
+    }
+
+    .search-input1:focus {
+        border-color: #3b2415;
+        box-shadow: none;
+    }
+
+    .search-icon1 {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+        z-index: 10;
+    }
+
+    .search-button1 {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 50px;
+        padding: 8px 20px;
+        transition: all 0.3s ease;
+        background-color: #3b2415;
+        color: white;
+    }
+
+    .search-button1:hover {
+        background-color: #3b2415;
+        color: white;
+        transform: translateY(-50%) scale(1.05);
+    }
+
+   /* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination li {
+    margin: 0 4px;
+}
+
+.pagination a, .pagination span {
+    display: block;
+    padding: 5px 10px;  /* Smaller button size */
+    font-size: 14px;    /* Smaller font size */
+    color: #3b2415;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #3b2415;
+    color: white;
+}
+
+/* Active Page Styling */
+.pagination .active a, .pagination .active span {
+    background-color: #3b2415;
+    color: white;
+    border: 1px solid #3b2415;
+    font-weight: bold;
+    box-shadow: 0 0 8px rgba(59, 36, 21, 0.5);
+}
+
+/* First/Last Page and Arrows Styling */
+.pagination .first, .pagination .last, 
+.pagination .prev, .pagination .next {
+    font-weight: bold;
+    background-color: white;
+    color: #3b2415;
+    /* border: 1px solid #ddd; */
+    transition: 0.3s;
+}
+
+.pagination .first:hover, .pagination .last:hover, 
+.pagination .prev:hover, .pagination .next:hover {
+    background-color: #3b2415;
+    color: white;
+}
+
+
+#cart-message {
+    position: fixed; /* Stays in position even on scroll */
+    bottom: 7vh; /* Always stays at 40% of the viewport height */
+    left: 50%; /* Centers horizontally */
+    transform: translateX(-50%); /* Ensures text remains centered */
+    background-color: #110808;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 1000; /* Ensures it overlaps other content */
+    white-space: nowrap;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds slight shadow for better visibility */
+}
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" style="text-decoration: none; color: #5b3e31;">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'account_home' %}" style="text-decoration: none; color: #5b3e31;">Account</a></li>
+        <li class="breadcrumb-item active" aria-current="page">SellWith Us Products</li>
+    </ol>
+</nav>
+
+<h2 class="head-work">My Products</h2>
+
+<!-- Search Box -->
+<div class="search-wrapper my-5">
+    <form action="" method="GET" class="search-box1">
+        <i class="fas fa-search search-icon1"></i>
+        <input type="text" name="q" class="form-control search-input1" placeholder="Search Products by name..">
+        <button type="submit" class="btn search-button1">Search</button>
+    </form>
+</div>
+
+<!-- Product Table -->
+<div id="ownProducts" class="section-visible my-4">
+    <div class="card p-3">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Original Price</th>
+                        <th>Rental Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="own-products-body">
+                    {% for product in products %}
+                    <tr>
+                        <td>
+                            {% if product.image_front %}
+                                <img src="{{ product.image_front.url }}" alt="Front view" class="img-fluid" style="max-width: 80px;">
+                            {% else %}
+                                No Image
+                            {% endif %}
+                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.rental_price }}</td>
+                        <td>
+                            <div class="btn-group-sm d-flex justify-content-center">
+                                <a href="{% url 'Sell_view' product.id %}" class="btn btn-custom btn-sm me-2 mb-2">View</a>
+                                <a href="{% url 'updateSellWithUs' product_id=product.id %}" class="btn btn-custom btn-sm me-2 mb-2">Update</a>
+                                <a href="{% url 'deleteSellWithUs' product_id=product.id %}" class="btn btn-custom btn-sm mb-2 me-2" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No products found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if request.GET.success %}
+    <div id="cart-message">✔ {{ request.GET.success }}</div>
+    <script>
+        setTimeout(function() {
+            document.getElementById("cart-message").style.display = "none";
+            const url = new URL(window.location.href);
+            url.searchParams.delete('success');  
+            window.history.replaceState({}, '', url);  
+        }, 3000);  
+    </script>
+{% endif %}
+
+
+    <!-- Pagination Controls -->
+   <!-- Pagination Controls -->
+<nav>
+    <ul class="pagination">
+        {% if products.has_previous %}
+            <li class="first"><a href="?page=1">« First</a></li>
+            <li class="prev"><a href="?page={{ products.previous_page_number }}">‹‹</a></li>
+        {% endif %}
+
+        {% for num in products.paginator.page_range %}
+            <li class="{% if products.number == num %}active{% endif %}">
+                <a href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if products.has_next %}
+            <li class="next"><a href="?page={{ products.next_page_number }}">››</a></li>
+            <li class="last"><a href="?page={{ products.paginator.num_pages }}">Last »</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+</div>
+{% endblock %}

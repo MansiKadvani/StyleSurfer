@@ -1,0 +1,820 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block title %}StyleSurfer - SellWithUs{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<style>
+    .sell {
+        margin-top: 10px;
+        position: relative;
+    }
+
+    .sell img {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio */
+        opacity: 0.3; /* Adjust opacity for better readability */
+    }
+
+    .sell p {
+        position: absolute;
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%);
+        font-size: clamp(24px, 5vw, 50px); /* Responsive font size */
+        color: #110808;
+        opacity: 0.9;
+        font-weight: bold;
+        text-align: center; /* Center the text */
+    }
+
+    .works {
+        background-color: #453229;
+        color: white;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .step {
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .icon img {
+        max-width: 80px;
+        margin-bottom: 15px;
+    }
+
+    .works h3 {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .works p {
+        font-size: 1rem;
+        color: white;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+        .sell img {
+            height: auto; /* Adjust for smaller screens */
+            opacity: 0.3;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .step {
+            width: 100%; /* Full width for small screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .step {
+            width: 100%; /* Full width for small screens */
+        }
+
+        .icon img {
+            max-width: 60px;
+        }
+
+        .works h3 {
+            font-size: 1.1rem;
+        }
+
+        .works p {
+            font-size: 0.9rem;
+        }
+    }
+
+    .head-work {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+    }
+
+    .head-work::after {
+        content: "";
+        position: absolute;
+        bottom: -3px; /* Adjust the position of the underline */
+        left: 50%; /* Move the underline to the center */
+        transform: translateX(-50%); /* Adjust for perfect centering */
+        width: 10%; /* Adjust the width of the underline */
+        height: 2px; /* Thickness of the underline */
+        background-color: #000; /* Color of the underline */
+    }
+
+    .card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        font-weight: 600;
+        color: #3b2415;
+        opacity: 95%;
+    }
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        width: 100%;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .form-control:focus {
+        border-color: #3b2415;
+        box-shadow: 0 0 5px #3b2415;
+    }
+    .form-control:hover {
+        border-color: #3b2415;
+    }
+    button[type="submit"],
+    .btn-cancel {
+        width: 100%;
+        font-size: 18px;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    button[type="submit"] {
+        background-color: #3b2415;
+        opacity: 80%;
+        color: #fff;
+    }
+    button[type="submit"]:hover {
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+    .btn-cancel {
+        background-color: #ddd;
+        color: #3b2415;
+    }
+    .btn-cancel:hover {
+        background-color: #3b2415;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-control-file {
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        font-size: 14px;
+    }
+    .form-control-file-label {
+        font-weight: 600;
+        color: #3b2415;
+        opacity: 95%;
+    }
+    #id_quantity {
+        width: 100%;
+    }
+    #exampleModal .modal-header {
+        background-color: #3b2415;
+        opacity: 70%;
+        color: white;
+    }
+    #exampleModal .modal-body {
+        font-size: 16px;
+        color: #3b2415;
+    }
+    #exampleModal .modal-footer button {
+        background-color: #3b2415;
+        color: white;
+    }
+    #exampleModal .modal-footer button:hover {
+        background-color: #f9f9f9;
+        color: #3b2415;
+    }
+    #exampleModal .btn-close{
+        color: white;
+    }
+
+    .custome-checkbox{
+        border: 2px solid #110808;
+    }
+
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        box-shadow: none;
+    }
+
+    .invalid-feedback {
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+    }
+
+    .close{
+        padding: 0.5rem 1rem;
+        color: #fff;
+        background-color: #3b2415;
+        opacity: 80%;
+        font-size: 20px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+    }
+    .close:hover{
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+    .add{
+        background-color: #3b2415;
+        opacity: 80%;
+        display: block;
+        margin: auto;
+        width: 30%;
+        border: none;
+
+    }
+    .add:hover{
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+
+   
+</style>
+
+<script>
+    gsap.from(
+        element, { rotation: 180, opacity: 0, duration: 1.5 }
+    );
+</script>
+{% endblock %}
+
+{% block body %}
+
+<div id="alertContainer"></div>
+
+<div class="container-fluid sell" data-aos="fade-up">
+    <img src="{% static 'images/sellwithus.png' %}" class="img-fluid" alt="Sell With Us">
+    <p>Sell With Us <i class="fa fa-users" aria-hidden="true"></i></p>
+</div>
+
+<h2 class="head-work" data-aos="fade-up">How It Works
+</h2>
+
+<div class="works">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="step" data-aos="fade-up">
+                <div class="icon" ><img src="{% static 'images/work1.png' %}" alt="Submit Pictures"></div>
+                <h3>You submit pictures</h3>
+                <p>You get a notification only when we accept your outfit.</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="step" data-aos="fade-up">
+                <div class="icon"><img src="{% static 'images/work2.png' %}" alt="We Display"></div>
+                <h3>We display</h3>
+                <p>We shoot the outfit and make it live online, at our stores or both. You get order updates.</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="step" data-aos="fade-up">
+                <div class="icon"><img src="{% static 'images/work3.png' %}" alt="We Fulfill"></div>
+                <h3>We fulfill, you earn</h3>
+                <p>We Dryclean and send it to customers. You earn up to 40% revenue share when the order is served.</p>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="step" data-aos="fade-up">
+                <!-- Image wrapped in a clickable button-like div -->
+                <div class="icon" data-bs-toggle="modal" data-bs-target="#videoModal">
+                    <img src="{% static 'images/work4.png' %}" alt="We Fulfill" style="cursor: pointer;">
+                </div>
+                
+                <h3>Not Understand</h3>
+                <p>Click on the icon to see the video of how sell with us works.</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="videoModalLabel">How It Works?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <video controls style="width: 100%; height: auto;">
+                    <source src="{% static 'images/Sell.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="head-work" data-aos="fade-up">Fill The Details
+</h2>
+
+<div class="main" data-aos="fade-up">
+    <main role="main" class="container-fluid p-3">
+        <div class="container-fluid">
+            <div class="card">
+                <form id="sellwithusForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+
+                    <!-- User Info -->
+                        <div class="row" >
+                            <div class="form-group col-md-6">
+                                <label for="id_name">Name*</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                                <div id="nameError" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id_number">Number*</label>
+                                <input type="text" class="form-control" id="number" name="number">
+                                <div id="numberError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="id_email">Email*</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{ email }}" readonly>
+                                <!-- <div id="emailError" class="invalid-feedback"></div> -->
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id_addr">Pick Up Address*</label>
+                                <input type="text" class="form-control" id="addr" name="addr">
+                                <div id="addrError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="id_city">City</label>
+                                <input type="text" class="form-control" id="city" name="city" value="Rajkot" readonly>
+                                <div id="cityError" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id_pincode">Pincode*</label>
+                                <input type="text" class="form-control" id="pincode" name="pincode">
+                                <div id="pincodeError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <hr>
+
+
+                    <!-- Product Info -->
+                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Do You Have Any Boutique Or Shop ?</label>
+                            <input type="text" class="form-control" id="boutique" name="boutique">
+                            <div id="boutiqueError" class="invalid-feedback"></div>
+                     </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="id_pname">Product Name*</label>
+                                <input type="text" class="form-control" id="pname" name="pname">
+                                <div id="pnameError" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="id_brand">Product Brand/Designer Name*</label>
+                                <input type="text" class="form-control" id="brand" name="brand">
+                                <div id="brandError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="id_description">Description*</label>
+                                <textarea class="form-control" id="description" name="description"></textarea>
+                                <div id="descriptionError" class="invalid-feedback"></div>
+                            </div>
+                                <div class="form-group col-md-6">
+                                <label for="id_price">MRP*</label>
+                                <input type="number" class="form-control" id="price" name="price">
+                                <div id="priceError" class="invalid-feedback"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="form-group col-md-12">
+                                <label for="id_color">Color</label>
+                                <input type="text" class="form-control" id="pcolor" name="color">
+                                <div id="colorError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                            <label>Size and Quantity</label>
+                            <div id="size-quantity-container">
+                                <div class="row size-quantity-entry mb-2">
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="size[]">
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                            <option value="XXXL">XXXL</option>
+                                            <option value="Free Size">Free Size</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="number" class="form-control" name="quantity[]" placeholder="Enter quantity" min="1">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="close btn btn-danger remove-size ">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="add btn btn-success mt-2" id="add-size">Add Size </button>
+                        </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="id_category">Category</label>
+                                <select class="form-control" id="category" name="category">
+                                    <option value="Women - Lehnga">Women - Lehnga</option>
+                                    <option value="Men - Sherwani">Men - Sherwani</option>
+                                    <option value="Women - Sharara">Women - Sharara</option>
+                                    <option value="Men - Suit">Men - Suit</option>
+                                </select>
+                                <div id="catError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="id_image_front">Front View Image</label>
+                                <input type="file" class="form-control-file" id="id_image_front" name="image_front">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="id_image_side">Side View Image</label>
+                                <input type="file" class="form-control-file" id="id_image_side" name="image_side">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="id_image_back">Back View Image</label>
+                                <input type="file" class="form-control-file" id="id_image_back" name="image_back">
+                            </div>
+                        </div>
+
+                    
+
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <label>For further info or feedback email us on <u>stylesurfer3@gmail.com</u></label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12 d-flex justify-content-center">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input custome-checkbox" type="checkbox" id="terms" name="terms" value="terms" required>
+                                <label class="form-check-label" for="terms">I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">terms & conditions</a></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+<div class="modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Terms & Conditions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <h6>1. Account Creation and Submission</h6> 
+                <ul>
+                    <li>Users must create an account under the “Sell with Us” section to list their products.</li>
+                    <li>A form must be submitted with accurate details, including name, email, contact number, pickup address, city (Rajkot), pincode, product details (name, brand, description, size, color, category), and images (front, back, side views).
+                        Submission of a valid bill for the product is mandatory for verification.</li>
+                </ul>
+                <h6>2. Product Approval</h6> 
+                <ul>
+                    <li>Submitted products will undergo review by the StyleSurfer admin team.</li>
+                    <li>Admin has the sole discretion to approve or reject the product. The decision will be communicated to the user via email.</li>
+                    <li>Approved products will go live on the website within 7-10 days.</li>
+                </ul>
+                <h6>3. Rental Process</h6> 
+                <ul>
+                    <li>Once a customer rents the listed product, the owner will be notified via email with customer details.</li>
+                    <li>The owner will receive 50% of the rental price directly to their registered account.</li>
+                </ul>
+                <h6>4. Product Return</h6> 
+                <ul>
+                    <li>After the rental period, the rented product will be returned to the website. The website will then return the product to the original owner.</li>
+                    <li>StyleSurfer is not liable for damages caused during the rental period but ensures necessary quality checks before return to the owner.</li>
+                </ul>
+                <h6>5. Owner Obligations</h6> 
+                <ul>
+                    <li>Owners must ensure that the listed products are genuine, of good quality, and accurately described.</li>
+                    <li>Owners must provide valid bank account details for smooth payment processing.</li>
+                    <li>Owners are responsible for any taxes or charges applicable to their earnings.</li>
+                </ul>
+                <h6>6. Payment Terms</h6> 
+                <ul>
+                    <li>Owners will receive their share of the rental income (50%) after the customer has successfully rented the product.</li>
+                    <li>Payments are processed within 7 business days of a successful rental.</li>
+                </ul>
+                <h6>7. Liability and Damages</h6> 
+                <ul>
+                    <li>Minor repairable damages caused to products during rentals will be handled by StyleSurfer.</li>
+                    <li>For irreparable damages or product loss, StyleSurfer’s liability is capped at 30% of the listed product price.</li>
+                </ul>
+                <h6>8. Confidentiality</h6> 
+                <ul>
+                    <li>All user data, including bank details and personal information, will be kept confidential and used only for payment processing and communication.</li>
+                </ul>
+                <h6>9. Exclusivity</h6> 
+                <ul>
+                    <li>Products listed on StyleSurfer should not simultaneously be listed on any other platform offering similar rental services.</li>
+                </ul>
+                <h6>10. Modifications</h6> 
+                <ul>
+                    <li>StyleSurfer reserves the right to modify these terms at any time. Users will be notified of significant changes via email.</li>
+                </ul>
+                <h6>11. Notices</h6> 
+                <ul>
+                    <li>All official communications will be conducted through the registered email address provided during account creation.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="modalMessage"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="submissionModalLabel">Thank You!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your Form Is Submitted successfully ! We will notice you via email that your product isapprove or rejected in shortly . Thank You !!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- JavaScript Validation -->
+<!-- JavaScript Validation -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+debugger;
+document.getElementById('add-size').addEventListener('click', function () {
+    let container = document.getElementById('size-quantity-container');
+    let newEntry = document.createElement('div');
+    newEntry.classList.add('row', 'size-quantity-entry', 'mb-2');
+    newEntry.innerHTML = `
+        <div class="col-md-6">
+            <select class="form-control" name="size[]">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+                <option value="XXXL">XXXL</option>
+                <option value="Free Size">Free Size</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="form-control" name="quantity[]" placeholder="Enter quantity" min="1">
+        </div>
+        <div class="col-md-1 d-flex align-items-center">
+            <button type="button" class="btn btn-danger remove-size">X</button>
+        </div>
+    `;
+    container.appendChild(newEntry);
+});
+
+// Remove size entry
+document.getElementById('size-quantity-container').addEventListener('click', function (event) {
+    if (event.target && event.target.classList.contains('remove-size')) {
+        event.target.closest('.size-quantity-entry').remove();
+    }
+});
+
+
+// Form validation
+document.getElementById("sellwithusForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    debugger;
+
+    const name = document.getElementById("name");
+    const number = document.getElementById("number");
+    const city = document.getElementById("city");
+    const pincode = document.getElementById("pincode");
+    const addr = document.getElementById("addr");
+    const boutique = document.getElementById("boutique");
+    const pname = document.getElementById("pname");
+    const brand = document.getElementById("brand");
+    const description = document.getElementById("description");
+    const price = document.getElementById("price");
+    const color = document.getElementById("pcolor");
+    const cat = document.getElementById("category");
+    // const sizeError = document.getElementById("sError");
+
+    const regExMobNo = /^(\+\d{1,3}[- ]?)?\d{10}$/;
+    const regExPin = /^[1-9][0-9]{5}$/;
+
+    let valid = true;
+    resetErrorMessages();
+
+    if (name.value === "") {
+        valid = false;
+        showError(name, "Please enter your name", "nameError");
+    } else if (number.value === "") {
+        valid = false;
+        showError(number, "Please enter your number", "numberError");
+    } else if (!regExMobNo.test(number.value)) {
+        valid = false;
+        showError(number, "Please enter a valid number", "numberError");
+    } else if (addr.value === "") {
+        valid = false;
+        showError(addr, "Please enter your address", "addrError");
+    } else if (pincode.value === "") {
+        valid = false;
+        showError(pincode, "Please enter your pincode", "pincodeError");
+    } else if (!regExPin.test(pincode.value)) {
+        valid = false;
+        showError(pincode, "Please enter a valid pincode", "pincodeError");
+    } else if (boutique.value === "") {
+        valid = false;
+        showError(boutique, "Please enter your boutique or shop name", "boutiqueError");
+    } else if (pname.value === "") {
+        valid = false;
+        showError(pname, "Please enter your product name", "pnameError");
+    } else if (brand.value === "") {
+        valid = false;
+        showError(brand, "Please enter product's brand name", "brandError");
+    } else if (description.value === "") {
+        valid = false;
+        showError(description, "Please enter product's description", "descriptionError");
+    } else if (price.value === "") {
+        valid = false;
+        showError(price, "Please enter product MRP", "priceError");
+    } else if (color.value === "") {
+        valid = false;
+        showError(color, "Please enter product color", "colorError");
+    } else if (cat.value === "") {
+        valid = false;
+        showError(cat, "Please enter product category", "catError");
+    }
+
+    // =================== SIZE-QUANTITY VALIDATION ===================
+    const sizeEntries = document.querySelectorAll('.size-quantity-entry');
+    const selectedSizes = new Set();
+
+    if (sizeEntries.length === 0) {
+        valid = false;
+        sizeError.textContent = "Please add at least one size and quantity.";
+        sizeError.style.display = "block";
+    } else {
+        sizeEntries.forEach((entry) => {
+            const sizeSelect = entry.querySelector('select[name="size[]"]');
+            const qtyInput = entry.querySelector('input[name="quantity[]"]');
+
+            if (qtyInput.value === "" || parseInt(qtyInput.value) <= 0) {
+                valid = false;
+                qtyInput.classList.add("is-invalid");
+                const errorMsg = document.createElement('div');
+                errorMsg.className = "text-danger mt-1 small";
+                errorMsg.innerText = "Enter a valid quantity.";
+                if (!qtyInput.nextElementSibling) {
+                    qtyInput.parentNode.appendChild(errorMsg);
+                }
+            }
+
+            // Prevent duplicate size selection
+            const sizeValue = sizeSelect.value;
+            if (selectedSizes.has(sizeValue)) {
+                valid = false;
+                sizeSelect.classList.add("is-invalid");
+                const errorMsg = document.createElement('div');
+                errorMsg.className = "text-danger mt-1 small";
+                errorMsg.innerText = "Duplicate size selected.";
+                if (!sizeSelect.nextElementSibling) {
+                    sizeSelect.parentNode.appendChild(errorMsg);
+                }
+            } else {
+                selectedSizes.add(sizeValue);
+            }
+        });
+    }
+
+    if (valid) {
+        const sellwithusFormData = new FormData(sellwithusForm);
+        const sellwithusUrl = `${window.location.origin}/SellWithUs/sellwithus/`;
+        fetch(sellwithusUrl, {
+            method: 'POST',
+            body: sellwithusFormData,
+        }).then(response => {
+            if (response.ok) {
+                const modal = new bootstrap.Modal(document.getElementById('submissionModal'));
+                modal.show();
+                sellwithusForm.reset();
+            } else {
+                const alertContainer = document.getElementById('alertContainer');
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        An unexpected error occurred.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+
+            }
+        });
+    }
+});
+
+// Reset errors
+function resetErrorMessages() {
+    document.querySelectorAll(".form-control").forEach(input => input.classList.remove("is-invalid"));
+    document.querySelectorAll(".text-danger.mt-1.small").forEach(el => el.remove());
+    // document.getElementById("sError").textContent = "";
+}
+
+// Show errors
+function showError(input, message, errorId) {
+    input.classList.add("is-invalid");
+    const errorElement = document.getElementById(errorId);
+    errorElement.textContent = message;
+    errorElement.style.display = "block";
+}
+
+
+
+
+
+
+</script>
+
+
+{% endblock %}
+
+

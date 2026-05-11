@@ -1,0 +1,408 @@
+{% extends 'base_seller.html' %}
+
+{% block css %}
+<style>
+    /* Card styling */
+    .card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Form field styling */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #3b2415;
+        opacity: 95%;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        width: 100%;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3b2415;
+        box-shadow: 0 0 5px #3b2415;
+    }
+
+    .form-control:hover {
+        border-color: #3b2415;
+    }
+
+    /* Button styling */
+    button[type="submit"],
+    .btn-cancel {
+        width: 100%;
+        font-size: 18px;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button[type="submit"] {
+        background-color: #3b2415;
+        opacity: 80%;
+        color: #fff;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+
+    .btn-cancel {
+        background-color: #ddd;
+        color: #3b2415;
+    }
+
+    .btn-cancel:hover {
+        background-color: #3b2415;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control-file {
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        font-size: 14px;
+    }
+
+    .form-control-file-label {
+        font-weight: 600;
+        color: #3b2415;
+        opacity: 95%;
+    }
+
+    #id_quantity {
+        width: 100%;
+    }
+
+     /* Modal styling */
+     .modal-header {
+        background-color: #3b2415;
+        opacity: 70%;
+        color: white;
+    }
+
+    .modal-body {
+        font-size: 16px;
+        color: #3b2415;
+    }
+
+    .modal-footer button {
+        background-color: #3b2415;
+        color: white;
+    }
+
+    .modal-footer button:hover {
+        background-color: #f9f9f9;
+        color: #3b2415;
+    }
+
+    .btn-close{
+        color: white;
+    }
+
+    .size-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 25px;  /* Adjust this value to control the spacing between checkboxes */
+}
+
+.size-checkboxes .size-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;  /* Space between checkbox and label text */
+}
+
+.size-checkboxes input[type="checkbox"] {
+    margin: 0;  /* Ensure there's no extra margin applied to the checkboxes */
+}
+
+.close{
+        padding: 0.5rem 1rem;
+        color: #fff;
+        background-color: #3b2415;
+        opacity: 80%;
+        font-size: 20px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+    }
+    .close:hover{
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+    .add{
+        background-color: #3b2415;
+        opacity: 80%;
+        display: block;
+        margin: auto;
+        width: 30%;
+        border: none;
+
+    }
+    .add:hover{
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+
+
+   
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="main">
+    <main role="main" class="container-fluid p-3">
+        <div class="container">
+            <div class="card">
+                <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    {% csrf_token %}
+                    <div class="row">
+                        <!-- Product Name -->
+                        <div class="form-group col-md-6">
+                            <label for="id_name">Product Name</label>
+                            <input type="text" class="form-control" id="id_name" name="name" value="{{ product.name }}">
+                        </div>
+
+                        <!-- Brand -->
+                        <div class="form-group col-md-6">
+                            <label for="id_brand">Brand</label>
+                            <input type="text" class="form-control" id="id_brand" name="brand" value="{{ product.brand }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Description -->
+                        <div class="form-group col-md-12">
+                            <label for="id_description">Description</label>
+                            <textarea class="form-control" id="id_description" name="description">{{ product.description }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Actual Price -->
+                        <div class="form-group col-md-6">
+                            <label for="id_price">Actual Price</label>
+                            <input type="number" class="form-control" id="id_price" name="price" value="{{ product.price }}">
+                        </div>
+
+                        <!-- Rental Price -->
+                        <div class="form-group col-md-6">
+                            <label for="id_rental_price">Rental Price</label>
+                            <input type="number" class="form-control" id="id_rental_price" name="rental_price" value="{{ product.rental_price }}">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="id_rental_price">Discount Percentage</label>
+                            <input type="number" class="form-control" id="discount" name="discount" value="{{ product.discount }}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+        <div class="col-md-12">
+    <label>Sizes and Quantity</label>
+    <div id="size-quantity-container">
+        {% for sq in size_quantity_data %}
+        <div class="size-quantity-row d-flex gap-2 mb-2 align-items-center">
+            <select name="sizes[]" class="form-control size-select">
+                <option value="" disabled>Select Size</option>
+                {% for size in available_sizes %}
+                <option value="{{ size }}" {% if sq.size == size %}selected{% endif %}>{{ size }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="quantities[]" class="form-control quantity-input"
+                   value="{{ sq.quantity }}" placeholder="Quantity" min="1">
+            <button type="button" class="close btn btn-danger remove-size-btn">X</button>
+        </div>
+        {% endfor %}
+    </div>
+    <button type="button" class="add btn btn-primary mt-2" id="add-size-btn">Add Size</button>
+</div>
+                    </div>
+
+                        <!-- Color -->
+        
+                    <div class="row">
+                        <!-- Quantity -->
+                            <div class="form-group col-md-12">
+                            <label for="id_color">Color</label>
+                            <input type="text" class="form-control" id="id_color" name="color" value="{{ product.color }}">
+                            </div>
+
+
+                    <!-- Image fields -->
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                        <label for="id_image_front">Front View Image</label>
+                        <input type="file" class="form-control-file" id="id_image_front" name="image_front">
+                        {% if product.image_front %}
+                            <img src="{{ product.image_front.url }}" alt="Front view" width="100">
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="id_image_side">Side View Image</label>
+                        <input type="file" class="form-control-file" id="id_image_side" name="image_side">
+                        {% if product.image_side %}
+                            <img src="{{ product.image_side.url }}" alt="Side view" width="100">
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="id_image_back">Back View Image</label>
+                        <input type="file" class="form-control-file" id="id_image_back" name="image_back">
+                        {% if product.image_back %}
+                            <img src="{{ product.image_back.url }}" alt="Back view" width="100">
+                        {% endif %}
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="checkbox" id="buyback" name="buyback" value="True" 
+                                {% if product.buyback == True %} checked {% endif %}>
+                            <label for="buyback">Buyback</label>
+                        </div>
+                        
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <button class="btn btn-primary" type="submit">Update Product</button>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <a href="" class="btn btn-cancel">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id="modalMessage"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- JavaScript Validation -->
+<!-- JavaScript Validation -->
+<script>
+
+
+    document.getElementById("add-size-btn").addEventListener("click", function () {
+        let container = document.getElementById("size-quantity-container");
+        let newRow = document.createElement("div");
+        newRow.classList.add("size-quantity-row", "d-flex", "gap-2", "mb-2", "align-items-center");
+        newRow.innerHTML = `
+            <select name="sizes[]" class="form-control size-select">
+                <option value="" disabled selected>Select Size</option>
+                {% for size in available_sizes %}
+                <option value="{{ size }}">{{ size }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="quantities[]" class="form-control quantity-input" placeholder="Quantity" min="1">
+            <button type="button" class="close btn btn-danger remove-size-btn">X</button>
+        `;
+        container.appendChild(newRow);
+    });
+
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("remove-size-btn")) {
+            e.target.parentElement.remove();
+        }
+    });
+
+
+
+function displayFileName(input, labelId) {
+        const label = document.getElementById(labelId);
+        if (input.files.length > 0) {
+            label.textContent = input.files[0].name; // Display the file name
+        } else {
+            label.textContent = "No file chosen"; // Display default text if no file selected
+        }
+    }
+    
+    function validateForm() {
+        const name = document.getElementById("id_name").value.trim();
+        const description = document.getElementById("id_description").value.trim();
+        const price = document.getElementById("id_price").value;
+        const rentalPrice = document.getElementById("id_rental_price").value;
+        const quantity = document.getElementById("id_quantity").value;
+        const image_front = document.getElementById("id_image_front").value;
+        const image_back = document.getElementById("id_image_back").value;
+        const image_side = document.getElementById("id_image_side").value;
+        let errorMessage = "";
+
+        if (!name) {
+            errorMessage = "Product name is required.";
+        } else if (!description) {
+            errorMessage = "Description is required.";
+        } else if (!price || price <= 0) {
+            errorMessage = "Actual price must be greater than zero.";
+        } else if (!rentalPrice || rentalPrice <= 0) {
+            errorMessage = "Rental price must be greater than zero.";
+        } else if (rentalPrice <= price){
+            errorMessage = "Rental price must be smaller than actual price.";
+        }
+        //  else if (!quantity || quantity <= 0) {
+        //     errorMessage = "Quantity must be greater than zero.";
+        // } 
+        else if (!document.querySelector('input[name="size"]:checked')) {
+            errorMessage = "At least one size must be selected.";
+        } 
+
+        if (errorMessage) {
+            document.getElementById("modalMessage").innerText = errorMessage;
+            const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            modal.show();            
+            return false;
+        }
+
+        return true; // If all validations pass, allow form submission
+    }
+
+</script>
+{% endblock %}

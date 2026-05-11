@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>OTP Verification</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo3_RW8_icon.ico' %}" sizes="128x128" class="favicon">
+
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #d8c2b0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 15px;
+        }
+
+        .otp-wrapper {
+            display: flex;
+            flex-direction: row;
+            background-color: #ffffff;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Left Side Image Container */
+        .otp-image-container {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .otp-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Right Side Form Container */
+        .otp-container {
+            padding: 30px;
+            text-align: center;
+            width: 60%;
+        }
+
+        h1 {
+            color: #5b3e31;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        p {
+            color: #755F51;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        /* OTP Input Box */
+        .otp-input-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .otp-input {
+            width: 40px;
+            height: 45px;
+            font-size: 20px;
+            text-align: center;
+            border: 2px solid #7a6253;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .otp-input:focus {
+            border-color: #110808;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: #5b3e31;
+            width: 100%;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #56463b;
+        }
+
+        /* Options */
+        .options {
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .options a {
+            color: #56463b;
+            text-decoration: none;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+
+        #timer-message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: red;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .otp-wrapper {
+                flex-direction: column;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .otp-image-container {
+                width: 100%;
+                padding: 20px 20px 0px 20px;
+            }   
+
+            .otp-image{
+                height : 220px;
+                width: 270px;
+            }
+            .otp-container {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .otp-input-container {
+                gap: 5px;
+            }
+
+            .otp-input {
+                width: 35px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 13px;
+            }
+        }
+
+        .disabled-link {
+    pointer-events: none;
+    color: grey;
+}
+
+    </style>
+</head>
+
+<body>
+          
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <div class="otp-wrapper">
+        <div class="otp-image-container">
+            <img class="otp-image" src="{% static 'images/verify.png' %}" alt="Verification Illustration">
+        </div>
+        
+        <div class="otp-container">
+            <h1>OTP Verification</h1>
+            <p id="otp-message">Please enter the OTP sent to your registered email or phone number.</p>
+            
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="otp-input-container">
+                    <input type="text" name="otp1" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp2" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp3" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp4" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp5" maxlength="1" class="otp-input" required>
+                    <input type="text" name="otp6" maxlength="1" class="otp-input" required>
+                </div>
+                <button type="submit" class="submit-btn">Verify OTP</button>
+            </form>
+
+            <p class="options">
+                Didn't receive the OTP? 
+                <a href="{% url 'otpResend' %}" id="resend-btn" class="disabled-link">Resend</a>
+            </p>
+            
+            <p id="timer-message">OTP expires in <span id="otp-timer">2</span> minutes.</p>
+        </div>
+    </div>
+
+    <script>
+
+    const timerElement = document.getElementById('otp-timer');
+    const otpMessage = document.getElementById('otp-message');
+    const resendButton = document.getElementById('resend-btn');
+    const expiryTimeKey = 'otpExpiryTime';
+
+    // Disable the resend button initially
+    resendButton.classList.add('disabled-link');
+
+    let expiryTime = localStorage.getItem(expiryTimeKey);
+    if (!expiryTime) {
+        const currentTime = new Date().getTime();
+        expiryTime = currentTime + 2 * 60 * 1000;
+        localStorage.setItem(expiryTimeKey, expiryTime);
+    }
+
+    const countdownInterval = setInterval(() => {
+        const currentTime = new Date().getTime();
+        const remainingTime = expiryTime - currentTime;
+
+        if (remainingTime > 0) {
+            const minutes = Math.floor(remainingTime / (60 * 1000));
+            const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
+            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+            clearInterval(countdownInterval);
+            otpMessage.textContent = "OTP expired. Please resend.";
+            timerElement.textContent = "0:00";
+
+            // Enable the resend button
+            resendButton.classList.remove('disabled-link');
+            localStorage.removeItem(expiryTimeKey);
+        }
+    }, 1000);
+
+    // Remove localStorage OTP expiry when form is submitted
+    document.querySelector('form').addEventListener('submit', () => {
+        localStorage.removeItem(expiryTimeKey);
+    });
+
+    // Auto-focus input fields for OTP entry
+    const inputs = document.querySelectorAll('.otp-input');
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (e.target.value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && index > 0 && !input.value) {
+                inputs[index - 1].focus();
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

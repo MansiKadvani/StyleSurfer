@@ -1,0 +1,365 @@
+{% extends 'base_seller.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+   .btn-custom {
+    background-color: white;
+    color: black;
+    border: 1px solid #3b2415;
+    padding: 10px 12px;
+    font-size: 14px;
+    width: auto;
+    min-width: 80px;
+}
+
+    .btn-custom.active {
+        background-color: #3b2415;
+        color: white;
+    }
+    .btn-group {
+        display: flex;
+        gap: 10px;
+    }
+    .table-container {
+        display: none;
+        margin-top: 20px;
+    }
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="mainSection" class="section-visible my-4">
+    <div class="btn-group mb-3 d-flex flex-column flex-sm-row">
+        <button id="buyBackBtn" onclick="showMainCategory('buyBackSection', this)" class="btn effect btn-custom active w-100 mr-0">Buy-Back</button>
+        <button id="purchaseRequestBtn" onclick="showMainCategory('purchaseRequestSection', this)" class="btn effect btn-custom w-100">Purchase Request</button>
+    </div>
+
+    <div id="buyBackSection">
+        <div class="btn-group mb-3">
+            <button id="buyBtn" onclick="showSubSection('buySection', 'requestTableContainer', this)" class="btn effect btn-custom active">Buy</button>
+            <button id="backBtn" onclick="showSubSection('backSection', 'backRequestTableContainer', this)" class="btn effect btn-custom">Back</button>
+        </div>
+
+        <div id="buySection">
+            <div class="mb-2">
+                <button id="requestBtn" onclick="showTable('requestTableContainer', this)" class="btn mb-3 effect btn-custom active">Request</button>
+                <button id="approveBtn" onclick="showTable('approveTableContainer', this)" class="btn mb-3 effect btn-custom">Approve / Reject</button>
+            </div>
+            <div id="requestTableContainer" class="table-container">
+                <h5>Request</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if seller_requests %}
+                            {% for request in seller_requests %}
+                                {% if request.custom_design.Customer_status == "Buy Request" and request.status == "Pending"  %}
+                                    <tr>
+                                        <td>{{ request.buyback.buyback_id }}</td>
+                                        <td>{{ request.buyback.user }}</td>
+                                        <td>{{ request.custom_design.name }}</td>
+                                        <td>{{ request.status }}</td>
+                                        <td>
+    {% if request.buyback.buyback_id %}
+        <a href="{% url 'customization_details' request.buyback.buyback_id %}">
+            <button class="btn btn-custom btn-sm">View Details</button>
+        </a>
+    {% else %}
+        <button class="btn btn-custom btn-sm" disabled>No Details</button>
+    {% endif %}
+</td>
+
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            </div>
+
+
+            <div id="approveTableContainer" class="table-container"><h5>Approve / Reject </h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if seller_requests %}
+                            {% for request in seller_requests %}
+                                {% if request.custom_design.Customer_status == "Buy Request" and request.status != "Pending"  %}
+                                    <tr>
+                                        <td>{{ request.buyback.buyback_id }}</td>
+                                        <td>{{ request.buyback.user }}</td>
+                                        <td>{{ request.custom_design.name }}</td>
+                                        <td>{{ request.status }}</td>
+                                                                                <td>
+    {% if request.buyback.buyback_id %}
+        <a href="{% url 'customization_details' request.buyback.buyback_id %}">
+            <button class="btn btn-custom btn-sm">View Details</button>
+        </a>
+    {% else %}
+        <button class="btn btn-custom btn-sm" disabled>No Details</button>
+    {% endif %}
+</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            </div>
+        </div>
+
+        <div id="backSection" style="display: none;">
+            <div class="mb-2">
+                <button id="backRequestBtn" onclick="showTable('backRequestTableContainer', this)" class="btn mb-3 effect btn-custom active">Pending</button>
+                <button id="backApproveBtn" onclick="showTable('backApproveTableContainer', this)" class="btn mb-3 effect btn-custom">Back complete (Returned)</button>
+            </div>
+            <div id="backRequestTableContainer" class="table-container">
+                <h5>Pending</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    {% if seller_requests %}
+        {% for request in seller_requests %}
+            {% if request.custom_design.Customer_status == "Back Request" and request.status == "Pending" %}
+                <tr>
+                    <td>{{ request.buyback.buyback_id }}</td>
+                    <td>{{ request.buyback.user }}</td>
+                    <td>{{ request.custom_design.name }}</td>
+                    <td>{{ request.status }}</td>
+                                                            <td>
+    {% if request.buyback.buyback_id %}
+        <a href="{% url 'customization_details' request.buyback.buyback_id %}">
+            <button class="btn btn-custom btn-sm">View Details</button>
+        </a>
+    {% else %}
+        <button class="btn btn-custom btn-sm" disabled>No Details</button>
+    {% endif %}
+</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</tbody>
+
+                </table>
+            </div>
+
+            </div>
+            <div id="backApproveTableContainer" class="table-container">
+                <h5>Back complete (Returned)</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    {% if seller_requests %}
+        {% for request in seller_requests %}
+            {% if request.custom_design.Customer_status == "Back Request" and request.status != "Pending"  %}
+                <tr>
+                    <td>{{ request.buyback.buyback_id }}</td>
+                    <td>{{ request.buyback.user }}</td>
+                    <td>{{ request.custom_design.name }}</td>
+                    <td>{{ request.status }}</td>
+                                                            <td>
+    {% if request.buyback.buyback_id %}
+        <a href="{% url 'customization_details' request.buyback.buyback_id %}">
+            <button class="btn btn-custom btn-sm">View Details</button>
+        </a>
+    {% else %}
+        <button class="btn btn-custom btn-sm" disabled>No Details</button>
+    {% endif %}
+</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</tbody>
+
+                </table>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="purchaseRequestSection" style="display: none;">
+        <div class="mb-2">
+            <button id="purchaseRequestBtn" onclick="showTable('purchaseRequestTableContainer', this)" class="btn mb-3 effect btn-custom active">Request</button>
+            <button id="purchaseApproveBtn" onclick="showTable('purchaseApproveTableContainer', this)" class="btn mb-3 effect btn-custom">Approve / Reject</button>
+        </div>
+        <div id="purchaseRequestTableContainer" class="table-container">
+            <h5>request</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    {% if seller_requests %}
+        {% for request in seller_requests %}
+            {% if request.custom_design.Customer_status == "Purchase Request" and request.status == "Pending" %}
+                <tr>
+                    <td>{{ request.buyback.buyback_id }}</td>
+                    <td>{{ request.buyback.user }}</td>
+                    <td>{{ request.custom_design.name }}</td>
+                    <td>{{ request.status }}</td>
+                                                            <td>
+    {% if request.buyback.buyback_id %}
+        <a href="{% url 'customization_details' request.buyback.buyback_id %}">
+            <button class="btn btn-custom btn-sm">View Details</button>
+        </a>
+    {% else %}
+        <button class="btn btn-custom btn-sm" disabled>No Details</button>
+    {% endif %}
+</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</tbody>
+
+                </table>
+            </div>
+
+
+        </div>
+        <div id="purchaseApproveTableContainer" class="table-container">
+            <h5>Approve / Reject</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    {% if seller_requests %}
+        {% for request in seller_requests %}
+            {% if request.custom_design.Customer_status == "Purchase Request" and request.status != "Pending" %}
+                <tr>
+                    <td>{{ request.buyback.buyback_id }}</td>
+                    <td>{{ request.buyback.user }}</td>
+                    <td>{{ request.custom_design.name }}</td>
+                    <td>{{ request.status }}</td>
+                                                            <td>
+    {% if request.buyback.buyback_id %}
+        <a href="{% url 'customization_details' request.buyback.buyback_id %}">
+            <button class="btn btn-custom btn-sm">View Details</button>
+        </a>
+    {% else %}
+        <button class="btn btn-custom btn-sm" disabled>No Details</button>
+    {% endif %}
+</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let activeMainCategory = localStorage.getItem("activeMainCategory") || "buyBackSection";
+    let activeSubSection = localStorage.getItem("activeSubSection") || "buySection";
+    let activeTable = localStorage.getItem("activeTable") || "requestTableContainer";
+
+    showMainCategory(activeMainCategory, document.getElementById(activeMainCategory === "buyBackSection" ? "buyBackBtn" : "purchaseRequestBtn"), false);
+    showSubSection(activeSubSection, activeTable, document.getElementById(activeSubSection === "buySection" ? "buyBtn" : "backBtn"), false);
+});
+
+function showMainCategory(categoryId, clickedBtn, save = true) {
+    document.getElementById("buyBackSection").style.display = "none";
+    document.getElementById("purchaseRequestSection").style.display = "none";
+    document.getElementById(categoryId).style.display = "block";
+
+    document.querySelectorAll(".btn-group .btn").forEach(btn => btn.classList.remove("active"));
+    clickedBtn.classList.add("active");
+
+    if (save) localStorage.setItem("activeMainCategory", categoryId);
+}
+
+function showSubSection(sectionId, defaultTableId, clickedBtn, save = true) {
+    document.getElementById("buySection").style.display = "none";
+    document.getElementById("backSection").style.display = "none";
+    document.getElementById(sectionId).style.display = "block";
+
+    document.querySelectorAll(".btn-group .btn").forEach(btn => btn.classList.remove("active"));
+    clickedBtn.classList.add("active");
+
+    if (save) localStorage.setItem("activeSubSection", sectionId);
+
+    let defaultTableBtn = document.querySelector(`#${defaultTableId}`).previousElementSibling;
+    showTable(defaultTableId, defaultTableBtn, save);
+}
+
+function showTable(tableId, clickedBtn, save = true) {
+    document.querySelectorAll(".table-container").forEach(table => table.style.display = "none");
+    document.getElementById(tableId).style.display = "block";
+
+    document.querySelectorAll(".mb-3.effect.btn-custom").forEach(btn => btn.classList.remove("active"));
+    clickedBtn.classList.add("active");
+
+    if (save) localStorage.setItem("activeTable", tableId);
+}
+</script>
+{% endblock %}

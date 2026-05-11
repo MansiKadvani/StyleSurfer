@@ -1,0 +1,1009 @@
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   
+
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="icon" href="{% static 'images/logo.ico' %}" sizes="32x32" type="image/x-icon" />
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Bootstrap CSS for styling and layout design -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons: Provides a wide range of icons compatible with Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Swiper CSS: Used for creating modern, responsive sliders and carousels -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Font Awesome: Provides a large set of scalable vector icons and social logos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+    <!-- Additional Bootstrap Icons (redundant with the second link, can be removed if unnecessary) -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Quicksand:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Custom CSS for styling the website -->
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        .logo {
+            display: grid;
+            place-items: center;
+
+        }
+
+        .logo img {
+            margin-right: 30% !important;
+        }
+
+        .dropdown-man,
+        .dropdown-women {
+            top: 9.95rem;
+        }
+        
+    
+        *{
+        font-family: 'Quicksand', sans-serif;
+        
+        
+      
+
+     }
+     
+     body.sidebar-open {
+        overflow: hidden; 
+    }
+      .icon-toggle {
+          transition: transform 0.3s;
+      }
+
+       [aria-expanded="true"] .icon-toggle {
+          transform: rotate(90deg);
+      }
+
+     
+.sidebar {
+    height: 100vh;
+    width: 350px !important;
+    position: fixed;
+    top: 44px;
+    left: -350px !important;
+    /* Hide sidebar initially */
+    background-color: #EDE3DB;
+    transition: 0.3s;
+    padding-top: 50px;
+    z-index: 1000;
+    margin-top: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-y: scroll;
+
+}
+
+
+.sidebar a {
+    padding: 3px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    transition: 0.3s;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0px;
+    right: 15px;
+    font-size: 25px;
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
+
+    </style>
+
+    <link href="{% static 'css/loader.scss' %}" rel="stylesheet">
+
+
+    {% block css %}{% endblock %}
+
+
+</head>
+
+<body>
+
+    <!-- <div class="pre_loader gray_bg text-center">
+        <div class="loader">
+            <div><div><div><div></div></div></div></div>
+        </div>
+    </div> -->
+
+    <!-- Loader -->
+    <!-- <div id="page-loader">
+        <div class="loader">
+            <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32"></circle>
+            </svg>
+        </div>
+
+        <div class="loader triangle">
+            <svg viewBox="0 0 86 80">
+                <polygon points="43 8 79 72 7 72"></polygon>
+            </svg>
+        </div>
+
+        <div class="loader">
+            <svg viewBox="0 0 80 80">
+                <rect x="8" y="8" width="64" height="64"></rect>
+            </svg>
+        </div>
+    </div> -->
+
+    <!-- <div class="loader-container">
+        <div id="page-loader">
+          <div class="flower">
+            <div class="flower__center"></div>
+            <div class="flower__leaves"></div>
+          </div>
+        </div>
+      </div>
+       -->
+
+    <!-- <div class="flower">
+        <div class="flower__center"></div>
+        <div class="flower__leaves"></div>
+      </div> -->
+
+    <!-- <div id="loader-wrapper">
+        <div class="custom-loader" id="loader"></div>
+    </div> -->
+
+
+    <!--marquue scrolling at top-->
+    <div class="bg-black text-white text-center p-1 text-sm ">
+        <marquee scrollamount="10"><i class="bi bi-people-fill"></i> Styled more than 100,000 Clients</marquee>
+    </div>
+
+    <!-- Sidebar Toggle Button (only visible on small screens) -->
+    <div class="sidebar-toggle p-1 mb-2 d-block d-lg-none">
+        <i class="bi bi-list " id="toggleSidebar"></i>
+
+        <img src="{% static 'images/logo.png' %} " id="logo_s" width="100px" height="52px">
+
+
+        {% if session_user_id %}
+        <a href="{% url 'account_home' %}" class="me-4"><i class="bi bi-person-circle" id="icons1"></i></a>
+        <a href="{% url 'cart_detail' %}" class="me-4"><i class="bi bi-cart" id="icons1"></i></a>
+        <a href="{% url 'logout' %}" class="me-4"><i class="bi bi-box-arrow-right" id="icons1"></i></a>
+
+        {% else %}
+        <a href="{% url 'login' %}" class="me-4"> <i class="bi bi-box-arrow-in-right" id="icons1"></i></a>
+        {% endif %}
+
+        <a href="#" class="me-3 resp-icon"><i class="bi bi-person-circle "></i></a>
+        <a href="#" class="me-3 resp-icon"><i class="bi bi-cart"></i></a>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input " placeholder="Search Your Style">
+            <div class="search-button">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar" id="sidebarMenu">
+        <button class="close-btn" id="closeSidebar">&times;</button>
+
+        <div class="text-center mb-4">
+            <img src="https://assets.vogue.in/photos/5d43f876abccd50008931423/16:9/w_1280,c_limit/Sabyasachia.jpg "
+                width="95%" height="95%" alt="Sidebar Image" class="img-fluid rounded">
+        </div>
+
+        <a href="#menDropdown" data-bs-toggle="collapse" aria-expanded="false"
+            class="d-flex justify-content-between align-items-center">Men<i
+                class="bi bi-chevron-right icon-toggle"></i></a>
+        <div class="collapse" id="menDropdown">
+            <a href="#dressesDropdown" data-bs-toggle="collapse" aria-expanded="false"
+                class="d-flex justify-content-between align-items-center">STYLES<i
+                    class="bi bi-chevron-right icon-toggle"></i></a>
+            <div class="collapse" id="dressesDropdown">
+                <a href="">See All Men's Wear </a>
+                <a href="{% url 'product' 'Sherwani' %}"> Sherwanis</a>
+                <a href="{% url 'product' 'Kurta_Jacket' %}">Kurta Jacket Set</a>
+                <a href="{% url 'product' 'kurta' %}">Kurta Set</a>
+                <a href="{% url 'product' 'Suit' %}">Suit</a>
+                <a href="{% url 'product' 'Tuxedo' %}">Tuxedo</a>
+            </div>
+            <a href="#occasionDropdown" data-bs-toggle="collapse" aria-expanded="false"
+                class="d-flex justify-content-between align-items-center">OCCASION<i
+                    class="bi bi-chevron-right icon-toggle"></i></a>
+            <div class="collapse" id="occasionDropdown">
+                <div class="occans-img">
+                    <div class="text-center pt-3 pb-0  occans-item">
+                        <img src="{% static 'images/home_nav1.png' %}" width="95%" height="95%" alt="Sidebar Image"
+                            class="img-fluid rounded">
+                    </div>
+                    <div class="text-center  pt-3 pb-0 occans-item">
+                        <img src="{% static 'images/home_nav2.png' %}" width="95%" height="95%" alt="Sidebar Image"
+                            class="img-fluid rounded">
+                    </div>
+                </div>
+                <div class="occans-img">
+                    <div class="text-center pt-3 pb-0 pr-0 mb-3 occans-item">
+                        <img src="{% static 'images/home_nav3.png' %}" width="85%" height="95%" alt="Sidebar Image"
+                            class="img-fluid rounded">
+                    </div>
+                    <div class="text-center  pt-3 pb-0 mb-3  pr-0 occans-item">
+                        <img src="{% static 'images/home_nav4.png' %}" width="88%" height="95%" alt="Sidebar Image"
+                            class="img-fluid rounded">
+                    </div>
+                </div>
+
+                <a href="{% url 'product' 'menEnagagement' %}">Engagement</a>
+                <a href="{% url 'product' 'menSangeet' %}">Sangeet</a>
+                <a href="{% url 'product' 'menWedding' %}">Wedding</a>
+                <a href="{% url 'product' 'menReception' %}">Reception</a>
+            </div>
+            <a href="#relationDropdown" data-bs-toggle="collapse" aria-expanded="false"
+                class="d-flex justify-content-between align-items-center">RELATION<i
+                    class="bi bi-chevron-right icon-toggle"></i></a>
+
+        </div>
+
+        <a href="#womenDropdown" data-bs-toggle="collapse" aria-expanded="false"
+            class="d-flex justify-content-between align-items-center">Women<i
+                class="bi bi-chevron-right icon-toggle"></i></a>
+        <div class="collapse" id="womenDropdown">
+            <a href="#dressDropdown" data-bs-toggle="collapse" aria-expanded="false"
+                class="d-flex justify-content-between align-items-center">STYLES<i
+                    class="bi bi-chevron-right icon-toggle"></i></a>
+            <div class="collapse" id="dressDropdown">
+                <a href="">See All Women's Wear </a>
+                <a href="{% url 'product' 'Lehnga' %}"> Lehngas</a>
+                <a href="{% url 'product' 'Saree' %}">Saree</a>
+                <a href="{% url 'product' 'Anarkali' %}">Anarkalis</a>
+                <a href="{% url 'product' 'Gowns' %}">Gowns</a>
+                <a href="{% url 'product' 'Sarara' %}">Sarara Set</a>
+                <a href="{% url 'product' 'Salwar_kameez' %}">Salwarkameez</a>
+                <a href="{% url 'product' 'Kurta' %}">kurtaset</a>
+                <a href="">Crop Top</a>
+
+            </div>
+            <a href="#occasionsDropdown" data-bs-toggle="collapse" aria-expanded="false"
+                class="d-flex justify-content-between align-items-center">OCCASION<i
+                    class="bi bi-chevron-right icon-toggle"></i></a>
+            <div class="collapse" id="occasionsDropdown">
+                <div class="occans-img">
+                    <div class="text-center pt-3 pb-0  occans-item">
+                        <img src="{% static 'images/home_nav5.png' %}" width="95%" height="95%" alt="Sidebar Image"
+                            class="img-fluid rounded">
+                    </div>
+                    <div class="text-center  pt-3 pb-0 occans-item">
+                        <img src="https://cdn0.weddingwire.in/article/1854/original/1280/jpg/124581-mehndi-function-dress-abhinav-mishra.jpeg "
+                            width="95%" height="95%" alt="Sidebar Image" class="img-fluid rounded">
+                    </div>
+                </div>
+                <div class="occans-img">
+                    <div class="text-center pt-3 pb-0 pr-0 mb-3 occans-item">
+                        <img src="{% static 'images/home_nav7.png' %} " width="85%" height="95%" alt="Sidebar Image"
+                            class="img-fluid rounded">
+                    </div>
+                    <div class="text-center  pt-3 pb-0 mb-3  pr-0 occans-item">
+                        <img src="{% static 'images/home_nav8.png' %}" width="88%" height="95%" alt="Sidebar Image"
+                            class="img-fluid rounded">
+                    </div>
+                </div>
+                <a href="{% url 'product' 'womenEnagagement' %}">Engagement</a>
+                <a href="{% url 'product' 'womenSangeet' %}">Sangeet</a>
+                <a href="{% url 'product' 'womenWedding' %}">Wedding</a>
+                <a href="{% url 'product' 'womenReception' %}">Reception</a>
+            </div>
+            <a href="#relationsDropdown" data-bs-toggle="collapse" aria-expanded="false"
+                class="d-flex justify-content-between align-items-center">RELATION<i
+                    class="bi bi-chevron-right icon-toggle"></i></a>
+            <div class="collapse" id="relationsDropdown">
+                <a href="{% url 'bridal' %}">Bride</a>
+                <!-- <a href="#">Bridemaid</a>
+                    <a href="#">Mother</a>
+                    <a href="#">Sister</a> -->
+
+            </div>
+        </div>
+        <a href="{% url 'spin_voucher' %}">Spin To Win</a>
+        <a href="#">Buy Back</a>
+        <a href="{% url 'resell' %}">Reselling</a>
+        <a href="{% url 'sellwithus' %}">Sell With Us</a>
+    </div>
+
+
+
+    <!-- Add this Overlay Element -->
+    <div class="overlay" id="sidebarOverlay"></div>
+
+    <!-- Overlay -->
+    <nav class="navbar navbar-expand-lg shadow-md" style="background-color: #5b3e31; height: 110px;">
+        <div class="container-fluid">
+            <div class="d-flex w-100 justify-content-between">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/Women/' %}active{% endif %}"
+                                href="{% url 'women' %}">Women</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/men/' %}active{% endif %}"
+                                href="{% url 'men' %}">Men</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/Women/' %}active{% endif %}"
+                                href="{% url 'bridal' %}">Bridal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/Women/' %}active{% endif %}"
+                                href="{% url 'groom' %}">Groom</a>
+                        </li>
+                    </ul>
+                    <div class="logo">
+                        {% load static %}
+                        <img src="{% static 'images/2-removebg-preview (1).png' %}" width="250px" height="110px">
+                    </div>
+
+                    <div class="navbar-icons ">
+                        {% if session_user_id %}
+                        <a href="{% url 'account_home' %}" class="me-4"><i class="bi bi-person-circle"
+                                id="icons1"></i></a>
+                        <a href="{% url 'cart_detail' %}" class="me-4"><i class="bi bi-cart" id="icons1"></i></a>
+                        <a href="{% url 'logout' %}" class="me-4"><i class="bi bi-box-arrow-right" id="icons1"></i></a>
+
+                        {% else %}
+                        <a href="{% url 'login' %}" class="me-4"> <i class="bi bi-box-arrow-in-right"
+                                id="icons1"></i></a>
+                        {% endif %}
+
+                    </div>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" class="search-input " data-bs-toggle="offcanvas"
+                            data-bs-target="#searchOffcanvas" aria-controls="searchOffcanvas"
+                            placeholder="Search Your Style">
+                        <div class="search-button">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </nav>
+
+    <!--search-->
+
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="searchOffcanvas" aria-labelledby="searchOffcanvasLabel">
+        <div class="offcanvas-header">
+
+            <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="container">
+                <div class="search-containers">
+                    <form method="GET" action="{% url 'search' %}">
+                        <input type="text" name="q" class="search-box"
+                            placeholder="Search for Styles, Collections & more">
+                        <button type="submit"><i class="fas fa-search search-icon"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid shadow-md links pb-2 pt-2">
+        <div class="row">
+            <div class="col text-center mt-2">
+                <a href="#" class="me-3 link-man link">Men</a>
+
+                <div class="dropdown-man drop-links visibility-hidden ">
+                    <div class="dropdown-column ">
+                        <h3> STYLES</h3>
+                        <a href="">See All Men's Wear </a>
+                        <a href="{% url 'product' 'Sherwani' %}"> Sherwanis</a>
+                        <a href="{% url 'product' 'Kurta_Jacket' %}">Kurta Jacket Set</a>
+                        <a href="{% url 'product' 'kurta' %}">Kurta Set</a>
+                        <a href="{% url 'product' 'Suit' %}">Suit</a>
+                        <a href="{% url 'product' 'Tuxedo' %}">Tuxedo</a>
+                    </div>
+                    <div class="dropdown-column">
+                        <h3> OCCASION</h3>
+                        <a href="{% url 'product' 'menEnagagement' %}">Engagement</a>
+                        <a href="{% url 'product' 'menSangeet' %}">Sangeet</a>
+                        <a href="{% url 'product' 'menWedding' %}">Wedding</a>
+                        <a href="{% url 'product' 'menReception' %}">Reception</a>
+                    </div>
+                    <div class="dropdown-column">
+                        <h3> RELATION</h3>
+                        <a href="{% url 'groom' %}"> Groom </a>
+                    </div>
+                    <div class="dropdown-image">
+                        <img height="100%"
+                            src="https://www.tasva.com/cdn/shop/files/Clothing.png?v=1712678944&width=1688" width="250"
+                            class="img-fluid" />
+                    </div>
+                </div>
+
+
+                <a href="#" class="me-3 link-women link">Women</a>
+
+                <div class="dropdown-women drop-links visibility-hidden ">
+                    <div class="dropdown-column ">
+                        <h3> STYLES</h3>
+                        <a href="">See All Women's Wear </a>
+                        <a href="{% url 'product' 'Lehnga' %}"> Lehngas</a>
+                        <a href="{% url 'product' 'Saree' %}">Saree</a>
+                        <a href="{% url 'product' 'Anarkali' %}">Anarkalis</a>
+                        <a href="{% url 'product' 'Gowns' %}">Gowns</a>
+                        <a href="{% url 'product' 'Sarara' %}">Sarara Set</a>
+                        <a href="{% url 'product' 'Salwar_kameez' %}">Salwarkameez</a>
+                        <a href="{% url 'product' 'Kurta' %}">kurtaset</a>
+                        <a href="">Crop Top</a>
+                    </div>
+                    <div class="dropdown-column">
+                        <h3> OCCASION</h3>
+                        <a href="{% url 'product' 'womenEnagagement' %}">Engagement</a>
+                        <a href="{% url 'product' 'womenSangeet' %}">Sangeet</a>
+                        <a href="{% url 'product' 'womenWedding' %}">Wedding</a>
+                        <a href="{% url 'product' 'womenReception' %}">Reception</a>
+                    </div>
+                    <div class="dropdown-column">
+                        <h3> RELATION</h3>
+                        <a href="{% url 'bridal' %}"> Bride </a>
+
+                    </div>
+
+                    <!-- <div class="dropdown-column">
+             <h3> COLORS </h3>
+             <a href="#"> Black</a>
+             <a href="#"> Blue </a>
+             <a href="#"> Green </a>
+             <a href="#"> Yellow </a>
+             <a href="#"> Red </a>
+             <a href="#"> White</a>
+         </div> -->
+                    <div class="dropdown-image">
+                        <img height="100%" src="{% static 'images/nav_image.jpg' %}" width="250" class="img-fluid" />
+                    </div>
+                </div>
+
+                <span class="atag"><a href="{% url 'spin_voucher' %}" class="me-3">Spin To Win</a></span>
+                <a href="#" class="me-3">Buy Back</a>
+                <a href="{% url 'resell' %}" class="me-3">Reselling</a>
+                <a href="{% url 'sellwithus' %}" class="me-3">Sell With Us</a>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {% block body %}
+
+    {% endblock %}
+
+
+    <!--  -->
+
+    {% block footer %}
+    <div class="footer-img">
+        <img src="https://texfash.com/sites/texfash/files/styles/main_1_xl/public/images/releases/2022/12/06/ot00004-2-min.jpg?itok=JDrQXh2B"
+            width="100%">
+    </div>
+
+
+
+
+
+    <!--Footer-->
+    <div class="footer">
+        <div class="footer-column  " data-aos="fade-up">
+            <h3>DESIGNER WEAR</h3>
+            <ul>
+                <li> <a href=""> Salwar Kameez </a> </li>
+                <li><a href=""> Sarees </a></li>
+                <li> <a href=""> Lehengas </a> </li>
+                <li> <a href=""> Gowns </a> </li>
+                <li> <a href=""> Mens </a></li>
+            </ul>
+        </div>
+        <div class="footer-column" data-aos="fade-up">
+            <h3>ABOUT US</h3>
+            <ul>
+                <li> <a href=""> About Us </a></li>
+                <li> <a href="#"> Contact Us </a> </li>
+                <li> <a href="#"> Testimonial </a> </li>
+            </ul>
+        </div>
+
+        <div class="footer-column" data-aos="fade-up">
+            <h3>POLICIES</h3>
+            <ul>
+                <li><a href="{% url 'privacy_policy' %}">Privacy-Policy</a></li>
+                <li> <a href="{% url 'terms_condition' %}"> Terms &amp; Conditions </a></li>
+
+            </ul>
+        </div>
+
+        <div class="footer-column" data-aos="fade-up">
+            <h3>MY ACCOUNT</h3>
+            <ul>
+                <li><a href="#"> Shopping Bag </a></li>
+                <li> <a href="#"> Buy In Bulk </a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column" data-aos="fade-up">
+            <h3>SAFE &amp; SECURE PAYMENT</h3>
+            <div class="payment-icons">
+                <img src="{% static 'images/footer_payment.png' %}" height="40" width="50" />
+            </div>
+
+
+            <div class="social-icons" data-aos="fade-up">
+                <h3>FOLLOW US</h3>
+                <a href="https://www.instagram.com/style_.surfer/"><i class="fab fa-instagram"> </i> </a>
+                <a href="#"><i class="fab fa-facebook-f"> </i></a>
+                <a href="#"> <i class="fab fa-pinterest"> </i></a>
+            </div>
+
+
+            <div class="contact-info" data-aos="fade-up">
+                <h3>GET IN TOUCH</h3>
+                <p>+91 1234567890</p>
+            </div>
+
+
+            <div class="contact-info">
+                <h3>EMAIL US ON</h3>
+                <p>StyleSurfer@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!--Slider js link-->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/plugins/BezierPlugin.min.js"></script>
+
+    <script>
+
+        // debugger;
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     setTimeout(() => {
+        //         document.querySelector("custom-loader").style.display = "none";
+        //     }, 1000); // Ensures visibility before hiding
+        // });
+
+        window.addEventListener('load', function () {
+            // Hide loader after 3 seconds
+            setTimeout(function () {
+                // Hide loader wrapper
+                document.getElementById('loader-wrapper').style.display = 'none';
+
+            }, 4000); // 3 seconds delay
+        });
+
+
+
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggleButton = document.getElementById('toggleSidebar');
+        const closeButton = document.getElementById('closeSidebar');
+        const manLink = document.querySelector(".link-man");
+        const manDropdown = document.querySelector(".dropdown-man");
+        const womenLink = document.querySelector(".link-women");
+        const womenDropdown = document.querySelector(".dropdown-women");
+
+        // dropdown//
+
+        const showManDropdown = () => {
+            manDropdown.classList.remove("visibility-hidden");
+        }
+
+        const hideManDropdown = () => {
+            manDropdown.classList.add("visibility-hidden");
+        }
+
+        const showWomenDropdown = () => {
+            womenDropdown.classList.remove("visibility-hidden");
+        }
+
+        const hideWomenDropdown = () => {
+            womenDropdown.classList.add("visibility-hidden");
+        }
+
+        manLink.onmouseover = showManDropdown;
+        manLink.onmouseout = hideManDropdown;
+
+        manDropdown.onmouseover = showManDropdown;
+        manDropdown.onmouseout = hideManDropdown;
+
+        womenLink.onmouseover = showWomenDropdown;
+        womenLink.onmouseout = hideWomenDropdown;
+
+        womenDropdown.onmouseover = showWomenDropdown;
+        womenDropdown.onmouseout = hideWomenDropdown;
+
+        // Toggle sidebar visibility
+        toggleButton.addEventListener('click', function () {
+            sidebar.classList.toggle('open-sidebar');
+            overlay.classList.toggle('show-overlay');
+        });
+
+        // Hide sidebar when overlay is clicked
+        overlay.addEventListener('click', function () {
+            sidebar.classList.remove('open-sidebar');
+            overlay.classList.remove('show-overlay');
+        });
+
+
+        // close button //
+        closeButton.addEventListener('click', function () {
+            sidebar.classList.remove('open-sidebar');
+            overlay.classList.remove('show-overlay');
+        });
+
+        document.getElementById('searchInput').addEventListener('click', function () {
+            var offcanvasElement = new bootstrap.Offcanvas(document.getElementById('searchOffcanvas'));
+            offcanvasElement.show();
+        });
+
+
+
+        $()
+
+
+
+
+
+
+
+        // spinner js
+        var padding = { top: 5, right: 50, bottom: 0, left: 50 },
+            w = 500 - padding.left - padding.right,
+            h = 480 - padding.top - padding.bottom,
+            r = Math.min(w, h) / 2,
+            rotation = 0,
+            oldrotation = 0,
+            picked = 100000,
+            oldpick = [],
+            colors = ["#e3c248", "#ed5e2e"];
+
+        // debugger;
+        // var data = JSON.parse('{{ spin_data|safe|escapejs }}');
+
+        // var data = [
+        //   { label: "5%", value: 1, question: "You won a 5% discount!" },
+        //   { label: "0%", value: 2, question: "Better Luck Next Time!" },
+        //   { label: "Bad Luck", value: 3, question: "Better luck next time!" },
+        //   { label: "10%", value: 4, question: "You won a 10% discount!" },
+        //   { label: "2%", value: 5, question: "You won a 2% discount!" },
+        //   { label: "15%", value: 6, question: "You won a 15% discount!" },
+        // ];
+
+        var data = JSON.parse('{{ rewards_json|escapejs }}');
+
+        var svg = d3
+            .select("#chart")
+            .append("svg")
+            .data([data])
+            .attr("width", w + padding.left + padding.right + 20)
+            .attr("height", h + padding.top + padding.bottom);
+
+        var container = svg
+            .append("g")
+            .attr("class", "chartholder")
+            .attr(
+                "transform",
+                "translate(" + (w / 2 + padding.left + 10) + "," + (h / 2 + padding.top) + ")"
+            );
+
+        var vis = container.append("g");
+
+        var pie = d3.pie().sort(null).value(function (d) {
+            return 1;
+        });
+
+        var arc = d3
+            .arc()
+            .outerRadius(r)
+            .innerRadius(50);
+
+        var arcs = vis
+            .selectAll("g.slice")
+            .data(pie(data))
+            .enter()
+            .append("g")
+            .attr("class", "slice");
+
+        arcs
+            .append("path")
+            .attr("fill", function (d, i) {
+                return colors[i % colors.length];
+            })
+            .attr("d", arc);
+
+        arcs
+            .append("text")
+            .attr("transform", function (d) {
+                d.innerRadius = 0;
+                d.outerRadius = r;
+                d.angle = (d.startAngle + d.endAngle) / 2;
+                return (
+                    "translate(" +
+                    arc.centroid(d) +
+                    ")rotate(" +
+                    ((d.startAngle + d.endAngle) / 2) * (180 / Math.PI) +
+                    ")"
+                );
+            })
+            .attr("dy", ".35em")
+            .text(function (d, i) {
+                return data[i].label;
+            });
+
+        container.on("click", spin);
+
+        function spin(d) {
+
+            let hasErrorOccurred = false;
+
+
+            fetch('SpinToWin/check_spin_limit/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'error') {
+
+
+                        hasErrorOccurred = true;
+
+                        document.getElementById("errorMessage").textContent = data.message;
+                        $("#spinModal").modal("hide");
+                        $("#congratsModal").modal("hide");
+                        $("#errorModal").modal("show");
+
+                        // container.on("click", spin);
+                        // window.location.href = '/'; // Redirect to the homepage immediately
+                        return; // Re-enable the spin functionality for future clicks
+
+                    }
+                })
+                .catch(error => {
+                    console.error("error: ", error);
+                    container.on("click", spin);
+                });
+
+            container.on("click", null);
+
+            if (oldpick.length == data.length) {
+                container.on("click", null);
+                return;
+            }
+            var ps = 360 / data.length,
+                rng = Math.floor(Math.random() * 1440 + 360);
+
+            rotation = Math.round(rng / ps) * ps;
+
+            picked = Math.round(data.length - (rotation % 360) / ps);
+            picked = picked >= data.length ? picked % data.length : picked;
+            if (oldpick.indexOf(picked) !== -1) {
+                spin();
+                return;
+            } else {
+                oldpick.push(picked);
+            }
+
+            rotation += 90 - Math.round(ps / 2);
+            vis
+                .transition()
+                .duration(3000)
+                .attrTween("transform", rotTween)
+                .on("end", function () {
+                    //         debugger;
+                    //          // Log the spin
+                    //          fetch('/log_spin/', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //         'X-CSRFToken': '{{ csrf_token }}',
+                    //     },
+                    //     body: JSON.stringify({ reward: data[picked].label }),
+                    // })
+                    //     .then(response => response.json())
+                    //     .then(logData => {
+                    //         if (logData.status === 'success') {
+                    //             document.getElementById("rewardMessage").textContent = data[picked].question;
+                    //             $("#spinModal").modal("hide");
+                    //             console.log("Hiding spin modal and showing congrats modal.");
+                    //             setTimeout(() => {
+                    //                 $("#congratsModal").modal("show");
+                    //             }, 500);
+                    //         } else {
+                    //             console.error(logData.message);
+                    //             alert(logData.message);
+                    //         }
+                    //     })
+                    //     .catch(error => console.error("Error in fetch:", error));
+
+                    d3.select("#question h1").text(data[picked].question);
+
+                    var rewardMessage = data[picked].question;
+                    var rewardLabel = data[picked].label;
+
+                    // Set the reward message in the second modal
+                    document.getElementById("rewardMessage").textContent = rewardMessage;
+
+                    // Close the first modal and open the second one
+                    $("#spinModal").modal("hide");
+                    setTimeout(() => {
+                        if (!hasErrorOccurred) {
+                            $("#congratsModal").modal("show");
+                        }
+                    }, 500);
+                    storeReward(rewardLabel);  // Call to store the reward in the backend
+
+                    oldrotation = rotation;
+                    container.on("click", spin);
+                });
+
+
+
+        }
+
+
+        function storeReward(rewardLabel) {
+            debugger;
+            rewardLabel = rewardLabel.split(" ")[0].toString();
+            // Send the reward coins to the backend
+            fetch('SpinToWin/check_spin_limit/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({
+                    reward_coins: rewardLabel,  // Send the reward coins value to the server
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Reward stored successfully!');
+                    } else {
+                        console.error('Error storing reward:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending reward:', error);
+                });
+        }
+
+        svg
+            .append("circle")
+            .attr("cx", w / 2 + padding.left + 10)
+            .attr("cy", h / 2 + padding.top)
+            .attr("r", r + 5)
+            .style("stroke", "#40352c")
+            .style("stroke-width", 10)
+            .style("fill", "none");
+
+        svg
+            .append("g")
+            .attr(
+                "transform",
+                "translate(" + (w + padding.left + padding.right) + "," + (h / 2 + padding.top) + ")"
+            )
+            .append("path")
+            .attr("d", "M-15,0L0,10L0,-10Z")
+            .style("fill", "black");
+
+        container
+            .append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 60)
+            .style("fill", "#676161")
+            .style("cursor", "pointer");
+
+        container
+            .append("text")
+            .attr("x", 0)
+            .attr("y", 15)
+            .attr("text-anchor", "middle")
+            .text("SPIN")
+            .style("font-weight", "bold")
+            .style("font-size", "30px");
+
+        function rotTween() {
+            var i = d3.interpolate(oldrotation % 360, rotation);
+            return function (t) {
+                return "rotate(" + i(t) + ")";
+            };
+        }
+
+    </script>
+    <script>
+        AOS.init({
+            duration: 1000, // Animation duration (in milliseconds)
+            once: false,
+        });
+
+        AOS.init({
+            offset: 120,    // Offset (in pixels) from the original trigger point
+            duration: 800,  // Animation duration (in milliseconds)
+            easing: 'ease-in-out', // Easing function
+            delay: 100,     // Delay (in milliseconds) between animations
+        });
+
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for elements with class 'animate'
+        gsap.utils.toArray(".animate ").forEach((element) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",  // Start animation when element is 80% into the viewport
+                    end: "top 50%",   // End animation when it's 50% in
+                    toggleActions: "play none none reverse", // Play animation on enter, reverse on leave
+                },
+                opacity: 0,            // Start with opacity 0
+                y: 50,                 // Start with a downward offset
+                duration: 1.4,         // Animation duration
+                ease: "power2.out",    // Easing function
+            });
+        });
+    </script>
+
+    {% block js %} {% endblock %}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

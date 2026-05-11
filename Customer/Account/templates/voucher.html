@@ -1,0 +1,256 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block title %}Account - Vouchers{% endblock %}
+
+{% block css %}
+<style>
+    .account-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .user-phone {
+        font-size: 14px;
+        color: gray;
+        margin: 0;
+    }
+
+    .account-button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 20px;
+        background-color: white;
+        color: #110808;
+        border: 3px solid #110808;
+        text-align: center;
+        transition: background-color 0.3s;
+        margin-bottom: 20px;
+    }
+
+    .account-button:hover {
+        background-color: #3d2828;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* Adjust grid layout for buttons */
+    .button-container .col-12 {
+        padding: 10px;
+    }
+
+    .coin-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #110808;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: 2px solid #6c757d;
+        font-weight: bold;
+    }
+
+    .coin-icon i {
+        margin-right: 10px;
+        font-size: 22px;
+        color: #110808;
+    }
+
+    .coupon-card {
+        border: 2px solid #110808;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px auto;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .coupon-card::before,
+    .coupon-card::after {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-color: #fff;
+        border: 2px solid #110808;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .coupon-card::before {
+        left: -10px;
+    }
+
+    .coupon-card::after {
+        right: -10px;
+    }
+
+    .logo1 {
+        width: 120px;
+        height: auto;
+        margin: 0;
+    }
+
+    .details {
+        border-left: 2px dashed #110808;
+        padding-left: 15px;
+    }
+
+    .details h5 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .details p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #110808;
+        opacity: 80%;
+    }
+
+    .code-box {
+        font-weight: bold;
+        font-size: 16px;
+        border: 1px solid #110808;
+        border-radius: 5px;
+        padding: 5px 15px;
+        background-color: #f8f9fa;
+    }
+
+    .btn-redeem {
+        background-color: #493131;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        margin-top: 10px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-redeem:hover {
+        background-color: #110808;
+    }
+
+    /* Grid Layout for Two Vouchers in One Row */
+    .voucher-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .voucher-card {
+        width: 48%;
+        /* Adjust width for two items per row */
+    }
+
+    @media (max-width: 768px) {
+        .voucher-card {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .details {
+            border-left: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .code-section {
+            margin-top: 15px;
+            text-align: center;
+        }
+    }
+
+    .breadcrumb {
+        margin: 30px;
+        color: #5b3e31;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="" style="text-decoration: none;  color: #5b3e31;">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'account_home' %}"
+                style="text-decoration: none;  color: #5b3e31;">Account</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+    </ol>
+</nav>
+
+<div class="container-fluid mt-4">
+    {% if vouchers %}
+        <div class="voucher-container">
+            {% for voucher in vouchers %}
+                <div class="voucher-card">
+                    <div class="coupon-card">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-sm-3 text-center">
+                                <img src="{% static 'images/clogo.png' %}" alt="stylesurfer Logo" class="logo1">
+                            </div>
+                            <div class="col-12 col-sm-6 details">
+                                <h5>StyleSurfer</h5>
+                                <p>{{ voucher.voucher.discount }}% Coupon</p>
+                                <p>Valid till {{ voucher.voucher.expires_at }}</p>
+                            </div>
+                            <div class="col-12 col-sm-3 text-center code-section">
+                                <div class="code-box mb-2">
+                                    {% if not voucher.is_active %}
+                                        Expired
+                                    {% else %}
+                                        {{ voucher.code }}
+                                    {% endif %}
+                                </div>
+                                {% if voucher.is_active %}
+                                    <a href="#"><button class="btn-redeem">Available</button></a>
+                                {% else %}
+                                    <button class="btn-redeem" disabled>Expired</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">No vouchers available at the moment. Please check back later!</p>
+    {% endif %}
+</div>
+{% endblock %}
+

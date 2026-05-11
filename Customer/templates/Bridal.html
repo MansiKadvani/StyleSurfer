@@ -1,0 +1,1848 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block title %}StyleSurfer-Bridal{% endblock %}
+
+{% block css %}
+<style>
+  .img_box img{
+    width: 100%;
+    /* height: 75%; */
+    transition: all 3s;
+}
+
+.product-price p{
+    color: black;
+    margin-top: 10px;
+    font-size: 15px;
+    padding: 5px;
+    padding-right: 0;
+}
+.img_box :hover{
+    transform: scale(1.1);
+}
+.card_slider{
+    padding: 45px 0;
+}
+.swiper-button-next,.swiper-button-prev {
+    color: white;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.611);
+    text-align: center;
+}
+.swiper-button-next::after,.swiper-button-prev::after {
+     font-size: 17px;
+}
+.swiper-pagination-bullet {
+     background-color: black;
+}
+.swiper-pagination-bullet-active {
+     background-color: black;
+}
+.slider_container{
+    margin-top: 3.5%;
+    margin-bottom: 3.5%;
+    padding: 2%;
+
+  }
+
+.rent-by{
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing : .1em;
+}
+
+        .img_box img{
+            width: 100%;
+            height: 75%;
+            transition: all 3s;
+        }
+
+        .product-price p{
+            color: black;
+            margin-top: 10px;
+            font-size: 15px;
+            padding: 5px;
+            padding-right: 0;
+        }
+        .img_box :hover{
+            transform: scale(1.1);
+        }
+        .card_slider{
+            padding: 45px 0;
+            margin-bottom: 3.5%;
+        }
+        .product_slider{
+            padding: 45px 0;
+            padding-top: 4%;
+            padding-bottom: 0%;
+        }
+        .lehenga_slider{
+            padding: 50px 0;
+            padding-top: 4%;
+
+        }
+        .swiper-button-next,.swiper-button-prev {
+            color: white;
+            padding: 5px;
+            background-color: rgba(0, 0, 0, 0.611);
+            text-align: center;
+            top: 50%;
+        }
+        .swiper-button-next::after,.swiper-button-prev::after {
+             font-size: 17px;
+        }
+        .swiper-pagination-bullet {
+             background-color: black;
+        }
+        .swiper-pagination-bullet-active {
+             background-color: black;
+        }
+        .slider_container{
+            margin-top: 3.5%;
+            margin-bottom: 3.5%;
+            padding: 2%;
+
+          }
+
+        .rent-by{
+            font-size: xx-large;
+            text-align: center;
+            color: black;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing : .1em;
+        }
+
+@media (max-width: 576px){
+    .rent-by{
+        font-size: 20px;
+    }
+}
+@media (max-width: 768px){
+    .rent-by{
+        font-size: 20px;
+    }
+}
+
+
+
+        .bridals{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #D2B48C;
+            padding-top:5%;
+            padding-bottom: 0%;
+            margin-top:3.5%;
+
+
+
+
+        }
+        .bridals-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .bridals-item img {
+            max-width: 190%;
+            border-radius: 180px 180px 180px 180px;
+            border: 2px solid black;
+            padding: 20px;
+            height: 90ch;
+
+        }
+        .bridal-heading{
+            display: flex;
+            background-color:#D2B48C;
+            justify-content: center;
+            align-items: center;
+           padding-bottom: 30px;
+
+        }
+        .bridal-heading-item {
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:80%;
+            text-align: center;
+            padding: 30px;
+            padding-bottom: 0%;
+        }
+        .button-s{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #D2B48C;
+            padding-bottom: 3%;
+            margin-bottom: 3.5%;
+        }
+
+
+
+
+
+@media (min-width: 1200px) {
+    .bridals-item img {
+        max-width: 150%;
+        height: 60ch;
+    }
+
+    .bridal-heading-item {
+        width: 70%;
+    }
+}
+
+@media (max-width: 991px) {
+    .bridals-item img {
+        max-width: 120%;
+        height: 50ch;
+    }
+
+    .bridal-heading-item {
+        font-size: 15px;
+        width: 80%;
+        padding: 20px;
+    }
+
+    .button-item p {
+        font-size: 15px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .bridals {
+        flex-direction: column;
+    }
+
+    .bridals-item img {
+        max-width: 100%;
+        height: 40ch;
+    }
+
+    .bridal-heading-item {
+        font-size: 15px;
+        width: 90%;
+        padding: 15px;
+    }
+
+    .button-item p {
+        font-size: 15px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .bridals-item img {
+        max-width: 100%;
+        height: 45ch;
+    }
+
+    .bridal-heading-item {
+        font-size: 15px;
+        width: 95%;
+        padding: 10px;
+    }
+
+    .button-item p {
+        font-size: 15px;
+        padding: 8px;
+    }
+}
+
+    .image-container {
+        overflow: hidden;
+    }
+  .gallery-img {
+    width: 100%;
+    height: 290px;
+    object-fit: cover;
+
+     transition: transform 2.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.gallery-img:hover {
+    transform: scale(1.1);
+
+}
+@media (max-width: 576px) {
+    .gallery-img {
+        height: 130px;
+    }
+}
+
+@media (max-width: 576px) {
+    .gallery-img {
+        height: 130px;
+    }
+}
+
+    .your-bride{
+        padding: 3.5%;
+        margin-top: 2%;
+        padding-top: 1%;
+    }
+    .rent-by-bride {
+        font-size: xx-large;
+        text-align: center;
+        color: black;
+        text-transform: uppercase;
+        margin-bottom: 5%;
+        letter-spacing : .1em;
+    }
+
+@media (max-width: 576px){
+    .rent-by-bride{
+        font-size: 20px;
+    }
+}
+@media (max-width: 768px){
+    .rent-by-bride{
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 1139px){
+    .dropdown-image {
+        flex: 1;
+        text-align: center;
+      }
+      .dropdown-image img {
+        max-width:50%;
+        height: 50%;
+      }
+  }
+    .product-button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 3%;
+        margin-top: 5%;
+
+    }
+    .button-item_s p{
+            border: 1px solid black;
+            color: black;
+            padding: 15px;
+            border-radius: 0;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 15px;
+            background-color: transparent;
+    }
+    .media-wrap{
+        margin-top: 10%;
+    }
+     .modal-content{
+        background-color: transparent;
+    }
+    .modal {
+        background-color: #0000007c;
+      }
+      .close-btn {
+        position: absolute;
+        top: 0%;
+        right: 13px;
+        font-size: 2.5rem;
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+        background-color: transparent;
+
+
+    }
+    .close-btn:hover,
+    .close-btn:focus {
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    }
+
+    .saree{
+        width: 100%;
+        height: 80ch;
+    }
+    .bridal-heading-saree{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .bridal-heading-item_s {
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:80%;
+        text-align: center;
+        padding: 30px;
+        padding-bottom: 0%;
+
+    }
+
+@media (max-width: 991px) {
+
+    .bridal-heading-item_s {
+        font-size: 15px;
+        width: 80%;
+        padding: 20px;
+    }
+
+    .button-item-saree p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .bridal-heading-item_s {
+        font-size: 15px;
+        width: 95%;
+        padding: 10px;
+    }
+
+    .button-item-saree p {
+        font-size: 15px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+
+
+    .bridal-heading-item_s {
+        font-size: 15px;
+        width: 90%;
+        padding: 15px;
+    }
+
+    .button-item-saree p {
+        font-size: 15px;
+        padding: 10px;
+    }
+}
+      .button-item-saree p{
+        border: 1px solid black;
+        color: black;
+        padding: 15px;
+        border-radius: 0;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 15px;
+        background-color: transparent;
+
+      }
+
+      .button-saree{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding-bottom: 3%;
+        margin-bottom: 3.5%;
+      }
+
+      .head-work {
+    text-align: center;
+    margin-top: 20px;
+    color: #453229;
+    position: relative;
+}
+
+.head-work::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7%;
+    height: 2px;
+    background-color: #000;
+}
+
+.button-item_s p{
+        border: 1px solid black;
+        color: black;
+        padding: 15px;
+        border-radius: 0;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 15px;
+        background-color: transparent;
+        transition: 0.4s;
+        cursor: pointer;
+
+}
+
+.button-item_s :hover{
+    background-color: black;
+    color: white;
+}
+
+.product-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+
+}
+.btn-dark{
+        border: 1px solid black;
+        color: black;
+        border-radius: 0;
+        text-transform: uppercase;
+        font-size: 15px;
+        background-color: transparent;
+        transition: 0.4s;
+}
+.button-item_ss  :hover{
+    background-color: #2C1608;
+    color: white;
+
+}
+
+/* Card styling */
+
+.rent-by-groom-style-card{
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing : .1em;
+    margin-top: 5%;
+    margin-bottom: 5%;
+   }
+
+   @media (max-width: 576px){
+    .rent-by-groom-style-card{
+        font-size: 20px;
+        margin-top: 2%;
+    }
+    }
+    @media (max-width: 768px){
+    .rent-by-groom-style-card{
+        font-size: 20px;
+        margin-top: 2%;
+    }
+    }
+    @media (max-width: 320px){
+        .rent-by-groom-style-card{
+            font-size: 15px;
+            margin-top: 2%;
+        }
+    }
+
+   .groom-cards {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 20px;
+    margin-bottom: 5%;
+
+  }
+
+  .container1{
+    width: 100%;
+    /* background: linear-gradient(0deg, #513F38 0%, #ffffff 100%);*/
+    background: linear-gradient(0deg, #2C1608 0%, #ffffff 96%, #ffffff 99%);
+    padding: 50px;
+    height: 100%;
+    /* margin-top: 10%; */
+    margin-bottom: 10%;
+
+  }
+
+  @media (max-width: 576px){
+    .container1{
+        margin-top: 4%;
+        padding: 30px;
+    }
+    }
+    @media (max-width: 768px){
+        .container1{
+            margin-top: 4%;
+            padding: 40px;
+        }
+    }
+    @media (max-width: 320px){
+        .container1{
+            margin-top: 4%;
+            padding: 30px;
+        }
+    }
+
+  .card {
+    perspective: 1000px;
+
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+   height: 451px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+
+  @media (max-width: 576px){
+    .card-inner {
+        width: 100%;
+         height: 360px !important;
+    }
+    }
+    @media (max-width: 768px){
+        .card-inner {
+
+            height: 451px !important;
+        }
+    }
+    @media (max-width: 320px){
+        .card-inner {
+            height: 360px !important;
+        }
+    }
+
+  .card:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-back{
+    height: 451px;
+    text-align: center;
+
+  }
+
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 10px;
+
+  }
+
+  .card-front img {
+    width: 100%;
+    height: 70%;
+    margin-bottom: 8px;
+    object-fit: cover;
+
+  }
+
+  .card-front h3 {
+    margin: 5px 0;
+    font-size: 19px;
+
+  }
+
+  .card-back {
+    background-image: url('https://w0.peakpx.com/wallpaper/547/943/HD-wallpaper-galaxy-black-mandala-purple-rose-space-thumbnail.jpg');
+    color: white;
+    transform: rotateY(180deg);
+    padding: 20px;
+    font-size: 20px;
+
+  }
+
+  .card-back p {
+   margin-top: 30% !important ;
+  }
+
+  .card-collection{
+    color: white;
+    border: 1px solid white;
+  }
+
+
+  
+/* our groom*/
+
+.carousel-image {
+    height: 750px;
+    object-fit: cover;
+    object-position: center;
+}
+@media (max-width: 576px){
+    .carousel-image{
+        height: auto;
+    }
+}
+@media (max-width: 768px){
+    .carousel-image{
+        height: auto;
+    }
+}
+@media (max-width: 320px){
+    .carousel-image{
+        height: auto;
+    }
+}
+
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: 50%;
+
+
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+
+
+  /* Card styling */
+
+   .rent-by-groom-style-card{
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing : .1em;
+    margin-top: 5%;
+    margin-bottom: 5%;
+   }
+
+   @media (max-width: 576px){
+    .rent-by-groom-style-card{
+        font-size: 20px;
+        margin-top: 2%;
+    }
+    }
+    @media (max-width: 768px){
+    .rent-by-groom-style-card{
+        font-size: 20px;
+        margin-top: 2%;
+    }
+    }
+    @media (max-width: 320px){
+        .rent-by-groom-style-card{
+            font-size: 15px;
+            margin-top: 2%;
+        }
+    }
+
+   .groom-cards {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 20px;
+    margin-bottom: 5%;
+
+  }
+
+  .container1{
+    width: 100%;
+    /* background: linear-gradient(0deg, #513F38 0%, #ffffff 100%);*/
+    background: linear-gradient(0deg, #2C1608 0%, #ffffff 96%, #ffffff 99%);
+    padding: 50px;
+    height: 100%;
+    /* margin-top: 10%; */
+    margin-bottom: 10%;
+
+  }
+
+  @media (max-width: 576px){
+    .container1{
+        margin-top: 4%;
+        padding: 30px;
+    }
+    }
+    @media (max-width: 768px){
+        .container1{
+            margin-top: 4%;
+            padding: 40px;
+        }
+    }
+    @media (max-width: 320px){
+        .container1{
+            margin-top: 4%;
+            padding: 30px;
+        }
+    }
+
+  .card {
+    perspective: 1000px;
+
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+   height: 451px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+
+  @media (max-width: 576px){
+    .card-inner {
+        width: 100%;
+         height: 360px !important;
+    }
+    }
+    @media (max-width: 768px){
+        .card-inner {
+
+            height: 451px !important;
+        }
+    }
+    @media (max-width: 320px){
+        .card-inner {
+            height: 360px !important;
+        }
+    }
+
+  .card:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-back{
+    height: 451px;
+    text-align: center;
+
+  }
+
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 10px;
+
+  }
+
+  .card-front img {
+    width: 100%;
+    height: 70%;
+    margin-bottom: 8px;
+    object-fit: cover;
+
+  }
+
+  .card-front h3 {
+    margin: 5px 0;
+    font-size: 19px;
+
+  }
+
+  .card-back {
+    background-image: url('https://w0.peakpx.com/wallpaper/547/943/HD-wallpaper-galaxy-black-mandala-purple-rose-space-thumbnail.jpg');
+    color: white;
+    transform: rotateY(180deg);
+    padding: 20px;
+    font-size: 20px;
+
+  }
+
+  .card-back p {
+   margin-top: 30% !important ;
+  }
+
+  .card-collection{
+    color: white;
+    border: 1px solid white;
+  }
+
+
+
+  .slider_container-sherwani{
+
+    margin-bottom: 3.5%;
+    padding: 2%;
+
+  }
+
+  .card_slider-sherwani{
+    padding: 45px 0;
+}
+
+  .rent-by-sherwani{
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing : .1em;
+
+}
+@media (max-width: 576px){
+    .rent-by-sherwani{
+        font-size: 20px;
+    }
+}
+@media (max-width: 768px){
+    .rent-by-sherwani{
+        font-size: 20px;
+    }
+}
+@media (max-width: 320px){
+    .rent-by-sherwani{
+        font-size: 15px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  /* review*/
+
+  .swiper-container {
+
+    padding: 40px;
+    height: 100%;
+    background: #f4f4f4;
+    margin-top: 3%;
+
+
+  }
+  .card-review {
+    width: 100%; /* Full width */
+    margin: auto;
+    padding: 90px;
+
+  }
+
+  .card-reviewss .swiper-slide {
+    text-align: center;
+    background: #f9f9f9;
+    padding: 50px 40px 50px 40px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 93%;
+    height: 400px;
+    transition: transform 0.6s ease, z-index 0.3s ease;
+  }
+  .card-reviewss .swiper-slide:hover {
+    transform: scale(1.15);
+    z-index: 4;
+  }
+
+  .stars {
+    font-size: 30px;
+    color: #FFD700;
+    margin-bottom: 10px;
+  }
+
+  .card-reviewss .swiper-slide .name {
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+    margin-top: 20px;
+  }
+
+  .card-reviewss .swiper-slide .text {
+    font-size: 18px;
+    color: black;
+    margin-top: 15px;
+    line-height: 1.8;
+  }
+
+  .swiper-pagination {
+    margin-top: 25px;
+  }
+
+
+  @media (max-width: 788px) {
+    .card-reviewss .swiper-slide {
+          height: 385px;
+          padding: 30px 20px 30px 20px;
+      }
+
+  }
+@media (max-width: 1195px) {
+    .card-review {
+      padding: 30px 10px;
+    }
+
+    .card-reviewss .swiper-slide {
+      width: 95%;
+      height: 385px;
+      padding: 50px 60px 50px 60px;
+
+    }
+
+    .stars {
+      font-size: 22px;
+    }
+
+    .card-reviewss .swiper-slide .name {
+      font-size: 16px;
+    }
+
+    .card-reviewss .swiper-slide .text {
+      font-size: 14px;
+    }
+  }
+
+
+  @media (max-width: 480px) {
+
+    .stars {
+      font-size: 19px;
+    }
+
+    .card-reviewss .swiper-slide {
+        height: 385px;
+        padding: 30px 40px 30px 40px;
+    }
+    .card-reviewss .swiper-slide .name {
+      font-size: 18px;
+
+    }
+
+    .card-reviewss .swiper-slide .text {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 320px) {
+
+    .card-reviewss .swiper-slide {
+        width: 95%;
+        height: 383px;
+        padding: 25px 55px 25px 55px;
+      }
+      .card-reviewss .swiper-slide .text {
+        font-size: 12px;
+      }
+
+    .swiper-pagination {
+     margin-top: 28px;
+  }
+
+}
+  .rent-by-groom-review {
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing : .1em;
+    margin-top: 3%;
+}
+
+
+@media (max-width: 576px){
+.rent-by-groom-review{
+    font-size: 20px;
+}
+}
+@media (max-width: 768px){
+.rent-by-groom-review{
+    font-size: 20px;
+}
+}
+@media (max-width: 320px){
+    .rent-by-groom-review{
+        font-size: 15px;
+    }
+}
+
+.head-work {
+    text-align: center;
+    margin-top: 20px;
+    color: #453229;
+    position: relative;
+}
+
+.head-work::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7%;
+    height: 2px;
+    background-color: #000;
+}
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="videos">
+  <video  autoplay muted loop width="100%">
+      <source src="{% static 'images/video_bridal2.mp4' %}">
+  </video>
+</div>
+
+<section class="slider_container"   >
+  <div class="rent-by">
+      <p class="head-work"> EXPERIENCE MORE</p>
+  </div>
+  <div class="swiper card_slider ">
+      <div class="swiper-wrapper">
+        {% for product in products %}
+          <div class="swiper-slide">
+              <div class="img_box">
+                <a href="{% url 'prod_desc' product.id %}">
+                  <img src="{{ product.image_front.url }}" alt="{{ product.name }}" width="300px" height="300px">
+                </a>
+                </div>
+          </div>
+          {% endfor %}
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+
+  </div>
+
+</div>
+
+</section>
+
+<!-- <div class="bridals">
+  <div class="bridals-item">
+  <img src="{% static 'images/bridal_image1.png' %}">
+</div><br>
+
+
+</div>
+<div class="bridal-heading">
+  <div class="bridal-heading-item">
+  <p>Welcome to stylesurfer
+      Make your dream wedding a reality with our exquisite bridal collections, expert planning services, and personalized consultations. Let us help you create unforgettable memories with elegance, style, and grace.Planning your big day? We know just how special it is! At we’re here to make your dream wedding a reality without the stress of sky-high prices. With our beautifully curated collection of bridal gowns, bridesmaid dresses,you can shine in style and still stay on budget.</p>
+  </div>
+
+</div>
+<div class="product-button">
+  <div class="button-item_s" >
+     <a href="{% url 'product' 'womenWedding' %}" style="text-decoration:none;"><p>Explore</p></a>
+       </div>
+</div> -->
+
+<div class="row p-5 pb-0 " >
+  <div class="col-sm-6 col-12 pb-3 col-md-6 d-flex justify-content-center">
+     <div class="media-wrap" >
+          <img src="{% static 'images/bridal_image2.png' %}" class="img-fluid" loading="lazy">
+
+     </div>
+
+  </div>
+  <div class="col-sm-6 col-12 pb-2 col-md-6 d-flex justify-content-center">
+     <div class="media-wrap">
+      <video  autoplay muted loop width="100%" data-bs-toggle="modal" data-bs-target="#videoo">
+          <source src="{% static 'images/video_bridal.mp4' %}">
+      </video>
+
+     </div>
+  </div>
+</div>
+<div class="modal fade" id="videoo">
+  <div class="modal-dialog ">
+
+      <div class="modal-content ">
+          <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">
+              &times;
+          </button>
+
+          <div class="modal-body ">
+              <video  autoplay muted loop width="100%" >
+                  <source src="{% static 'images/video_bridal.mp4' %}">
+              </video>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+</div>
+
+<div class="container content">
+    <div class="row align-items-center" >
+     <div class="col-md-6 text-center text-md-start  pb-3 animate"  >
+      <h2 class="head-work">
+       Enhance Your Special Occasion
+      </h2>
+      <p style="color: #453229; opacity: 80%; text-align: center;">
+       Discover timeless elegance and cultural richness at Stylesurfer
+        Ethnic Wear. Elevate your special occasion with exquisite traditional attire that exudes sophistication and style.
+      </p>
+     </div>
+     <div class="col-md-6 text-center animate">
+      <img src="https://blog.salwari.com/wp-content/uploads/2022/11/featured--1024x576.webp" width="600" height="600" class="img-fluid">
+     </div>
+    </div>
+   </div>
+
+   <div class="container content">
+    <div class="row align-items-center mt-4">
+     <div class="col-md-6 text-center animate" >
+      <img src="https://emperiogrand.com/wp-content/uploads/2024/09/1-1024x576.jpg" width="600px" height="600px"class="img-fluid">
+     </div>
+     <div class="col-md-6 text-center text-md-start mt-4 pb-2 animate " >
+        <h2 class="head-work">
+            Engagement
+        </h2>
+        <p style="color: #453229; opacity: 80%; text-align: center;">
+
+            Celebrate your engagement in style with outfits that blend tradition and modern elegance, making every moment as special as your love story.
+        </p>
+        <div class="product-buttons" >
+            <div class="button-item_ss">
+                <a href="{% url 'product' 'Engagement' %}" class="btn btn-dark px-4 py-2">View Collection</a>
+            </div>
+        </div>
+    </div>
+   </div>
+   </div>
+
+   <div class="container content">
+    <div class="row align-items-center">
+     <div class="col-md-6 text-center text-md-start  pb-3 animate"  >
+      <h2 class="head-work">
+        Mehndi
+      </h2>
+      <p style="color: #453229; opacity: 80%; text-align: center;">
+        Make your Mehndi celebration unforgettable with StyleSurfer’s exclusive collection. From vibrant hues to intricate patterns, we offer outfits that blend tradition with contemporary flair, ensuring you look radiant and feel comfortable as you dance the night away.      </p>
+      <div class="product-buttons" >
+        <div class="button-item_ss">
+            <a href="{% url 'product' 'Mehndi' %}" class="btn btn-dark px-4 py-2">View Collection</a>
+        </div>
+    </div>
+     </div>
+     <div class="col-md-6 text-center animate">
+      <img src="https://static1.squarespace.com/static/6564afb4f0851760cfcdde58/t/65a6da92676f4671557f23cf/1705433746287/Harini-Aswin-MCC-Hall-Chennai-0609+-+Copy.jpg?format=1500w" width="600px"  height="600px" class="img-fluid">
+     </div>
+    </div>
+   </div>
+   
+   <div class="container content">
+    <div class="row align-items-center mt-4">
+     <div class="col-md-6 text-center animate " >
+      <img src="https://weddingvows.com/wp-content/uploads/2024/01/Song-2-2-1024x576.jpg" width="600" height="600"class="img-fluid">
+     </div>
+     <div class="col-md-6 text-center text-md-start mt-4 pb-2 animate" >
+        <h2 class="head-work">
+            Haldi
+        </h2>
+        <p style="color: #453229; opacity: 80%; text-align: center;">
+
+            Brighten Your Haldi Ceremony with our Golden Touch. Explore Our Captivating Collection!
+        </p>
+        <div class="product-buttons" >
+            <div class="button-item_ss">
+                <a href="{% url 'product' 'Haldi' %}" class="btn btn-dark px-4 py-2">View Collection</a>
+            </div>
+        </div>
+    </div>
+   </div>
+   </div>
+
+   <div class="container content">
+    <div class="row align-items-center">
+     <div class="col-md-6 text-center text-md-start  pb-3 animate " >
+      <h2 class="head-work">
+        Sangeet
+      </h2>
+      <p style="color: #453229; opacity: 80%; text-align: center;">
+        Celebrate your Sangeet in style with StyleSurfer. Our collection blends vibrant tradition with modern flair, making every dance and moment unforgettable.
+      </p>
+      <div class="product-buttons" >
+        <div class="button-item_ss">
+            <a href="{% url 'product' 'Sangeet' %}" class="btn btn-dark px-4 py-2">View Collection</a>
+        </div>
+    </div>
+     </div>
+     <div class="col-md-6 text-center animate">
+      <img src="https://i.ytimg.com/vi/PvfaamYMu9s/maxresdefault.jpg" width="600" height="600"class="img-fluid">
+     </div>
+    </div>
+   </div>
+   
+   <div class="container content">
+    <div class="row align-items-center mt-4">
+     <div class="col-md-6 text-center animate " >
+      <img src="https://blog.g3fashion.com/wp-content/uploads/2022/02/main.webp" width="600" height="600" class="img-fluid">
+     </div>
+     <div class="col-md-6 text-center text-md-start mt-4 pb-2 animate" >
+        <h2 class="head-work"> 
+            Look your best on your special day.
+        </h2>
+        <p style="color: #453229; opacity: 80%; text-align: center;">
+
+            Find the perfect outfit for your wedding without spending a fortune.
+            From stylish sherwanis to classic suits, our collection has everything  you need to  look amazing and feel confident. rent your dream look and make unforgettable memories.
+        </p>
+        <div class="product-buttons">
+            <div class="button-item_ss">
+                <a href="{% url 'product' 'Wedding' %}" class="btn btn-dark px-4 py-2">View Collection</a>
+            </div>
+        </div>
+    </div>
+   </div>
+   </div>
+
+   <div class="container content">
+    <div class="row align-items-center">
+     <div class="col-md-6 text-center text-md-start  pb-3 animate"  >
+      <h2 class="head-work">
+        Reception
+      </h2>
+      <p style="color: #453229; opacity: 80%; text-align: center;">
+        Make your reception unforgettable with StyleSurfer’s exclusive collection.  From timeless designs to contemporary styles, we bring you outfits that combine elegance and comfort, ensuring you shine effortlessly on your special night.
+      </p>
+      <div class="product-buttons" >
+        <div class="button-item_ss">
+            <a href="{% url 'product' 'Reception' %}" class="btn btn-dark px-4 py-2">View Collection</a>
+        </div>
+    </div>
+     </div>
+     <div class="col-md-6 text-center animate">
+      <img src="https://static1.squarespace.com/static/6564afb4f0851760cfcdde58/t/65a6da92676f4671557f23cf/1705433746287/Harini-Aswin-MCC-Hall-Chennai-0609+-+Copy.jpg?format=1500w" width="600px"  height="600px" class="img-fluid">
+     </div>
+    </div>
+   </div>
+
+
+
+<div class="container-fluid your-bride">
+  <div class="rent-by-bride">
+      <p class="head-work">REAL BRIDES</p>
+  </div>
+  <div class="row">
+
+     <div class="col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/bridal1.jpg' %}" alt="Gallery Image 1" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/bridal2.jpg' %}" alt="Gallery Image 2" class="gallery-img">
+      </div>
+      <div class="col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/brand3.jpg' %}" alt="Gallery Image 3" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/brand4.jpg' %}" alt="Gallery Image 1" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2mb-4 image-container">
+          <img src="{% static 'images/brand5.jpg' %}" alt="Gallery Image 2" class="gallery-img">
+      </div>
+      <div class="col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/bridal6.jpg' %}" alt="Gallery Image 3" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2mb-4 image-container">
+          <img src="{% static 'images/bridal7.jpg' %}" alt="Gallery Image 2" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/bridal8.jpg' %}" alt="Gallery Image 3" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/bridal9.jpg' %}" alt="Gallery Image 2" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2mb-4 image-container">
+          <img src="{% static 'images/bridal10.jpg' %}" alt="Gallery Image 2" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/bridal11.jpg' %}" alt="Gallery Image 3" class="gallery-img">
+      </div>
+      <div class=" col-4 col-md-2 col-lg-2 mb-4 image-container">
+          <img src="{% static 'images/bridal12.jpg' %}" alt="Gallery Image 2" class="gallery-img">
+      </div>
+
+</div>
+</div>
+
+<div class="container1">
+    <div class="rent-by-groom-style-card" >
+        <p>discover Collection For Groomsmen</p>
+    </div>
+  <div class="swiper mySwiper groom-cards">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide card" >
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/lehnga.png' %}"  >
+            <h3>Lehnga</h3>
+          </div>
+          <div class="card-back" >
+            <p>"Lehngas designed for the radiant bride, where elegance meets tradition."</p>
+            <div class="product-buttons " >
+                <div class="button-item_ss">
+                    <a href="{% url 'product' 'Lehnga' %}" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/saree.png' %}" ><!--https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROCQZHGYSFnY0XOphdv2v_c5wdKk7h9UswMQ&s-->
+            <h3>Saree</h3>
+          </div>
+          <div class="card-back">
+            <p>"Sarees woven with grace, draped in timeless elegance. "</p>
+            <div class="product-buttons" >
+                <div class="button-item_ss">
+                    <a href="{% url 'product' 'Saree' %}" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/anarkali.png' %}">
+            <h3>Anarkali</h3>
+          </div>
+          <div class="card-back">
+            <p>"Anarkalis that flow with grace, blending royalty and charm."</p>
+            <div class="product-buttons" >
+                <div class="button-item_ss">
+                    <a href="{% url 'product' 'Anarkali' %}" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/gown.png' %}" >
+            <h3>Gown</h3>
+          </div>
+          <div class="card-back">
+            <p>"Gowns that redefine elegance, crafted for a fairy-tale charm."</p>
+            <div class="product-buttons" >
+                <div class="button-item_ss">
+                    <a href="{% url 'product' 'Gowns' %}" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper-slide card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/kurta.png' %}" >
+            <h3>kurta Set</h3>
+          </div>
+          <div class="card-back">
+            <p>"Kurta sets that blend tradition with contemporary elegance. "</p>
+            <div class="product-buttons" >
+                <div class="button-item_ss">
+                    <a href="{% url 'product' 'Kurta' %}" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper-slide card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/sharara.png' %}" >
+            <h3>Sharara</h3>
+          </div>
+          <div class="card-back">
+            <p>"Shararas that twirl with grace, a perfect fusion of tradition and glamour. "</p>
+            <div class="product-buttons" >
+                <div class="button-item_ss">
+                    <a href="{% url 'product' 'Sarara' %}" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper-slide card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/choli dress.png' %}" >
+            <h3>Choli dress</h3>
+          </div>
+          <div class="card-back">
+            <p>"Choli with jacket – a perfect blend of elegance and contemporary charm"</p>
+            <div class="product-buttons" >
+                <div class="button-item_ss">
+                    <a href="" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper-slide card">
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="{% static 'images/women/salwar.png' %}" >
+            <h3>Salwar Kameez</h3>
+          </div>
+          <div class="card-back">
+            <p>"Salwar Kameez - a timeless blend of comfort, grace, and tradition."</p>
+            <div class="product-buttons" >
+                <div class="button-item_ss">
+                    <a href="{% url 'product' 'Salwar_kameez' %}" class="btn btn-dark px-4 py-2 card-collection">View Collection</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+  </div>
+
+  
+
+
+
+
+
+<!-- <section class="slider_container ">
+  <div class="rent-by" >
+      <p> EXPERIENCE Saree</p>
+  </div>
+  <div class="swiper product_slider" >
+      <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://static.wixstatic.com/media/4594f8_3e94a2e9309d46828fc55ccbc9d2b897~mv2.jpg/v1/fill/w_267,h_356,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4594f8_3e94a2e9309d46828fc55ccbc9d2b897~mv2.jpg">
+              </div>
+
+          </div>
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://static.wixstatic.com/media/4594f8_bdefbafe7a6444edb2efb261f20ba92f~mv2.jpg/v1/fill/w_267,h_356,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4594f8_bdefbafe7a6444edb2efb261f20ba92f~mv2.jpg" >
+              </div>
+
+          </div>
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://static.wixstatic.com/media/4594f8_517bf5bc97ac4abf92f5c5ae765fa975~mv2.jpg/v1/fill/w_267,h_356,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4594f8_517bf5bc97ac4abf92f5c5ae765fa975~mv2.jpg" >
+              </div>
+
+          </div>
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://static.wixstatic.com/media/4594f8_7b99c11f5db94b22b355ab9b66d0e48c~mv2.jpg/v1/fill/w_267,h_356,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4594f8_7b99c11f5db94b22b355ab9b66d0e48c~mv2.jpg" >
+              </div>
+
+          </div>
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://static.wixstatic.com/media/4594f8_5101e7a33d3f487e80c99eb3d51b9c94~mv2.jpg/v1/fill/w_500,h_667,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4594f8_5101e7a33d3f487e80c99eb3d51b9c94~mv2.jpg">
+              </div>
+
+          </div>
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://www.parivarceremony.com/media/catalog/product/cache/14a1553305c404c221b3f13f50c007dd/p/2/p2520sr03-1.jpg" >
+              </div>
+
+          </div>
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://static.wixstatic.com/media/4594f8_81c347031f6b402fa4a724c5cca1197a~mv2.jpg/v1/fill/w_267,h_356,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/4594f8_81c347031f6b402fa4a724c5cca1197a~mv2.jpg">
+              </div>
+
+          </div>
+          <div class="swiper-slide">
+              <div class="img_box">
+                  <img src="https://www.parivarceremony.com/media/catalog/product/cache/14a1553305c404c221b3f13f50c007dd/p/2/p2520sr10-1.jpg" >
+              </div>
+
+          </div>
+
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<div class="row p-4 pt-0 pb-0 " >
+  <div class="col-sm-12 col-12 pb-3 col-md-12  d-flex justify-content-center">
+     <div class="media-wrap">
+          <img src="https://static.wixstatic.com/media/897441_a12df2ff71df42e7866ba24d274c93a3~mv2.jpg/v1/fill/w_980,h_1372,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/897441_a12df2ff71df42e7866ba24d274c93a3~mv2.jpg" class="img-fluid saree" loading="lazy">
+
+     </div>
+  </div>
+  <div class="bridal-heading-saree">
+      <div class="bridal-heading-item_s">
+      <p>Welcome to our bridal saree rental collection! We understand that every bride wants to look stunning on her special day without the worry of a huge expense. That's why we offer a wide range of luxurious bridal sarees for rent, designed to make you feel beautiful and confident.</p>
+      </div>
+
+  </div>
+  <div class="product-button">
+      <div class="button-item_s">
+         <a href="{% url 'product' 'Saree' %}" style="text-decoration:none;"><p>Explore</p></a>
+           </div>
+  </div>
+
+
+
+
+
+
+  <section class="slider_container ">
+      <div class="rent-by">
+          <p> lehenga</p>
+      </div>
+      <div class="swiper lehenga_slider">
+          <div class="swiper-wrapper">
+
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://www.anitadongre.com/dw/image/v2/BGCX_PRD/on/demandware.static/-/Sites-masterCatalog_AD_India/default/dwa86def4f/images/hires/F24/Women/F24AR18_Blue_2.jpg?sw=400&sh=600&sm=fit">
+                  </div>
+
+              </div>
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://abhinavmishraofficial.com/cdn/shop/files/1_1989916f-6e7a-4f8e-ac72-7c8d67677762_600x.png?v=1725947596" >
+                  </div>
+
+              </div>
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://www.anitadongre.com/dw/image/v2/BGCX_PRD/on/demandware.static/-/Sites-masterCatalog_AD_India/default/dw11717f66/images/hires/F24/Women/F24A36_Gold_1.jpg?sw=1300&sh=1950&sm=fit" >
+                  </div>
+
+              </div>
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://abhinavmishraofficial.com/cdn/shop/files/Untitleddesign_12_600x.jpg?v=1719571461" >
+                  </div>
+
+              </div>
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://www.anitadongre.com/dw/image/v2/BGCX_PRD/on/demandware.static/-/Sites-masterCatalog_AD_India/default/dw09126bc4/images/hires/FW19/ad_fw19rr033lcdd1_red_1.jpg?sw=400&sh=600&sm=fit">
+                  </div>
+
+              </div>
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://abhinavmishraofficial.com/cdn/shop/files/1_b38401ff-8603-425c-83b3-ba77492e0d4e_600x.png?v=1725947844" >
+                  </div>
+
+              </div>
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://abhinavmishraofficial.com/cdn/shop/files/1_9538e934-fcd4-43b8-9414-75e0630cb023_600x.png?v=1725946918">
+                  </div>
+
+              </div>
+              <div class="swiper-slide">
+                  <div class="img_box">
+                      <img src="https://abhinavmishraofficial.com/cdn/shop/files/3_a615773b-6b86-41b7-b455-32741b1d0951_600x.png?v=1725692737" >
+                  </div>
+
+              </div>
+
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+
+      </div>
+
+  </div>
+
+  </section> -->
+
+
+  <div class="row p-5 pb-0 " >
+      <div class="col-sm-6 col-12 pb-3 col-md-6 d-flex justify-content-center">
+          <div class="media-wrap">
+              <video  autoplay muted loop width="100%" data-bs-toggle="modal" data-bs-target="#videoobride">
+                  <source src="{% static 'images/video_bridal1.mp4' %}">
+              </video>
+
+             </div>
+
+      </div>
+      <div class="col-sm-6 col-12 pb-2 col-md-6 d-flex justify-content-center">
+         <div class="media-wrap">
+          <img src="{% static 'images/bridal_image3.png' %}" class="img-fluid" loading="lazy">
+     </div>
+      </div>
+   </div>
+   <div class="modal fade" id="videoobride">
+      <div class="modal-dialog ">
+
+          <div class="modal-content ">
+              <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">
+                  &times;
+              </button>
+
+              <div class="modal-body ">
+                  <video  autoplay muted loop width="100%" >
+                      <source src="{% static 'images/video_bridal1.mp4' %}">
+                  </video>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="swiper-container">
+    <div class="rent-by-groom-review">
+        <p>Hear from our happy customers</p>
+    </div>
+  
+    <div class="swiper mysSwiper card-review">
+        <div class="swiper-wrapper card-reviewss">
+            {% for review in reviews %}
+            <div class="swiper-slide">
+                <div class="stars">
+                    {% for i in "12345"|make_list %}
+                        <span class="{% if forloop.counter <= review.rating %}filled-star{% else %}empty-star{% endif %}">★</span>
+                    {% endfor %}
+                </div>
+  
+                <p class="text">"{{ review.review }}"</p>
+                <p class="name">{{ review.user.username }}</p>
+                <p class="review-date">🕒 Reviewed on {{ review.created_at|date:"d M Y" }}</p>
+            </div>
+            {% endfor %}
+        </div>
+  
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+   // slider //
+var swiper = new Swiper(".card_slider",{
+    spaceBetween: 30,
+    loop: true,
+    speed: 1000,
+    autoplay:{
+      delay: 2000,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+  nextEl: ".swiper-button-next",
+  prevEl: ".swiper-button-prev",
+},
+breakpoints: {320: {slidesPerView: 2 , spaceBetween: 20, },768: {slidesPerView: 3, },1200: {slidesPerView: 5, },480: {slidesPerView: 2,},},
+  });
+
+// slider //
+var swiper = new Swiper(".card_slider-sherwani",{
+    spaceBetween: 30,
+    loop: true,
+    speed: 1000,
+    autoplay:{
+      delay: 2000,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+  nextEl: ".swiper-button-next",
+  prevEl: ".swiper-button-prev",
+},
+breakpoints: {320: {slidesPerView: 2 , spaceBetween: 20, },768: {slidesPerView: 3, },1200: {slidesPerView: 5, },480: {slidesPerView: 2,},},
+  });
+
+
+
+
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1, // Default for small screens
+    spaceBetween: 20,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+
+    loop: true,
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+
+    },
+  });
+
+  var swiper = new Swiper(".mysSwiper", {
+    loop: true,
+    grabCursor: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    slidesPerView: 1, // Show one card at a time
+    spaceBetween: 20,
+    breakpoints: {
+      768: {
+        slidesPerView: 2, // Show two cards on larger screens
+      },
+      1024: {
+        slidesPerView: 3, // Show three cards on extra-large screens
+      },
+    },
+  });
+
+</script>
+{% endblock %}

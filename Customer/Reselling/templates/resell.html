@@ -1,0 +1,245 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+      <style>
+        
+  .row.row-lg {
+    width: 90%;
+  }
+
+  .row {
+    margin: 0 auto;
+    max-width: 100%;
+    width: 100%;
+
+  }
+
+  .container_sss {
+    color: black;
+    background-color: #D2B68A;
+    margin-top: 3.5%;
+    margin-bottom: 3.5%;
+    padding: 25px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .icons-row__item {
+    width: 34.33333333%;
+    text-align: center;
+    /* padding: 0 50px;*/
+    gap: 5px;
+    margin-bottom: 25px;
+  }
+
+  .icons-row-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .icons-row__item h6 {
+    margin-bottom: 15px;
+
+  }
+
+  .icons-row__item i {
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+
+  .icons-row__item img {
+    margin-bottom: 3px;
+  }
+  .image-wrapper {
+    position: relative;
+  }
+  .bottom-images .image-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bottom-images img {
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (min-width: 992px) {
+      .bottom-images .image-wrapper img {
+        height: 400px;
+      }
+    }
+
+    .textss {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      height: auto;
+      max-width: 500px;
+        text-align: center;
+        background-color:   black; 
+        opacity: 0; /* Hide initially */
+        transition: opacity 0.3s ease;
+   }
+   .image-wrapper:hover .textss {
+    opacity: 1; /* Show text on hover */
+  }
+
+.textss-item p {
+    color: white; 
+    margin: 10px 0;
+    font-size: 20px; 
+   
+}
+
+@media (max-width: 574px) {
+    .icons-row__item {
+      width: 100%; 
+      margin-bottom: 15px;
+    }
+
+    .icons-row__item img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .icons-row__item h6 {
+      font-size: 17px; 
+    }
+
+    .icons-row__item p {
+      font-size: 15px; 
+    }
+
+    .container_sss {
+      padding: 15px; 
+    }
+  }
+  
+gsap.from(element, { rotation: 180, opacity: 0, duration: 1.5 });
+      </style>
+{% endblock %}
+
+{% block body %}
+      <div class="main">
+        <img src="{% static 'images/resell1.jpg' %}" width="100%">
+      </div>
+
+
+
+      
+
+<div class="icons-row--background ">
+    <div class="container-fluid container_sss">
+      <div class="row row-lg">
+        <div class="icons-row-wrapper">
+  
+          <div class="icons-row__item" data-aos="fade-up">
+           <img src="{% static 'images/icon1.png' %}" width="40px" height="40px">
+            <h6>1.  AFFORDABLE LUXURY</h6> 
+            <p>Step into the world of designer fashion without worrying about the price tag. Rent stunning, high-quality outfits for weddings, parties, or everyday wearall at a fraction of the cost.</p>
+          </div> 
+          <div class="icons-row__item" data-aos="fade-up">
+            <img src="{% static 'images/icon2.png' %}" width="55px" height="55px">
+            <h6>2. SURTAINABLE FASHION </h6>
+            <p>Make a positive impact on the planet by embracing circular fashion. Resell your lightly worn outfits and extend their lifecycle, reducing waste and promoting eco-friendly choices.
+          </div>
+          <div class="icons-row__item" data-aos="fade-up">
+            <img src="{% static 'images/icon3.png' %}" width="55px" height="55px">
+            <h6>3. ENDLESS VARIETY</h6>
+            <p>Find exactly what you need, no matter the occasion. From intricate bridal lehengas and sherwanis .</p>
+          </div>
+          <div class="icons-row__item" data-aos="fade-up">
+            
+            <img src="{% static 'images/icon4.png' %}" width="50px" height="55px">
+            <h6>4. PREMIUM DESIGNER CHOICES  </h6>
+            <p>Access exclusive collections from top designers, featuring unique styles that guarantee you’ll stand out.</p>
+          </div>
+          <div class="icons-row__item" data-aos="fade-up">
+            <img src="{% static 'images/icon5.png' %}" width="50px" height="50px">
+            <h6>5. TRUSTED PLATFORM  </h6>
+            <p>Enjoy a seamless and secure experience. From easy listings to safe payments, every transaction is backed by our quality checks and trusted systems, so you can focus on what matters looking your best!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container my-4 bottom-images">
+    <div class="row">
+      <div class="col-lg-6 col-12 pb-3">
+        <a style="text-decoration:none "; href="{% url 'rmen' %}">
+        <div class="image-wrapper" data-aos="fade-right">
+          <img src="{% static 'images/resell2.jpg' %}" alt="Image 1">
+          <div class="textss">
+            <div class="textss-item">
+                <p>Men</p>
+            </div>
+            </div>
+        </div>
+        </a>
+      </div>
+      <div class="col-lg-6 col-12 pb-3">
+        <a style="text-decoration:none "; href="{% url 'rwomen' %}">
+        <div class="image-wrapper" data-aos="fade-left">
+          <img src="{% static 'images/resell5.jpg' %}" alt="Image 2">
+          <div class="textss">
+            <div class="textss-item">
+                <p>Women</p>
+            </div>
+            </div>
+        </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+  
+      
+      AOS.init({
+          duration: 1000, // Animation duration (in milliseconds)
+          once: false,    
+        });
+      
+        AOS.init({
+          offset: 120,    // Offset (in pixels) from the original trigger point
+          duration: 800,  // Animation duration (in milliseconds)
+          easing: 'ease-in-out', // Easing function
+          delay: 100,     // Delay (in milliseconds) between animations
+        });
+      
+      
+          gsap.registerPlugin(ScrollTrigger);
+      
+          // Animation for elements with class 'animate'
+          gsap.utils.toArray(".animate ").forEach((element) => {
+              gsap.from(element, {
+                  scrollTrigger: {
+                      trigger: element,
+                      start: "top 80%",  // Start animation when element is 80% into the viewport
+                      end: "top 50%",   // End animation when it's 50% in
+                      toggleActions: "play none none reverse", // Play animation on enter, reverse on leave
+                  },
+                  opacity: 0,            // Start with opacity 0
+                  y: 50,                 // Start with a downward offset
+                  duration: 1.4,         // Animation duration
+                  ease: "power2.out",    // Easing function
+              });
+          });
+  </script>
+
+{% endblock %}

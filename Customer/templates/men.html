@@ -1,0 +1,838 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<style>
+
+ 
+  .nav-link {
+    text-transform: uppercase;
+    font-weight: 550;
+    color: white;
+}
+
+.nav-link:hover {
+    border-radius: 1px;
+    background-color: #968177ed;
+}
+/* categories */
+
+    /* sidebar*/
+
+
+    
+body.sidebar-open {
+    overflow: hidden; 
+}
+  .icon-toggle {
+      transition: transform 0.3s;
+  }
+
+   [aria-expanded="true"] .icon-toggle {
+      transform: rotate(90deg);
+  }
+
+ 
+
+  .rent-bys{
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing : .1em;
+    margin-top: 3%;
+}
+@media (max-width: 576px){
+    .rent-bys{
+        font-size: 20px;
+    }
+}
+#logo_s{
+  margin-left: 35%;
+    }
+.main-content {
+    padding: 20px;
+    padding-top: 0;
+    overflow: hidden;
+    margin-top: 3%;
+    margin-bottom: 5%;
+
+  }
+  @media (max-width: 1139px){
+    .dropdown-image {
+        flex: 1;
+        text-align: center;
+      }
+      .dropdown-image img {
+        max-width:50%;
+        height: 50%;
+      }
+  }
+
+  .main-content img {
+    width: 100%;
+    height: auto;
+    transition: all 3s;
+   
+   
+  }
+
+  .main-content img:hover {
+    transform: scale(1.1);
+  }
+
+  .categories-item img {
+    aspect-ratio: 16 / 9;
+  }
+  .categories-item{
+    overflow: hidden;
+  }
+  .second-item img {
+    aspect-ratio: 4 / 3;
+    height: 100%;
+  }
+.second-item{
+    overflow: hidden;
+}
+  .sherwani-item img {
+    aspect-ratio: 3 / 4;
+    height: 100%;
+  }
+  .sherwani-item {
+    overflow: hidden;
+  }
+.recommend {
+padding: 5%;
+padding-bottom: 0%;
+
+}
+.recommend_slider{
+padding: 45px 0;
+margin-bottom: 1%;
+}
+.rent-by-recommend{
+font-size: xx-large;
+text-align: center;
+color: black;
+text-transform: uppercase;
+margin-bottom: 10px;
+letter-spacing : .1em;
+
+}
+
+.img_box img{
+width: 100%;
+height: 75%;
+transition: all 3s;
+}
+
+.product-price p{
+color: black;
+margin-top: 10px;
+font-size: 15px;
+padding: 5px;
+padding-right: 0;
+}
+.img_box :hover{
+transform: scale(1.1);
+}
+.card_slider{
+padding: 45px 0;
+}
+.swiper-button-next,.swiper-button-prev {
+color: white;
+padding: 5px;
+background-color: rgba(0, 0, 0, 0.611);
+text-align: center;
+}
+.swiper-button-next::after,.swiper-button-prev::after {
+ font-size: 17px;
+}
+.swiper-pagination-bullet {
+ background-color: black;
+}
+.swiper-pagination-bullet-active {
+ background-color: black;
+}
+.slider_container{
+margin-top: 3.5%;
+margin-bottom: 3.5%;
+padding: 2%;
+
+}
+
+.rent-by{
+font-size: xx-large;
+text-align: center;
+color: black;
+text-transform: uppercase;
+margin-bottom: 10px;
+letter-spacing : .1em;
+}
+
+
+
+.wedding{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #f8ecd7;
+padding: 40px;
+padding-bottom: 0;
+
+}
+.wedding-item img{
+width: 100%;
+height: 40%;
+justify-content: center;
+align-items: center;
+margin-top: 5.3%;
+}
+.wedding-item {
+max-width: 24%;
+}
+.stars{
+width: 10%;
+}
+
+.media-area{
+background: linear-gradient(to bottom, #f8ecd7 50%, transparent 50%);
+padding: 40px;
+padding-top: 0%;
+margin-bottom: 5%;
+
+
+}
+.heading{
+font-size: xx-large;
+text-align: center;
+color: black;
+text-transform: uppercase;
+letter-spacing : .1em;
+margin-bottom: 0;
+}
+
+@media (max-width: 576px){
+.rent-by{
+    font-size: 20px;
+}
+}
+@media (max-width: 768px){
+.rent-by{
+    font-size: 20px;
+}
+}
+
+@media (max-width: 576px){
+.heading{
+    font-size: 20px;
+    letter-spacing : 0;
+
+}
+.media-area{
+    padding: 10px;
+    background-color: #f8ecd7;
+    
+}
+.row.p-5 {
+    padding: 0 !important;
+}
+
+}
+@media (max-width: 576px){
+.wedding-item img{
+    width: 150%;
+
+}
+.wedding-item {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+  }
+.wedding{
+    padding: 10px;
+}
+
+/* event */
+
+.main-heading{
+font-size: xx-large;
+text-align: center;
+color: black;
+text-transform: uppercase;
+letter-spacing : .1em;
+margin-bottom: 0;
+padding-top: 50px;
+
+}
+
+.color-main{
+background-color: #f8ecd7;
+}
+.event{
+display: flex;
+justify-content: center;
+justify-items: center;
+gap: 25px;
+padding: 5%;
+margin: 2%;
+margin-top: 0%;
+background-color:  #f8ecd7 ;
+}
+.event-item{
+position: relative;
+}
+@media screen  and (max-width: 756px){
+   .rent-style{
+    font-size: 15px;
+
+   }
+}
+.event-item img{
+justify-content: center;
+align-items: center; 
+ width: 280px;
+ border-radius: 250px 250px 0px 0px;
+ border: 1px solid #a89b68;
+ padding: 10px;
+}
+
+@media (max-width: 768px) {
+.main-heading {
+    font-size: large; /* Adjust font size for smaller screens */
+}
+
+.event {
+   padding: 0%;
+   margin: 1%;
+    gap: 20px;
+}
+
+.event-item img {
+   max-width: 160px;
+
+   
+}
+}
+
+@media (max-width: 480px) {
+.main-heading {
+    font-size: 20px; 
+}
+
+.event {
+    flex-direction: column; 
+    align-items: center; 
+    padding: 0%;
+    margin: 0%;
+     gap: 5px;
+}
+
+.event-item img {
+  max-width: 180%;
+}
+}
+@media (max-width: 576px){
+.textss-item p {
+    font-size: 8px;
+    margin: 5px 0;
+}
+}
+@media (max-width: 976px){
+.event {
+    padding: 1%;
+    margin: 1%;
+     gap: 5px;
+ }
+
+ .event-item img {
+     max-width: 200px; 
+    
+ }
+}
+@media (max-width: 787px) {
+.event {
+    padding: 1%;
+    margin: 1%;
+     gap: 5px;
+ }
+
+ .event-item img {
+    width: 150px; 
+   
+ }
+}
+
+@media (max-width: 1156px){
+.event {
+    padding: 4%;
+    margin: 1%;
+     gap: 20px;
+ }
+
+ .event-item img {
+     max-width: 220px; 
+    
+ }
+}
+
+
+.textss {
+position: absolute;
+bottom: 0;
+width: 100%;
+text-align: center;
+background-color:   #a89b68d4; 
+opacity: 0; /* Hide initially */
+transition: opacity 0.3s ease;
+}
+.event-item:hover .textss {
+opacity: 1; /* Show text on hover */
+}
+
+.textss-item p {
+color: black; 
+margin: 10px 0;
+font-size: 20px; 
+
+}
+.icon {
+width: 150px;
+height: 150px;
+display: flex;
+justify-content: center;
+align-items: center;
+background-image: url("{% static 'images/pattern-removebg-preview.png' %}");
+background-size: contain;
+background-repeat: no-repeat;
+}
+@media (max-width: 576px){
+.rent-by-recommend{
+    font-size: 20px;
+}
+}
+gsap.from(element, { rotation: 180, opacity: 0, duration: 1.5 });
+</style>
+
+{% endblock %}
+
+{% block body %}
+    
+<div id="carouselExampleIndicators" class="carousel slide  mb-6" data-bs-ride="carousel" data-aos="fade-left">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="{% static 'images/men.jpg' %}" width="100px" height="30%" alt="First slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="{% static 'images/Your paragraph text (2).png' %}"width="100px"  height="30%" alt="Second slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="{% static 'images/Your paragraph text (2).png' %}"width="50px"   alt="Third slide">
+      </div>
+    </div>
+</div>
+</div>
+<br>
+
+<div class="container-fluid">
+    <div class="rent-bys" data-aos="fade-up">
+        <p>Explore Categories</p>
+    </div>
+    <div class="row main-content g-4" >
+    
+      <div class="col-lg-8">
+    
+        <div class="row g-4 mb-4">
+          <div class="col-md-8 categories-item" data-aos="fade-right">
+            <a style="text-decoration:none "; href="{% url 'product' 'Kurta' %}">
+            <img
+              src="{% static 'images/men_image1.png' %}"
+              class="img-fluid"
+              alt="Top Left Image"
+            />
+            </a>
+          </div>
+
+          <div class="col-md-4 second-item" data-aos="fade-left">
+            <a style="text-decoration:none "; href="{% url 'product' 'Sherwani' %}">
+            <img
+              src="{% static 'images/men_image2.png' %}"
+              class="img-fluid"
+              alt="Top Right Image"
+            />
+            </a>
+          </div>
+        </div>
+        
+        <div class="row g-4">
+          <div class="col-md-4 second-item" data-aos="fade-right">
+            <a style="text-decoration:none "; href="{% url 'product' 'Suit' %}">
+            <img
+              src="{% static 'images/men_image3.png' %}"
+              class="img-fluid"
+              alt="Bottom Left Image"
+            />
+            </a>
+          </div>
+          <div class="col-md-8 categories-item" data-aos="fade-left">
+            <a style="text-decoration:none "; href="{% url 'product' 'Kurta_Jacket' %}">
+            <img
+              src="{% static 'images/men_image4.png' %}"
+              class="img-fluid"
+              alt="Bottom Right Image"
+            />
+            </a>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-lg-4 sherwani-item" data-aos="fade-left">
+        <a style="text-decoration:none "; href="{% url 'product' 'Tuxedo' %}">
+        <img
+          src="{% static 'images/men_image5.png' %}"
+          class="img-fluid"
+          alt="Sidebar Image"
+        />
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+ 
+
+<div class="container-fluid wedding " >
+    <div class="wedding-item stars" data-aos="fade-right">
+        <img src="{% static 'images/animation_star_right.jpg' %}"  >
+         </div> 
+  <div class="wedding-item " data-aos="zoom-in">
+ <img src="{% static 'images/groom.gif' %}" >
+  </div>
+  <div class="wedding-item stars" data-aos="fade-left">
+    <img src="{% static 'images/animation_star_right.jpg' %}">
+     </div>
+<br>
+     
+</div>
+
+
+<div class="media-area">
+    <div class="heading" data-aos="fade-up">
+        <p>The Wedding Edit</p>
+    </div>
+    <div class="row p-5 " >
+       <div class="col-sm-6 col-12 pb-3 col-md-6 d-flex justify-content-center">
+          <div class="media-wrap" data-aos="fade-right">
+
+               <img alt="men indo-western" src="{% static 'images/men_image6.png' %}" class="img-fluid" loading="lazy">
+        
+          </div>
+        
+       </div>
+       <div class="col-sm-6 col-12 pb-2 col-md-6 d-flex justify-content-center">
+          <div class="media-wrap" data-aos="fade-left">
+             
+                <img alt="men sherwani" src="{% static 'images/men_image7.png' %}" class="img-fluid" loading="lazy">
+            
+          </div>
+       </div>
+    </div>
+ </div>
+
+ 
+
+ <div class="container-fluid color-main ">
+    <div class="main-heading" data-aos="fade-up">
+        <img src="{% static 'images/curate.png' %} " width="140px" height="120px">
+        <p>Curate A Look For The<br>
+            Wedding Occasion</p>
+    </div>
+ <div class="event">
+    <div class="event-item" data-aos="fade-left">
+        <a style="text-decoration:none "; href="{% url 'product' 'GroomWedding' %}">
+        <img src="{% static 'images/men_image8.png' %}">
+        <div class="textss">
+            <div class="textss-item">
+                <p>Wedding</p>
+            </div>
+            </div>
+            </a>
+    </div>
+    
+    <div class="event-item" data-aos="fade-left">
+        <a style="text-decoration:none "; href="{% url 'product' 'GroomReception' %}">
+        <img src="{% static 'images/men_image9.png' %}">
+        <div class="textss">
+            <div class="textss-item">
+                <p>Reception</p>
+            </div>
+            </div>
+            </a>
+    </div>
+
+    <div class="event-item" data-aos="fade-left">
+        <a style="text-decoration:none "; href="{% url 'product' 'GroomEngagement' %}">
+        <img src="{% static 'images/men_image10.png' %}">
+        <div class="textss">
+            <div class="textss-item">
+                <p>Engagement</p>
+            </div>
+            </div>
+            </a>
+    </div>
+
+    <div class="event-item" data-aos="fade-left">
+      <a style="text-decoration:none "; href="{% url 'product' 'GroomSangeet' %}">
+      <img src="{% static 'images/groom10.jpg' %}">
+      <div class="textss">
+          <div class="textss-item">
+              <p>Sangeet</p>
+          </div>
+          </div>
+          </a>
+  </div>
+
+
+ </div>
+
+ <div class="container" >
+  <div class="row p-5 pt-0 justify-content-center">
+      <div class="col-2 d-flex justify-content-center">
+          <div class="icon" data-aos="fade-right">
+            <img src="{% static 'images/curate.png' %}" width="140px" height="120px">
+          </div>
+      </div>
+      <div class="col-2 d-flex justify-content-center">
+          <div class="icon" data-aos="fade-right"> <img src="{% static 'images/curate.png' %}" width="140px" height="120px"></div>
+      </div>
+      <div class="col-2 d-flex justify-content-center">
+          <div class="icon" data-aos="fade-right"> <img src="{% static 'images/curate.png' %}" width="140px" height="120px"></div>
+      </div>
+      <div class="col-2 d-flex justify-content-center">
+          <div class="icon" data-aos="fade-right"> <img src="{% static 'images/curate.png' %}" width="140px" height="120px"></div>
+      </div>
+      <div class="col-2 d-flex justify-content-center">
+          <div class="icon" data-aos="fade-right"> <img src="{% static 'images/curate.png' %}" width="140px" height="120px"></div>
+      </div>
+  </div>
+
+
+ <div class="container">
+    <div class="row p-5 pt-0 justify-content-center">
+        <div class="col-2 d-flex justify-content-center">
+            <div class="icon"></div>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <div class="icon"></div>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <div class="icon"></div>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <div class="icon"></div>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <div class="icon"></div>
+        </div>
+    </div>
+</div>
+ </div>
+
+
+ 
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+<!--Slider js link-->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+{% block js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+
+
+    AOS.init({
+        duration: 1000, // Animation duration (in milliseconds)
+        once: false,
+      });
+
+      AOS.init({
+        offset: 120,    // Offset (in pixels) from the original trigger point
+        duration: 800,  // Animation duration (in milliseconds)
+        easing: 'ease-in-out', // Easing function
+        delay: 100,     // Delay (in milliseconds) between animations
+      });
+
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation for elements with class 'animate'
+        gsap.utils.toArray(".animate ").forEach((element) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",  // Start animation when element is 80% into the viewport
+                    end: "top 50%",   // End animation when it's 50% in
+                    toggleActions: "play none none reverse", // Play animation on enter, reverse on leave
+                },
+                opacity: 0,            // Start with opacity 0
+                y: 50,                 // Start with a downward offset
+                duration: 1.4,         // Animation duration
+                ease: "power2.out",    // Easing function
+            });
+        });
+</script>
+<script>
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggleButton = document.getElementById('toggleSidebar');
+        const closeButton = document.getElementById('closeSidebar');
+        const manLink = document.querySelector(".link-man");
+          const manDropdown = document.querySelector(".dropdown-man");
+
+    
+         const womenLink = document.querySelector(".link-women");
+    const womenDropdown = document.querySelector(".dropdown-women");
+
+      // dropdown//
+
+    const showManDropdown = () => {
+        manDropdown.classList.remove("visibility-hidden");
+    }
+
+    const hideManDropdown = () => {
+        manDropdown.classList.add("visibility-hidden");
+    }
+
+    const showWomenDropdown = () => {
+        womenDropdown.classList.remove("visibility-hidden");
+    }
+
+    const hideWomenDropdown = () => {
+        womenDropdown.classList.add("visibility-hidden");
+    }
+
+    manLink.onmouseover = showManDropdown;
+    manLink.onmouseout = hideManDropdown;
+
+    manDropdown.onmouseover = showManDropdown;
+    manDropdown.onmouseout = hideManDropdown;
+
+    womenLink.onmouseover = showWomenDropdown;
+    womenLink.onmouseout = hideWomenDropdown;
+
+    womenDropdown.onmouseover = showWomenDropdown;
+    womenDropdown.onmouseout = hideWomenDropdown;
+
+        // Toggle sidebar visibility
+        toggleButton.addEventListener('click', function() {
+            sidebar.classList.toggle('open-sidebar');
+            overlay.classList.toggle('show-overlay');
+        });
+    
+        // Hide sidebar when overlay is clicked
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('open-sidebar');
+            overlay.classList.remove('show-overlay');
+        });
+    
+    
+        // close button //
+        closeButton.addEventListener('click', function() {
+            sidebar.classList.remove('open-sidebar');
+            overlay.classList.remove('show-overlay');
+        });
+
+//search-button//
+document.getElementById('searchInput').addEventListener('click', function() {
+  var offcanvasElement = new bootstrap.Offcanvas(document.getElementById('searchOffcanvas'));
+  offcanvasElement.show();
+});
+
+ // slider //
+ var swiper = new Swiper(".card_slider", {
+    spaceBetween: 30,
+    loop: true,
+    speed: 1000,
+    autoplay:{
+      delay: 2000,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+  nextEl: ".swiper-button-next",
+  prevEl: ".swiper-button-prev",
+},
+breakpoints: {320: {slidesPerView: 1, },768: {slidesPerView: 3, },1200: {slidesPerView: 5, },480: {slidesPerView: 2,},},
+  });
+
+  // slider //
+ var swiper = new Swiper(".recommend_slider", {
+    spaceBetween: 30,
+    loop: true,
+    speed: 1000,
+    autoplay:{
+      delay: 2000,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+  nextEl: ".swiper-button-next",
+  prevEl: ".swiper-button-prev",
+},
+breakpoints: {320: {slidesPerView: 1, },768: {slidesPerView: 3, },1200: {slidesPerView: 4, },480: {slidesPerView: 2,},},
+  });
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebarMenu');
+    const toggleSidebarButton = document.getElementById('toggleSidebar');
+    const closeSidebarButton = document.getElementById('closeSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    toggleSidebarButton.addEventListener('click', () => {
+        sidebar.classList.add('open-sidebar');
+        overlay.classList.add('show-overlay');
+        document.body.classList.add('sidebar-open'); // Prevent scrolling on the main page
+    });
+
+    closeSidebarButton.addEventListener('click', () => {
+        sidebar.classList.remove('open-sidebar');
+        overlay.classList.remove('show-overlay');
+        document.body.classList.remove('sidebar-open'); // Restore scrolling on the main page
+    });
+
+    overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open-sidebar');
+        overlay.classList.remove('show-overlay');
+        document.body.classList.remove('sidebar-open'); // Restore scrolling on the main page
+    });
+});
+
+</script>
+
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

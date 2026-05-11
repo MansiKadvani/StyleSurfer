@@ -1,0 +1,273 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    .account-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    .user-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .user-phone {
+        font-size: 14px;
+        color: grey;
+        margin: 0;
+    }
+
+    .coin-icon {
+        font-size: 24px;
+        color: goldenrod;
+    }
+
+    .profile-section {
+        flex-grow: 1;
+        padding: 30px;
+    }
+
+    .profile-info {
+        background-color: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 20px;
+        border: 2px solid #3d2828;
+    }
+
+    input.form-control {
+        border-radius: 25px;
+        border: 2px solid #5b3e31a6;
+        background-color: transparent;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    input.form-control:disabled {
+        border: none;
+        background-color: white;
+        color: #110808;
+        font-weight: bold;
+    }
+
+    input.form-control:focus {
+        box-shadow: none;
+        border-color: #3d2828;
+    }
+
+    .edit-btn,
+    .save-btn,
+    .cancel-btn {
+        background-color: #5b3e31;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        margin: 10px;
+        width: 30%;
+    }
+
+    .save-btn,
+    .cancel-btn {
+        display: none;
+    }
+
+    .edit-btn:hover,
+    .save-btn:hover,
+    .cancel-btn:hover {
+        background-color: #3d2828;
+    }
+
+    .button-group {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .responsive-btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    /* Media Query for Small Devices */
+    @media (max-width: 576px) {
+        .account-navbar {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .user-info {
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .coin-icon {
+            margin-top: 10px;
+        }
+    }
+
+    .breadcrumb {
+        margin: 30px;
+        color: #5b3e31;
+    }
+
+    #message {
+    position: fixed; /* Stays in position even on scroll */
+    bottom: 7vh; /* Always stays at 40% of the viewport height */
+    left: 50%; /* Centers horizontally */
+    transform: translateX(-50%); /* Ensures text remains centered */
+    background-color: #110808;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 1000; /* Ensures it overlaps other content */
+    white-space: nowrap;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds slight shadow for better visibility */
+}
+
+#error {
+    position: fixed;
+    bottom: 7vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #5b1e1e; /* Deep earthy red matching your palette */
+    color: white;
+    opacity: 90%;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #3b2415; /* Subtle border that fits your theme */
+}
+
+.white-cross {
+    color: white;
+    font-weight: bold;
+    margin-right: 8px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+
+<nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="" style="text-decoration: none;  color: #5b3e31;">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'account_home' %}"
+                style="text-decoration: none;  color: #5b3e31;">Account</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+    </ol>
+</nav>
+
+
+
+<div class="profile-section">
+    <div class="container">
+        <h3>Personal Information</h3><br>
+        <form method="POST" enctype="multipart/form-data" id="profile-form" class="row">
+            {% csrf_token %}
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="profile-info">
+                    <h5>Name</h5>
+                    <input type="text" id="username" name="username" class="form-control" value="{{ user.username }}"
+                        disabled>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="profile-info">
+                    <h5>Email</h5>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="profile-info">
+                    <h5>Phone Number</h5>
+                    <input type="tel" id="number" name="number" value="{{ user.number }}" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-12 button-group">
+                <button type="button" class="edit-btn" onclick="enableEditing()">Edit</button>
+                <button type="submit" class="save-btn">Save</button>
+                <button type="button" class="cancel-btn" onclick="cancelEditing()">Cancel</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+{% if request.GET.success %}
+<div id="message">✔ {{ request.GET.success }}</div>
+<script>
+    setTimeout(function() {
+        document.getElementById("message").style.display = "none";
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        window.history.replaceState({}, document.title, url);
+    }, 4000); // Hide after 3 seconds
+</script>
+{% endif %}
+
+{% if request.GET.error %}
+<div id="error"><span class="white-cross">✖</span> {{ request.GET.error }}</div>
+<script>
+    setTimeout(function() {
+        document.getElementById("error").style.display = "none";
+        const url = new URL(window.location);
+        url.searchParams.delete('error');
+        window.history.replaceState({}, document.title, url);
+    }, 4000); // Hide after 4 seconds
+</script>
+{% endif %}
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+    function enableEditing() {
+        const inputs = document.querySelectorAll("#profile-form input");
+        inputs.forEach(input => input.disabled = false);
+        document.querySelector(".save-btn").style.display = "inline-block";
+        document.querySelector(".cancel-btn").style.display = "inline-block";
+        document.querySelector(".edit-btn").style.display = "none";
+    }
+
+    function cancelEditing() {
+        const inputs = document.querySelectorAll("#profile-form input");
+        inputs.forEach(input => input.disabled = true);
+        document.querySelector(".save-btn").style.display = "none";
+        document.querySelector(".cancel-btn").style.display = "none";
+        document.querySelector(".edit-btn").style.display = "inline-block";
+    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

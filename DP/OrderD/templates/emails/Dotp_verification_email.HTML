@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Delivery Verification</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #693f26;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            border: 2px solid #3b2415;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #ecd8b1;
+            background: linear-gradient(135deg, #3b2415, #693f26);
+        }
+        .header div {
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .content {
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 22px;
+            color: #3b2415;
+            margin-bottom: 15px;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .highlight {
+            color: #3b2415;
+            font-weight: bold;
+        }
+        .otp-box {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #3b2415;
+            color: #ffffff;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            width: 90%;
+            letter-spacing: 5px;
+        }
+        .otp-box:hover {
+            background-color: #693f26;
+        }
+        .footer {
+            background: linear-gradient(135deg, #3b2415, #693f26);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #ecd8b1;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        p {
+            color: #3b2415;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div>StyleSurfer</div>
+            Order Delivery OTP
+        </div>
+        <div class="content">
+            <h1>Hello, <span class="highlight">{{ username }}</span></h1>
+            <p>To verify and receive your order, please provide the following OTP to the delivery partner:</p>
+            <div class="otp-box">{{ otp }}</div>
+            <p>The delivery partner will enter this OTP in their dashboard to confirm successful delivery.</p>
+            <p>If you did not request this delivery, please contact our support team immediately.</p>
+        </div>
+        <div class="footer">
+            &copy; 2025 StyleSurfer. All rights reserved.<br>
+            Need help? <a href="mailto:support@stylesurfer.com">Contact Us</a>
+        </div>
+    </div>
+</body>
+</html>

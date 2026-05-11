@@ -1,0 +1,224 @@
+
+{% extends 'base_dp.html' %}
+{% load static %}
+
+{% block title %} DP - Orders {% endblock %}
+
+{% block css %}
+    <style>
+         /* Adding button theme */
+    .btn-custom {
+        background-color: #3b2415;
+        color: white;
+        opacity: 0.85;
+    }
+
+    .btn-custom:hover {
+        background-color: #3b2415;
+        color: white;
+        opacity: 1;
+    }
+
+    /* Styling for breadcrumbs */
+    .breadcrumb {
+        background-color: #f8f9fa;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+        border-radius: 0.25rem;
+    }
+
+    .breadcrumb a {
+        color: #3b2415;
+        text-decoration: none;
+    }
+
+
+
+    /* Positioning the 'Own Products' button */
+    .breadcrumb-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .breadcrumb-container .btn {
+        margin-top: 0.5rem;
+    }
+
+    /* Responsive adjustment */
+    @media (max-width: 576px) {
+        .breadcrumb-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .breadcrumb-container .btn {
+            margin-top: 1rem;
+            width: 100%;
+        }
+        .btn-group{
+            width: 100%;
+        }
+    }
+
+    /* Table styling */
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    table th:nth-child(1), table td:nth-child(1),
+    table th:nth-child(2), table td:nth-child(2),
+    table th:nth-child(3), table td:nth-child(3),
+    table th:nth-child(4), table td:nth-child(4),
+    table th:nth-child(5), table td:nth-child(5) {
+        width: 20%;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<body class="container my-4">
+
+<div class="breadcrumb-container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Orders</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Main Buttons -->
+<div class="btn-group mb-3" role="group" id="mainTabs">
+    <button type="button" class="btn btn-custom" data-tab="pending">Pending</button>
+    <button type="button" class="btn btn-custom" data-tab="delivered">Delivered</button>
+    <button type="button" class="btn btn-custom" data-tab="returned">Returned/Complete</button>
+</div>
+
+<!-- Sub-buttons (only for Pending) -->
+<div class="btn-group mb-3" role="group" id="pendingSubTabs" style="display: none;">
+    <button type="button" class="btn btn-outline-dark" data-subtab="delivery">Delivery Pending</button>
+    <button type="button" class="btn btn-outline-dark" data-subtab="return">Return Pending</button>
+</div>
+
+<!-- Orders Table -->
+<div class="card p-3">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Order Status</th>
+                    <th>Grand Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="order-table-body">
+                <!-- Dummy Data -->
+                <tr class="order-row" data-status="delivery pending">
+                    <td>#1001</td>
+                    <td>Alice</td>
+                    <td>Delivery Pending</td>
+                    <td>₹1200</td>
+                    <td><button class="btn btn-custom btn-sm">View</button></td>
+                </tr>
+                <tr class="order-row" data-status="return pending">
+                    <td>#1002</td>
+                    <td>Bob</td>
+                    <td>Return Pending</td>
+                    <td>₹2200</td>
+                    <td><button class="btn btn-custom btn-sm">View</button></td>
+                </tr>
+                <tr class="order-row" data-status="delivered">
+                    <td>#1003</td>
+                    <td>Charlie</td>
+                    <td>Delivered</td>
+                    <td>₹1800</td>
+                    <td><button class="btn btn-custom btn-sm">View</button></td>
+                </tr>
+                <tr class="order-row" data-status="returned">
+                    <td>#1004</td>
+                    <td>David</td>
+                    <td>Returned</td>
+                    <td>₹2500</td>
+                    <td><button class="btn btn-custom btn-sm">View</button></td>
+                </tr>
+                <tr class="order-row" data-status="complete">
+                    <td>#1005</td>
+                    <td>Eva</td>
+                    <td>Complete</td>
+                    <td>₹3100</td>
+                    <td><button class="btn btn-custom btn-sm">View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JS -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mainTabs = document.querySelectorAll('#mainTabs .btn');
+        const subTabs = document.querySelectorAll('#pendingSubTabs .btn');
+        const subTabContainer = document.getElementById("pendingSubTabs");
+        let activeMainTab = localStorage.getItem("mainTab") || "pending";
+        let activeSubTab = localStorage.getItem("subTab") || "delivery";
+
+        function setActiveTabs() {
+            mainTabs.forEach(btn => {
+                btn.classList.toggle("active", btn.dataset.tab === activeMainTab);
+            });
+
+            subTabContainer.style.display = (activeMainTab === "pending") ? "flex" : "none";
+
+            subTabs.forEach(btn => {
+                btn.classList.toggle("active", btn.dataset.subtab === activeSubTab);
+            });
+
+            filterOrders();
+        }
+
+        function filterOrders() {
+            const rows = document.querySelectorAll('.order-row');
+            rows.forEach(row => {
+                const status = row.dataset.status;
+                let show = false;
+
+                if (activeMainTab === "pending") {
+                    if (activeSubTab === "delivery" && status === "delivery pending") show = true;
+                    if (activeSubTab === "return" && status === "return pending") show = true;
+                } else if (activeMainTab === "delivered" && status === "delivered") {
+                    show = true;
+                } else if (activeMainTab === "returned" && (status === "returned" || status === "complete")) {
+                    show = true;
+                }
+
+                row.style.display = show ? "" : "none";
+            });
+        }
+
+        mainTabs.forEach(btn => {
+            btn.addEventListener("click", function () {
+                activeMainTab = this.dataset.tab;
+                localStorage.setItem("mainTab", activeMainTab);
+                setActiveTabs();
+            });
+        });
+
+        subTabs.forEach(btn => {
+            btn.addEventListener("click", function () {
+                activeSubTab = this.dataset.subtab;
+                localStorage.setItem("subTab", activeSubTab);
+                setActiveTabs();
+            });
+        });
+
+        setActiveTabs(); // initial load
+    });
+</script>
+
+{% endblock %}

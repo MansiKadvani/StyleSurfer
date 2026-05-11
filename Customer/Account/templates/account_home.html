@@ -1,0 +1,135 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    .account-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .user-phone {
+        font-size: 14px;
+        color: gray;
+        margin: 0;
+    }
+
+    .account-button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 20px;
+        background-color: white;
+        color: #110808;
+        border: 3px solid #110808;
+        text-align: center;
+        transition: background-color 0.3s;
+        margin-bottom: 20px;
+    }
+
+    .account-button:hover {
+        background-color: #3d2828;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* Adjust grid layout for buttons */
+    .button-container .col-12 {
+        padding: 10px;
+    }
+
+    .coin-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #110808;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: 2px solid #6c757d;
+        font-weight: bold;
+    }
+
+    .coin-icon i {
+        margin-right: 10px;
+        font-size: 22px;
+        color: #110808;
+    }
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-4">
+    <!-- Navigation Bar -->
+    <div class="account-navbar">
+        <!-- User Info -->
+        <div class="user-info">
+            <img src="{% static 'images/account_logo.png' %}" alt="User Image" class="user-image">
+            <div class="user-details">
+                <p class="user-name">{{ user.username }}</p>
+                <p class="user-phone">{{ user.number }}</p>
+            </div>
+        </div>
+        <!-- Coin Icon -->
+        <div class="coin-icon">
+            <i class="fas fa-coins"></i> {{ coin.reward|default:0 }}
+        </div>
+    </div>
+
+    <!-- Button Section with Two Buttons per Row -->
+    <div class="row button-container mt-5">
+        <div class="col-12 col-md-6">
+            <a href="{% url 'profile' %}" class="account-button" style="text-decoration: none;">Profile</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <a href="{% url 'password' %}" class="account-button" style="text-decoration: none;">Password & Security</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <a href="{% url 'order' %}" class="account-button" style="text-decoration: none;">Orders</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <a href="{% url 'cvoucher' %}" class="account-button" style="text-decoration: none;">Vouchers</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <a href="{% url 'help' %}" class="account-button" style="text-decoration: none;">Help Center</a>
+        </div>
+        <div class="col-12 col-md-6">
+            <a href="{% url 'Buy_back' %}" class="account-button" style="text-decoration: none;">Buy_back</a>
+        </div>
+         <div class="col-12 col-md-6">
+            <a href="{% url 'Sell' %}" class="account-button" style="text-decoration: none;">Sell With Us</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

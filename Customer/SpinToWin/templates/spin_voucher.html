@@ -1,0 +1,532 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block title %}Spin-To-Win Vouchers{% endblock %}
+
+{% block css %}
+<style>
+    .account-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .user-phone {
+        font-size: 14px;
+        color: gray;
+        margin: 0;
+    }
+
+    .account-button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 20px;
+        background-color: white;
+        color: #110808;
+        border: 3px solid #110808;
+        text-align: center;
+        transition: background-color 0.3s;
+        margin-bottom: 20px;
+    }
+
+    .account-button:hover {
+        background-color: #3d2828;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* Adjust grid layout for buttons */
+    .button-container .col-12 {
+        padding: 10px;
+    }
+
+    .coin-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #110808;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: 2px solid #6c757d;
+        font-weight: bold;
+    }
+
+    .coin-icon i {
+        margin-right: 10px;
+        font-size: 22px;
+        color: #110808;
+    }
+
+    .coupon-card {
+        border: 2px solid #110808;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 20px;
+        margin: 20px auto;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .coupon-card::before,
+    .coupon-card::after {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background-color: #fff;
+        border: 2px solid #110808;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .coupon-card::before {
+        left: -10px;
+    }
+
+    .coupon-card::after {
+        right: -10px;
+    }
+
+    .logo1 {
+        width: 120px;
+        height: auto;
+        margin: 0;
+    }
+
+    .details {
+        border-left: 2px dashed #110808;
+        padding-left: 15px;
+    }
+
+    .details h5 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .details p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #110808;
+        opacity: 80%;
+    }
+
+    .code-box {
+        font-weight: bold;
+        font-size: 16px;
+        border: 1px solid #110808;
+        border-radius: 5px;
+        padding: 5px 15px;
+        background-color: #f8f9fa;
+    }
+
+    .btn-redeem {
+        background-color: #493131;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        margin-top: 10px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-redeem:hover {
+        background-color: #110808;
+    }
+
+    /* Grid Layout for Two Vouchers in One Row */
+    .voucher-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .voucher-card {
+        width: 48%;
+        /* Adjust width for two items per row */
+    }
+
+    @media (max-width: 768px) {
+        .voucher-card {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .details {
+            border-left: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .code-section {
+            margin-top: 15px;
+            text-align: center;
+        }
+    }
+
+     /* Shake animation for error */
+    .swal2-shake {
+        animation: shake 0.6s ease-in-out;
+    }
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        20% { transform: translateX(-10px); }
+        40% { transform: translateX(10px); }
+        60% { transform: translateX(-10px); }
+        80% { transform: translateX(10px); }
+        100% { transform: translateX(0); }
+    }
+
+
+   
+    #message {
+    position: fixed; /* Stays in position even on scroll */
+    bottom: 7vh; /* Always stays at 40% of the viewport height */
+    left: 50%; /* Centers horizontally */
+    transform: translateX(-50%); /* Ensures text remains centered */
+    background-color: #110808;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 1000; /* Ensures it overlaps other content */
+    white-space: nowrap;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds slight shadow for better visibility */
+}
+
+#error {
+    position: fixed;
+    bottom: 7vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #5b1e1e; /* Deep earthy red matching your palette */
+    color: white;
+    opacity: 90%;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #3b2415; /* Subtle border that fits your theme */
+}
+
+.white-cross {
+    color: white;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-4">
+    <!-- Navigation Bar -->
+    <div class="account-navbar">
+        <!-- User Info -->
+        <div class="user-info">
+        </div>
+        <!-- Coin Icon -->
+        <div class="coin-icon">
+            <i class="fas fa-coins"></i> Total Coin :- {{ coin.reward|default:0 }}
+        </div>
+    </div>
+
+     <!-- Check if vouchers exist -->
+     {% if vouchers %}
+     <!-- Loop through available vouchers -->
+     <div class="voucher-container">
+         {% for voucher in vouchers %}
+             <div class="voucher-card">
+                 <div class="coupon-card">
+                     <div class="row align-items-center">
+                         <!-- Example voucher details -->
+                         <div class="col-12 col-sm-3 text-center">
+                             <img src="{% static 'images/clogo.png' %}" alt="{{ voucher.name }} Logo" class="logo1">
+                         </div>
+                         <div class="col-12 col-sm-6 details">
+                             <h5>{{ voucher.description }}</h5>
+                             <p>{{ voucher.discount }}% Coupon</p>
+                         </div>
+                         <div class="col-12 col-sm-3 text-center code-section">
+                             <div class="code-box mb-2"><i class="fas fa-coins"></i> {{ voucher.vprice }}</div>
+                             <a href="{% url 'redeem_voucher' voucher.id %}"><button class="btn-redeem">Redeem</button></a>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         {% endfor %}
+     </div>
+ {% else %}
+     <!-- Display message if no vouchers are available -->
+     <p class="text-center text-muted">No vouchers available at the moment. Please check back later!</p>
+ {% endif %}
+</div>
+
+
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="submissionModalLabel">Message</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body" id="modalMessage">-->
+<!--                &lt;!&ndash; Message will be set dynamically &ndash;&gt;-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn modal-btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!-- Message Overlay -->
+<!--<div id="messageOverlay" class="message-overlay" style="display: none;">-->
+<!--    <div class="message-box">-->
+<!--        <span class="close-btn" onclick="closeMessageOverlay()">×</span> &lt;!&ndash; Close button &ndash;&gt;-->
+<!--        <div id="emojiEffect"></div> &lt;!&ndash; Emoji Effect &ndash;&gt;-->
+<!--        <h2 id="messageText"></h2>-->
+<!--        <canvas id="confettiCanvas"></canvas> &lt;!&ndash; Canvas for Celebration &ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--{% endblock %}-->
+
+<!--{% block js %}-->
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+<!--        const params = new URLSearchParams(window.location.search);-->
+<!--        const success = params.get('success');-->
+<!--        const error = params.get('error');-->
+<!--        const messageOverlay = document.getElementById("messageOverlay");-->
+<!--        const messageText = document.getElementById("messageText");-->
+<!--        const emojiEffect = document.getElementById("emojiEffect");-->
+
+<!--        function resetURL() {-->
+<!--            const newUrl = window.location.origin + "/SpinToWin/spin_voucher/"; // Reset URL-->
+<!--            window.history.replaceState(null, "", newUrl);-->
+<!--        }-->
+
+<!--        function closeMessageOverlay() {-->
+<!--            messageOverlay.style.display = "none";-->
+<!--            stopConfetti();-->
+<!--            resetURL();-->
+<!--        }-->
+
+<!--        if (success) {-->
+<!--            messageText.textContent = success;-->
+<!--            messageOverlay.classList.add("success-message");-->
+<!--            messageOverlay.style.display = "flex"; // Show overlay-->
+<!--            startConfetti(); // Start confetti effect 🎉-->
+<!--            emojiEffect.innerHTML = "🎉🥳🎊"; // Success emojis-->
+<!--            setTimeout(closeMessageOverlay, 5000);-->
+<!--        } else if (error) {-->
+<!--            messageText.textContent = error;-->
+<!--            messageOverlay.classList.add("error-message");-->
+<!--            messageOverlay.style.display = "flex"; // Show overlay-->
+<!--            messageOverlay.classList.add("shake"); // Shake effect ❌-->
+<!--            emojiEffect.innerHTML = "❌😢⚠️"; // Error emojis-->
+<!--            setTimeout(closeMessageOverlay, 5000);-->
+<!--        }-->
+
+<!--        // Close overlay when clicking outside the message box-->
+<!--        messageOverlay.addEventListener("click", function (event) {-->
+<!--            if (event.target === messageOverlay) {-->
+<!--                closeMessageOverlay();-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+
+<!--    // 🎉 Confetti Effect-->
+<!--    let confettiCanvas = document.getElementById("confettiCanvas");-->
+<!--    let confettiCtx = confettiCanvas.getContext("2d");-->
+<!--    let confettiArray = [];-->
+<!--    let animationFrame;-->
+
+<!--    function startConfetti() {-->
+<!--        confettiCanvas.width = window.innerWidth;-->
+<!--        confettiCanvas.height = window.innerHeight;-->
+
+<!--        for (let i = 0; i < 100; i++) {-->
+<!--            confettiArray.push({-->
+<!--                x: Math.random() * confettiCanvas.width,-->
+<!--                y: Math.random() * confettiCanvas.height - confettiCanvas.height,-->
+<!--                r: Math.random() * 6 + 2,-->
+<!--                d: Math.random() * 5 + 2,-->
+<!--                color: `hsl(${Math.random() * 360}, 100%, 50%)`-->
+<!--            });-->
+<!--        }-->
+
+<!--        function drawConfetti() {-->
+<!--            confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);-->
+<!--            for (let i = 0; i < confettiArray.length; i++) {-->
+<!--                let p = confettiArray[i];-->
+<!--                confettiCtx.beginPath();-->
+<!--                confettiCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2, false);-->
+<!--                confettiCtx.fillStyle = p.color;-->
+<!--                confettiCtx.fill();-->
+<!--                p.y += p.d;-->
+<!--                if (p.y > confettiCanvas.height) {-->
+<!--                    p.y = -p.r;-->
+<!--                }-->
+<!--            }-->
+<!--            animationFrame = requestAnimationFrame(drawConfetti);-->
+<!--        }-->
+
+<!--        drawConfetti();-->
+<!--    }-->
+
+<!--    function stopConfetti() {-->
+<!--        cancelAnimationFrame(animationFrame);-->
+<!--        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);-->
+<!--        confettiArray = [];-->
+<!--    }-->
+<!--</script>-->
+
+
+<!-- Include SweetAlert2 and Confetti Effect -->
+
+{% if request.GET.success %}
+<div id="message">✔ {{ request.GET.success }}</div>
+<script>
+    setTimeout(function() {
+        document.getElementById("message").style.display = "none";
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        window.history.replaceState({}, document.title, url);
+    }, 4000); // Hide after 3 seconds
+</script>
+{% endif %}
+
+{% if request.GET.error %}
+<div id="error"><span class="white-cross">✖</span> {{ request.GET.error }}</div>
+<script>
+    setTimeout(function() {
+        document.getElementById("error").style.display = "none";
+        const url = new URL(window.location);
+        url.searchParams.delete('error');
+        window.history.replaceState({}, document.title, url);
+    }, 4000); // Hide after 4 seconds
+</script>
+{% endif %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+<script>
+    // // Function to get URL parameters
+    // function getUrlParameter(name) {
+    //     name = name.replace(/[\[\]]/g, "\\$&");
+    //     let url = new URL(window.location.href);
+    //     return url.searchParams.get(name);
+    // }
+
+    // // Function for confetti effect 🎉
+    // function confettiEffect() {
+    //     var duration = 2 * 1000;  // 2 seconds
+    //     var end = Date.now() + duration;
+    //     (function frame() {
+    //         confetti({
+    //             particleCount: 5,
+    //             angle: 60,
+    //             spread: 55,
+    //             origin: { x: 0 }
+    //         });
+    //         confetti({
+    //             particleCount: 5,
+    //             angle: 120,
+    //             spread: 55,
+    //             origin: { x: 1 }
+    //         });
+
+    //         if (Date.now() < end) {
+    //             requestAnimationFrame(frame);
+    //         }
+    //     })();
+    // }
+
+    // // Function to show a success alert with confetti
+    // function showSuccessMessage(message) {
+    //     Swal.fire({
+    //         title: "Success!",
+    //         text: message,
+    //         icon: "success",
+    //         confirmButtonColor: "#453229",
+    //         timer: 7000, // Auto close after 3s
+    //         didOpen: () => {
+    //             confettiEffect();  // Start confetti effect
+    //         }
+    //     });
+    // }
+
+    // // Function to show an error alert with shake effect
+    // function showErrorMessage(message) {
+    //     Swal.fire({
+    //         title: "Error!",
+    //         text: message,
+    //         icon: "error",
+    //         confirmButtonColor: "#453229",
+    //         customClass: {
+    //             popup: 'swal2-shake' // Add shaking animation
+    //         }
+    //     });
+    // }
+
+    // // Check for success and error parameters in the URL
+    // let successMessage = getUrlParameter('success');
+    // let errorMessage = getUrlParameter('error');
+
+    // // Show the appropriate SweetAlert2 message
+    // if (successMessage) {
+    //     showSuccessMessage(successMessage);
+    //     // Remove the parameter from the URL after showing the alert
+    //     window.history.replaceState({}, document.title, window.location.pathname);
+    // }
+
+    // if (errorMessage) {
+    //     showErrorMessage(errorMessage);
+    //     // Remove the parameter from the URL after showing the alert
+    //     window.history.replaceState({}, document.title, window.location.pathname);
+    // }
+</script>
+
+
+
+
+{% endblock %}

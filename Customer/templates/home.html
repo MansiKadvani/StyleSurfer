@@ -1,0 +1,674 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block title %}StyleSurfer - Home{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/base1.css' %}">
+<style>
+    .btn-close{
+    color: white;
+}
+.img_box img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: all 3s;   
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<!-- Chat Button -->
+<div class="faq-chat-container">
+    <button class="faq-chat-button" onclick="toggleFAQChat()">
+        <i class="bi bi-chat-dots" style="color: #fff;"></i>
+    </button>
+</div>
+
+<!-- FAQ Chat Panel -->
+<div class="faq-chat-panel" id="faqChatPanel">
+    <div class="faq-chat-header">
+        <h5>FAQ Chat</h5>
+        <button class="close-chat" onclick="toggleFAQChat()">&times;</button>
+    </div>
+    <div class="faq-chat-content" id="faqChatContent">
+        {% for faq in faq %}
+        <div class="faq-question" data-index="{{ forloop.counter0 }}" onclick="toggleAnswer(this)">
+            {{ faq.question }}
+            <i class="bi bi-chevron-down"></i>
+        </div>
+        <div class="faq-answer" id="answer{{ forloop.counter0 }}">
+            {{ faq.answer }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="{% static 'images/couple.jpg' %}" width="100px" height="30%"
+                alt="First slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'images/home_slider4.jpeg' %}" width="100px" height="30%"
+                alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="{% static 'images/home_slider2.png' %}" width="100px" height="30%" alt="Third slide">
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="icons-row--background">
+    <div class="container-fluid container_sss">
+        <div class="row row-lg">
+            <div class="icons-row-wrapper">
+
+                <div class="icons-row__item">
+                    <i class="fas fa-hand-pointer"></i>
+                    <h6>1. MAKE YOUR CHOICE</h6>
+                    <p>Browse through our exclusive collection and <br>pick an outfit to lease with ease.</p>
+                </div>
+                <div class="icons-row__item">
+                    <i class="fas fa-ruler"></i>
+                    <h6>2. THE DREAM FIT</h6>
+                    <p>Select your size, the preferred duration and the<br> date of delivery.</p>
+                </div>
+                <div class="icons-row__item">
+                    <img src="{% static 'images/icons8-dress-front-view-50.png' %}" width="40px" height="40px">
+                    <h6>3. DESIGNER WEAR</h6>
+                    <p>Our designer wear collection is handpicked to ensure you find the perfect outfit for any event.
+                    </p>
+                </div>
+                <div class="icons-row__item">
+                    <i class="fas fa-truck"></i>
+                    <h6>4. DELIVERY TO YOUR DOORSTEP</h6>
+                    <p>Sit back and relax after check out as we custom fit the outfit to your measurements for a hassle
+                        free experience.</p>
+                </div>
+                <div class="icons-row__item">
+                    <i class="fas fa-camera"></i>
+                    <h6>5. LOOK PICTURE PERFECT</h6>
+                    <p>Own your look and turn heads wherever you go. Don't worry, the pick up is on us!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="slider_container ">
+    <div class="slider_1">
+        <div class="text">
+            <h5  style="color: #453229;"> EXPERIENCE<br /> MORE</h5>
+        </div>
+    </div>
+    <div class="swiper card_slider">
+        <div class="swiper-wrapper">
+            {% for product in products %}
+            <div class="swiper-slide">
+                <a style="text-decoration:none " ; href="{% url 'prod_desc' product.id %}">
+                <div class="img_box">
+                    <img src="{{ product.image_front.url }}" alt="{{ product.name }}" width="500px" height="500px">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+    </div>
+
+    </div>
+
+</section>
+
+<div class="container-fluid">
+    <div class="brand">
+        <div class="brand-items">
+            <a href="{% url 'brand_products' 'manish-malhotra' %}">
+            <img src="{% static 'images/manish-malhotra.jpg' %}">
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>manish malhotra</p>
+                </div>
+            </div>
+        </a>
+        </div>
+        <div class="brand-items">
+            <a href="{% url 'brand_products' 'sabyasachi' %}">
+            <img src="{% static 'images/4sabya.jpg' %}">
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>sabyasachi</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="brand-items">
+            <a href="{% url 'brand_products' 'abhinav mishra' %}">
+            <img src="{% static 'images/Abhinav-mishara.jpg' %}">
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>abhinav mishra</p>
+                </div>
+            </div>
+            </a>
+        </div>
+
+
+    </div>
+</div>
+<br>
+
+<div class="container-fluid">
+    <div class="rent-style">
+        <p class="head-work"> rent by style</p>
+    </div>
+    <div class="style">
+
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="{% url 'product' 'Lehnga' %}">
+            <img src="{% static 'images/style1.jpg' %}" width="100% "
+                height="350px"><!--https://i.pinimg.com/736x/a0/0d/c5/a00dc5f83356cdaf239287c0be28f719.jpg-->
+            <!--https://cdn.pixelbin.io/v2/black-bread-289bfa/81ub5U/t.resize(w:767)/manish-product/MM-LH-31856-BL-DP_C-ENQ/665/MM-LH-31856-BL-DP_C-ENQ_1_4361.webp-->
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>lehngas</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="{% url 'product' 'Saree' %}">
+            <img src="{% static 'images/style2.jpg' %}" width="100% "
+                height="350px"><!--https://www.osaa.in/cdn/shop/files/osaa40.jpg?v=1715936482&width=1000--><!--https://cdn.pixelbin.io/v2/black-bread-289bfa/t.resize(w:2500)/manish/30_Celeb_Styles_Images/MM-MMS-SR-56781-BL-PPT-BL-BG_C-ENQ/MM-MMS-SR-56781-BL-PPT-BL-BG_C-ENQ-1.jpg-->
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>Saree</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="{% url 'product' 'Anarkali' %}">
+            <img src="{% static 'images/style3.jpg' %}" width="100% " height="350px">
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>Anarkalis</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="{% url 'product' 'Gowns' %}">
+            <img src="{% static 'images/style4.jpg' %}" width="100% " height="350px">
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>Gowns</p>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="style">
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="{% url 'product' 'Kurta' %}">
+            <img src="{% static 'images/style5.jpg' %}" width="100% "
+                height="350px"><!--https://i.pinimg.com/736x/a0/0d/c5/a00dc5f83356cdaf239287c0be28f719.jpg-->
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>kurta sets</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="{% url 'product' 'Sarara' %}">
+            <img src="{% static 'images/style6.jpg' %}" width="100% "
+                height="350px"><!--https://www.osaa.in/cdn/shop/files/osaa40.jpg?v=1715936482&width=1000-->
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>Sharara Set</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="">
+            <img src="{% static 'images/style10.jpg' %}" width="100% " height="350px">
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>choli dress</p>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="style-items">
+            <a style="text-decoration:none " ; href="{% url 'product' 'Salwar_kameez' %}">
+            <img src="{% static 'images/style8.jpg' %}" width="100% " height="350px">
+            <div class="text-shop">
+                <div class="text-style">
+                    <p>Salwar kameez</p>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="slider_containers ">
+    <div class="containers-event ">
+        <div class="rent-by">
+            <p>Rent By Occasions</p>
+        </div>
+        <div class="swiper shop_slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="img_box1">
+                        <img src="{% static 'images/occasions.jpg' %}">
+                        <div class="buttons_1">
+                            <div class="button-item_1">
+                                <a style="text-decoration:none " href="{% url 'ocassion' 'Wedding' %}">
+                                    <p>Wedding</p></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="img_box1">
+                        <img src="{% static 'images/reception.jpeg' %}">
+                        <div class="buttons_1">
+                            <div class="button-item_1">
+                                <a style="text-decoration:none " href="{% url 'ocassion' 'Reception' %}"><p>Reception</p></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="img_box1">
+                        <img src="{% static 'images/occasions3.jpg' %}">
+                        <div class="buttons_1">
+                            <div class="button-item_1">
+                                <a style="text-decoration:none " href="{% url 'ocassion' 'Engagement' %}"><p>Engagement</p></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="img_box1">
+                        <img src="{% static 'images/occasions4.jpg' %}">
+                        <div class="buttons_1" id="haldi">
+                            <div class="button-item_1">
+                                <a style="text-decoration:none " href="{% url 'ocassion' 'Sangeet' %}"><p>Sangeet</p></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="img_box1">
+                        <img src="{% static 'images/occasions5.jpeg' %}"  >
+                        <div class="buttons_1 " >
+                            <div class="button-item_1 " >
+                                <a style="text-decoration:none " href="{% url 'ocassion' 'Haldi' %}"><p>haldi</p></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="img_box1">
+                        <img src="{% static 'images/occasions6.jpg' %}" >
+                        <div class="buttons_1">
+                            <div class="button-item_1">
+                                <a style="text-decoration:none " href="{% url 'ocassion' 'Mehndi' %}"><p> mehendi</p></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-next shop-next"></div>
+            <div class="swiper-button-prev shop-prev"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-edit">
+
+    <img src="{% static 'images/aboutimage.jpg' %}"
+        width="100%"><!--https://www.mohifashion.com/cdn/shop/articles/BB_216433_Final_320eb394-2ae4-42e1-91f1-7e342fc976df.jpg?v=1718363593&width=1100-->
+    <div class="imaeg-inner">
+        <div class="buttons_1">
+            <div class="text-bridal">
+                <b>The Bridal Edit </b>
+                <p> Discover Your Dream Looks</p>
+            </div>
+            <div class="button-item_1">
+                <a href="{% url 'bridal' %}" style="text-decoration: none;"><p>welcome</p></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="title-video">
+        <p class="head-work">Trending Looks To Watch</p>
+    </div>
+    <div class="trend-video">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+
+                <div class="swiper-slide swipers_slide" data-video="{% static 'images/video1.mp4' %}" autoplay muted
+                    loop>
+                    <video autoplay muted loop>
+                        <source src="{% static 'images/video1.mp4' %}">
+                    </video>
+                </div>
+
+                <div class="swiper-slide swipers_slide" data-video="{% static 'images/video2.mp4' %}">
+                    <video autoplay muted loop>
+                        <source src="{% static 'images/video2.mp4' %}">
+                    </video>
+
+                </div>
+                <div class="swiper-slide swipers_slide" data-video="{% static 'images/video3.mp4' %}">
+                    <video autoplay muted loop>
+                        <source src="{% static 'images/video3.mp4' %}">
+                    </video>
+                </div>
+
+                <div class="swiper-slide swipers_slide" data-video="{% static 'images/video4.mp4' %}">
+                    <video autoplay muted loop>
+                        <source src="{% static 'images/video4.mp4' %}">
+                    </video>
+                </div>
+
+                <div class="swiper-slide swipers_slide" data-video="{% static 'images/video5.mp4' %}">
+                    <video autoplay muted loop>
+                        <source src="{% static 'images/video5.mp4' %}">
+                    </video>
+                </div>
+
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next next "></div>
+            <div class="swiper-button-prev video-prev"></div>
+        </div>
+
+    </div>
+</div>
+</div>
+<div class="modal" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content ">
+            <button type="button" class="close-btn " data-bs-dismiss="modal" aria-label="Close">
+                &times;
+            </button>
+            <video id="modalVideo" autoplay loop>
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid man-itemss">
+    <div class="man-shop">
+        <div class="man-style">
+            <p>Menswear Edit</p>
+        </div>
+        <div class="style">
+            <div class="style-items">
+                <a style="text-decoration:none " ; href="{% url 'product' 'Sherwani' %}">
+                    <img src="{% static 'images/styleman1.jpg' %}" width="100% "
+                        height="350px"><!--https://i.pinimg.com/736x/a0/0d/c5/a00dc5f83356cdaf239287c0be28f719.jpg-->
+                    <div class="text-shop">
+                        <div class="text-style">
+                            <p>Sherwanis</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="style-items">
+                <a style="text-decoration:none " ; href="{% url 'product' 'kurta' %}">
+                <img src="{% static 'images/styleman2.jpg' %}" width="100% "
+                    height="350px"><!--https://www.osaa.in/cdn/shop/files/osaa40.jpg?v=1715936482&width=1000-->
+                <div class="text-shop">
+                    <div class="text-style">
+                        <p>Kurta sets</p>
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="style-items">
+                <a style="text-decoration:none " ; href="{% url 'product' 'Suit' %}">
+                <img src="{% static 'images/styleman3.jpg' %}" width="100% " height="350px">
+                <div class="text-shop">
+                    <div class="text-style">
+                        <p>Suit</p>
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="style-items">
+                <a style="text-decoration:none " ; href="{% url 'product' 'Kurta_Jacket' %}">
+                <img src="{% static 'images/styleman4.jpg' %}" width="100% " height="350px">
+                <div class="text-shop">
+                    <div class="text-style">
+                        <p>Kurta Jacket </p>
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Sticky Gift Box -->
+<div class="gift-icon" data-bs-toggle="modal" data-bs-target="#spinModal">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/gift.png" alt="Gift">
+</div>
+
+<!-- Spin Modal -->
+<div class="modal fade" id="spinModal" tabindex="-1" aria-labelledby="spinModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" id="color">
+            <div class="modal-header">
+                <h5 class="modal-title" id="spinModalLabel">Spin to Win</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="chart"> </div>
+                <div id="question">
+                    <h1>Spin to win exciting discounts!</h1>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Congrats Modal -->
+<div class="modal fade" id="congratsModal" tabindex="-1" aria-labelledby="congratsModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content" id="color2">
+            <div class="modal-header">
+                <h5 class="modal-title" id="congratsModalLabel">Congratulations!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="win"> <b>🎉 You won!</b>
+                    <p id="rewardMessage"></p>
+                </div>
+
+
+            </div>
+            <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+  </div>-->
+        </div>
+    </div>
+</div>
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" id="color">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Spin to Win</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="errorMessage">Helllo</div>
+                <div id="question">
+                    <h1>Spin to win exciting discounts!</h1>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+
+{% block js %}
+<script>
+    // slider //
+    var swiper = new Swiper(".card_slider", {
+        spaceBetween: 30,
+        loop: true,
+        speed: 1000,
+        autoplay: {
+            delay: 2000,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: { 320: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 4, }, 480: { slidesPerView: 2, }, },
+    });
+
+    var swiper = new Swiper(".shop_slider", {
+        spaceBetween: 30,
+        loop: true,
+        speed: 1000,
+        autoplay: {
+            delay: 2000,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: { 320: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 3, }, 480: { slidesPerView: 2, }, },
+    });
+
+
+    // video slider//
+
+    var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 150,
+            modifier: 1,
+            slideShadows: true,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: { 320: { slidesPerView: 1, }, 768: { slidesPerView: 3, }, 1200: { slidesPerView: 4, }, 480: { slidesPerView: 2, }, },
+    });
+
+    //js video//
+
+    // Add click event listener to slides to open modal
+    document.querySelectorAll('.swiper-slide').forEach(slide => {
+        slide.addEventListener('click', function () {
+            const videoUrl = slide.getAttribute('data-video');
+            const videoElement = document.getElementById('modalVideo');
+            videoElement.src = videoUrl; // Set video URL in modal
+            const videoModal = new bootstrap.Modal(document.getElementById('videoModal'));
+            videoModal.show();
+        });
+    });
+
+    // Clear video source on modal close to stop the video
+    document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
+        const videoElement = document.getElementById('modalVideo');
+        videoElement.src = ""; // Clear the video URL
+    });
+
+
+
+
+    // Toggle chat panel visibility
+    function toggleFAQChat() {
+        const faqChatPanel = document.getElementById("faqChatPanel");
+        faqChatPanel.style.display = faqChatPanel.style.display === "block" ? "none" : "block";
+    }
+
+    // Toggle answer visibility with smooth transition
+    function toggleAnswer(element) {
+        const index = element.getAttribute("data-index");
+        const answerElement = document.getElementById(`answer${index}`);
+        const questionElement = element;
+
+        answerElement.classList.toggle("open");
+        questionElement.classList.toggle("open");
+
+        answerElement.style.display = answerElement.classList.contains("open") ? "block" : "none";
+    }
+
+    // Initialize FAQ on load but keep hidden
+    window.onload = initializeFAQChat;
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const giftIcon = document.querySelector(".gift-icon_1");
+
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 100) { // Adjust threshold if needed
+                giftIcon.classList.add("show");
+            } else {
+                giftIcon.classList.remove("show");
+            }
+        });
+
+        // Scroll to top when clicking the icon
+        giftIcon.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    });
+
+</script>
+{% endblock %}

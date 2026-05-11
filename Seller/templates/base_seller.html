@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo3_RW8_icon.ico' %}" sizes="128x128" class="favicon">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.main {
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+    background-color: #fafbfe;
+}
+
+#sidebar {
+    width: 70px;
+    min-width: 70px;
+    z-index: 1000;
+    transition: all .25s ease-in-out;
+    background-color: #3b2415;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar.expand {
+    width: 260px;
+    min-width: 260px;
+}
+
+.toggle-btn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem;
+}
+
+.toggle-btn i {
+    font-size: 1.5rem;
+    color: #FFF;
+}
+
+.sidebar-logo {
+    margin: auto 0;
+}
+
+.sidebar-logo a {
+    color: #FFF;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
+
+.sidebar-nav {
+    padding: 2rem 0;
+    flex: 1 1 auto;
+}
+
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #FFF;
+    display: block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    margin-right: .75rem;
+}
+
+a.sidebar-link:hover {
+    background-color: #693f26;
+    border-left: 3px solid #a26f25;
+}
+
+.sidebar-item {
+    position: relative;
+}
+
+#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
+    position: absolute;
+    top: 0;
+    left: 70px;
+    background-color: #3b2415;
+    padding: 0;
+    min-width: 15rem;
+    display: none;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
+    display: block;
+    max-height: 15em;
+    width: 100%;
+    opacity: 1;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
+
+#sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+}
+
+
+.profile-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.user-icon {
+    font-size: 1.8rem;     
+    color: #333;                 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    transition: transform 0.2s ease;
+    cursor: pointer;/* Adds a smooth hover effect */
+}
+
+.user-icon:hover {
+    color: #3b2415;          /* Changes color on hover */
+    transform: scale(1.1);   /* Scales up slightly on hover */
+}
+
+.notification-icon {
+    margin-left: 10px;   /* Changes the cursor to pointer */
+    transition: transform 0.2s ease, color 0.2s ease;   
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    margin-right: 15px;/* Adds smooth transition */
+}
+
+.notification-icon:hover {
+    color: #0e2238; 
+    fill: #0e2238;         /* Changes color on hover */
+    transform: scale(1.1);   /* Scales the icon slightly on hover */
+}
+
+#heading {
+    font-size: 30px;
+    background-color: #3b2415;
+    color: white;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 7px;
+}
+
+.effect {
+    background-color: white;
+    color: #3b2415;
+    padding: 10px;
+    border: 1px solid #3b2415; ;
+    border-radius: 7px;
+    width: max-content;
+}
+
+.effect:hover{
+    background-color: #3b2415;
+    color: white;
+}
+
+.btn-group .active{
+    background-color: #3b2415;
+    color: white;
+}
+
+.sidebar-link.active {
+    background-color: #693f26;
+    border-left: 3px solid #a26f25;
+    color: #fff;
+}
+
+
+    </style>
+
+    {% block css %}
+    
+    {% endblock %}
+</head>
+<body>
+    <!-- Wrapper and Sidebar -->
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex align-items-center">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a href="{% url 'Sdashboard' %}">Stylesurfer</a>
+                </div>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item"><a href="{% url 'Sdashboard' %}" class="sidebar-link {% if request.path == '/Seller/Sdashboard/' %}active{% endif %}"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                <li class="sidebar-item"><a href="{% url 'ProductS/catproduct' %}" class="sidebar-link {% if request.path|slice:":17" == '/Seller/ProductS/' %}active{% endif %}"><i class="bi bi-tag"></i><span>Product</span></a></li>
+                <li class="sidebar-item"><a href="{% url 'view_order' %}" class="sidebar-link {% if '/Seller/sorder/view_order/' in request.path or '/Seller/sorder/view_resell/' in request.path %}active{% endif %}"><i class="bi bi-truck"></i><span>Order</span></a></li>
+                <li class="sidebar-item"><a href="{% url 'buy_backS' %}" class="sidebar-link"><i class="bi bi-gift"></i><span>Buy - Back</span></a></li>
+                <li class="sidebar-item"><a href="{% url 'offer' %}" class="sidebar-link {% if request.path|slice:":17" == '/Seller/SOffer/' %}active{% endif %}"><i class="bi bi-window"></i><span>Rating & Review</span></a></li>
+                <li class="sidebar-item"><a href="{% url 'Saccount' %}" class="sidebar-link {% if '/Seller/Saccount' in request.path or '/Seller/seller_profile' in request.path or '/Seller/Spassword' in request.path %}active{% endif %}"><i class="bi bi-person user-icon" style="color: white;"></i><span>Profile</span></a></li> 
+            </ul>
+            <div class="sidebar-footer">
+                <a href="{% url 'Slogout' %}" class="sidebar-link"><i class="bi bi-door-open"></i><span>Logout</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main">
+            <main role="main" class="container-fluid p-3">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-2">
+                    <h1 id="heading">Seller Dashboard</h1>
+                    <div class="btn-group profile-nav">
+                        <div class="nav-link effect"  id="dateDisplay"></div>
+                        <div class="nav-link effect"  id="timeDisplay"></div>
+                    </div>
+                </div>
+
+                {% block body %}
+    
+                {% endblock %}
+            </main>
+        </div>
+       
+    </div>
+
+    
+
+    <!-- Scripts -->
+     
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <script>
+        const hamBurger = document.querySelector(".toggle-btn");
+hamBurger.addEventListener("click", function () {
+    document.querySelector("#sidebar").classList.toggle("expand");
+});
+
+// Dynamic Date and Time Display
+
+
+
+function updateDateTime() {
+    const now = new Date();
+    
+    // Format date as day/month name - year (e.g., 31/October - 2024)
+    const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    const date = now.toLocaleDateString(undefined, dateOptions).replace(",", " -");
+    
+    // Format time as hours:minutes (e.g., 14:30)
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const time = now.toLocaleTimeString(undefined, timeOptions);
+    
+    document.getElementById("dateDisplay").textContent = date;
+    document.getElementById("timeDisplay").textContent = time;
+}
+
+setInterval(updateDateTime, 1000); // Update every second
+updateDateTime(); 
+    </script>
+
+    {% block js %} 
+    
+    {% endblock %}
+</body>
+</html>

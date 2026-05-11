@@ -1,0 +1,393 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+  
+    .container {
+        width: 100%;
+        padding: 20px;
+    }
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    /* .btn-custom {
+        background-color: #a97c50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s ease;
+    } */
+    .btn-action {
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s ease-in-out;
+        font-size: 18px;
+    }
+    @media (max-width: 768px) {
+        .product-img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+        }
+    }
+    @media (max-width: 768px) {
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+        }
+    }
+    .i{
+    color:#6D4C41;
+    font-weight:bold;
+    font-size:30px;
+    }
+    /* .btn-custom:hover {
+        background-color: #8b5e3c;
+    } */
+    /* table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+    } */
+    .table th {
+        background-color: #453229;
+        color: white;
+        text-align: center;
+        font-size: 21px;
+        font-weight: bolder;
+    }
+
+    .table td {
+        color: #6D4C41;
+        font-weight: bold;
+        text-align: center;
+        font-size: 17px;
+
+    }
+    .hidden {
+        display: none;
+    }
+
+    
+
+    /* Responsive Design */
+    /* @media (max-width: 768px) {
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        thead {
+            display: table-header-group; /* Ensure headers are visible 
+        }
+        tbody {
+            display: table-row-group;
+        }
+        tr {
+            display: table-row;
+            border-bottom: 1px solid #ddd;
+        }
+        td {
+            display: table-cell;
+            text-align: center;
+            padding: 10px;
+        }
+        th:not(:last-child), td:not(:last-child) {
+            border-right: 1px solid #ddd;
+        }
+        th:last-child, td:last-child {
+            text-align: center;
+        }
+
+        td:last-child {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .actions button {
+            width: auto;
+        }
+    } */
+
+        /* Status label colors */
+    .status-label {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .buy { background-color: green; }
+    .back { background-color: blue; }
+    .pending { background-color: orange; }
+
+    .approve { background-color: green; }
+    .rejected { background-color: red; }
+
+
+        .status-label {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .buyrequest { background-color: green; }
+    .back { background-color: blue; }
+    .pending { background-color: orange; }
+
+    .approve { background-color: green; }
+    .purchaserequest { background-color: blue; }
+    .rejected { background-color: red; }
+
+    .head-work {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+    }
+
+    .head-work::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7%;
+        height: 2px;
+        background-color: #000;
+    }
+
+    .breadcrumb {
+        margin: 30px;
+        color: #5b3e31;
+    }
+
+    .btn-buyback{
+    /* width: 100%;
+    padding: 6px 10px;
+    border: none !important;
+    background-color: transparent;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s; */
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #3b2415;
+    border-radius: 12px;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s ;
+    padding: 10px;
+
+}
+
+.main_buyback .active{
+    background-color: #3b2415;
+    color: white;
+}
+
+.btn-buyback:hover{
+    background-color: #3b2415;
+    color: white;
+}
+
+table th:nth-child(1), table td:nth-child(1) {
+        width: 20%; 
+    }
+    table th:nth-child(2), table td:nth-child(2) {
+        width: 20%; 
+    }
+    table th:nth-child(3), table td:nth-child(3) {
+        width: 20%; 
+    }
+    table th:nth-child(4), table td:nth-child(4) {
+        width: 20%; 
+    }
+    table th:nth-child(5), table td:nth-child(5) {
+        width: 20%; 
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    .name{
+        white-space: nowrap;           /* Prevents text from wrapping to the next line */
+  overflow: hidden;              /* Hides the overflowed text */
+  text-overflow: ellipsis;       /* Adds ... when the text overflows */
+  max-width: 100px;              /* Set width suitable to your table layout */
+  /* display: inline-block;     */
+    }
+
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="" style="text-decoration: none;  color: #5b3e31;">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'account_home' %}"
+                style="text-decoration: none;  color: #5b3e31;">Account</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Buy Back</li>
+    </ol>
+</nav>
+
+<h2 class="head-work">Buy-Back</h2>
+
+
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-6 col-sm-12 main_buyback">
+            <button class="btn-buyback"  id="buyBackBtn">Buy-Back</button>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <button class="btn-buyback" id="buyNotBackBtn">Purchase</button>
+        </div>
+    </div>
+    
+<div class="table-responsive mt-5">
+    <!-- Buy-Back Table -->
+    <table id="buyBackTable" class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>No.</th>
+                <th>Product Name</th>
+                <th>Customer Status</th>
+                <th>Seller Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for item in buyback_items %}
+            {% if item.buyback.buyback_status in "Buy,Back,Pending" %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td class="name">{{ item.name }}</td>
+                <td>
+                    <span">
+                        {{ item.Customer_status }}
+                    </span>
+                </td>
+                <td>
+                    <span">
+                        {{ item.seller_status }}
+                    </span>
+                </td>
+                <td class="actions ">
+                    <div class="btn-group">
+                    <a href="{% url 'buyback_detail' item.buyback.buyback_id|slice:":10"|upper  %}" class="btn-custom"><i class="bi bi-eye i"></i></a>
+                    <a href="#" class="btn-custom" onclick="confirmCancel(event, '{% url 'cancel_buyback_request' item.buyback.id %}')"><i class="bi bi-x-circle i"></i></a>
+                </div>
+                </td>
+            </tr>
+            {% endif %}-
+            {% empty %}
+            <tr>
+                <td colspan="8" class="text-center">No Buy-Back Items Found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <!-- Buy Not Back Table -->
+     <div class="table-responsive">
+    <table id="buyNotBackTable" class="table table-bordered mt-4 hidden">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Seller</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in buyback_items %}
+            {% if item.buyback.buyback_status in "purchased make own product" %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.brand }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.seller.sname }}</td>
+                <td class="actions">
+                    <a href="{% url 'buyback_detail' item.buyback.buyback_id|slice:":10"|upper  %}" class="btn-custom"><i class="bi bi-eye i"></i></a>
+                </td>
+            </tr>
+            {% endif %}
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No Non Buy-Back Items Found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let selectedTable = localStorage.getItem("selectedTable") || "buyBackTable";
+
+        document.getElementById("buyBackTable").classList.add("hidden");
+        document.getElementById("buyNotBackTable").classList.add("hidden");
+
+        document.getElementById(selectedTable).classList.remove("hidden");
+
+        document.getElementById("buyBackBtn").addEventListener("click", function() {
+            document.getElementById("buyBackTable").classList.remove("hidden");
+            document.getElementById("buyNotBackTable").classList.add("hidden");
+            localStorage.setItem("selectedTable", "buyBackTable");
+        });
+
+        document.getElementById("buyNotBackBtn").addEventListener("click", function() {
+            document.getElementById("buyNotBackTable").classList.remove("hidden");
+            document.getElementById("buyBackTable").classList.add("hidden");
+            localStorage.setItem("selectedTable", "buyNotBackTable");
+        });
+    });
+
+        function confirmCancel(event, url) {
+        event.preventDefault(); // Prevent immediate redirection
+
+        if (confirm("Are you sure you want to cancel this request?")) {
+            setTimeout(function () {
+                window.location.href = url; // Redirect after 5 seconds
+            }, 5000);
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base_dp.html' %}
+{% load static %}
+
+{% block title %} DP - Dashboard {% endblock %}
+<link rel="icon" type="image/x-icon" href="{% static 'images/logo3_RW8_icon.ico' %}" sizes="128x128" class="favicon">
+{% block css %}
+<style>
+     .card {
+            border: none; /* Remove default border */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* More prominent shadow */
+            transition: transform 0.2s; /* Smooth transition on hover */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+        }
+
+        .card-title {
+            font-weight: bold; /* Make card titles bold */
+        }
+
+        .card-text {
+            font-size: 18px; /* Increase text size for better visibility */
+            margin: 0; /* Remove default margin */
+        }
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Delivery Orders</h5>
+                    <p class="card-text">{{ total_delivered }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Return Orders</h5>
+                    <p class="card-text">{{ total_returned }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

@@ -1,0 +1,417 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+     .head-work {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+    }
+
+    .head-work::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7%;
+        height: 2px;
+        background-color: #000;
+    }
+
+    /* Product Image */
+    .prod-img {
+        display: block;
+        width: 100%;
+        max-width: 250px;
+        height: 300px;
+        border-radius: 10px;
+        margin: 0 auto;
+    }
+
+    .p_name {
+        font-weight: bold;
+        color: #3b2415;
+        font-size: 20px;
+        margin-bottom: 0;
+    }
+
+    .b_name {
+        font-weight: bold;
+        color: #3b2415;
+        font-size: 15px;
+        opacity: 60%;
+        margin-top: 1px;
+        margin-bottom: 0%;
+    }
+
+    .stoke{
+        font-weight: bold;
+        color: green;
+        font-size: 15px;
+        opacity: 60%;
+        margin-top: 1px;
+    }
+
+    .order-status-badge {
+    display: inline-block;
+    background-color: #453229; /* Brown shade */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-transform: capitalize;
+}
+
+.icon {
+        margin-right: 5px;
+        color: #3b2415;
+    }
+
+    .txt {
+        color: #3b2415;
+        opacity: 90%;
+        font-size: 15px;
+        line-height: 2px;
+    }
+
+    /* Review Button */
+    .review-btn {
+        background-color: #453229;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+
+    }
+
+    .review-btn:hover {
+        background-color: #3b2415;
+    }
+
+    .quantity-control {
+    max-width: 250px; /* Limit the width of the control */
+}
+
+.quantity-input {
+    font-size: 14px;
+    padding: 5px;
+    text-align: center;
+}
+
+.decrease-btn, .increase-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+   
+    transition: all 0.3s ease;
+}
+
+.decrease-btn:disabled, .increase-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.remove-btn{
+    background-color: white;
+    border : none;
+    color: #3b2415;
+
+}
+
+.last{
+    margin-left: auto;
+}
+
+.promo-code {
+            margin-bottom: 20px;
+        }
+
+        .promo-code input {
+            padding: 10px 12px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #3b2415;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #453229;
+        }
+
+        .promo-code button {
+            padding: 10px 15px;
+            background: #453229;
+            opacity: 90%;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .promo-code button:hover {
+            background: #3b2415;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(17, 8, 0, 0.2);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            padding: 4px 0;
+            color: #453229;
+        }
+
+        .summary-row span:last-child {
+            opacity: 0.8;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 14px;
+            background: #453229;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .checkout-btn:hover {
+            background: #3b2415;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: white;
+        }
+
+        .shipping-notice {
+            text-align: center;
+            color: #453229;
+            margin-top: 12px;
+            font-size: 13px;
+            padding: 8px;
+            background: #fff;
+            border-radius: 6px;
+            border: 1px dashed #ddd;
+        }
+
+        @media (max-width: 768px){
+            .p_name {
+                text-align: center;
+    }
+
+    .b_name {
+      text-align: center;
+    }
+   
+    .stoke{
+        text-align: center;
+    }
+
+    .last{
+        margin-left: auto;
+    }
+    
+    .quantity-control{
+        margin-left: auto;
+    }
+    .remove-btn{
+        margin-left: auto;
+    }
+
+    .txt{
+        line-height: 20px;
+    }
+        }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-5">
+    <h2 class="head-work">Your Cart</h2>
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <section class="products" id="cartItemsContainer">
+                        {% if cart_items %}
+                        {% for item in cart_items %}
+                        <div class="row" data-product-id="{{ item.product.id }}" data-rid="{{ item.rid }}">
+                            <div class="col-md-4 col-sm-12">
+                                <img src="{{ item.image }}" alt="{{ item.name }}" class="prod-img">
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <p class="p_name">{{ item.name }}
+                                    {% if item.prod_type == "own_product" %}
+                                    <span class="order-status-badge">Own</span>
+                                    {% elif item.prod_type == "resell_product"  %}
+                                    <span class="order-status-badge">Reselling</span>
+                                    {% elif item.prod_type == "Buy_back" %}
+                                    <span class="order-status-badge">Buy Back</span>
+                                    {% endif %}
+                                </p>
+                                <p class="b_name">{{ item.brand }}</p>
+                                {% if not item.prod_type == "Buy_back" %}
+                                <p class="stoke">stoke : {{ item.stoke }}</p>
+                                {% endif %}
+                                <div class="row two">
+                                    <div class=" d-flex justify-content-between">
+                                        <div class="col-md-6 col-sm-12 w-50">
+                                            <p class="txt"><i class="bi bi-tag icon fs-5"></i>Price : ₹{{ item.price }}</p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 w-50">
+                                            <p class="txt"><i class="bi bi-boxes icon fs-5"></i>Quantity : {{ item.quantity }}</p>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+
+
+                                <div class="row two">
+                                    <div class=" d-flex justify-content-between">
+                                        <div class="col-md-6 col-sm-12 w-50">
+                                            <p class="txt"><i class="bi bi-rulers icon fs-5"></i>Size : {{ item.size }}</p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 w-50">
+                                            <p class="txt"><i class="bi bi-palette icon fs-5"></i>Color : {{ item.color }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                               
+                                {% if item.security and item.security != "00" and item.days and item.days != "00" and item.date and item.date != "00" and item.return_date and item.return_date != "00" %}
+                                <div class="row two">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="col-md-6 col-sm-12 w-50">
+                                            <p class="txt"><i class="bi bi-wallet icon fs-5"></i>Deposit Amount : ₹{{ item.security }}</p>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 w-50">
+                                            <p class="txt"><i class="bi bi-clock-history icon fs-5"></i>Days : {{ item.days }} days</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="txt"><i class="bi bi-calendar icon fs-5"></i>Rental-Period :
+                                    {{ item.date }} - {{ item.return_date|date:"M. d, Y" }}</p>
+                                {% endif %}
+
+                                
+                                <div class="row two last">
+                                    {% if not item.prod_type == "Buy_back" %}
+                                    <div class="col-md-6 col-sm-12 w-50 qua">
+                                        <div class="quantity-control d-flex gap-2  bg-white">
+                                            <form method="POST" action="{% url 'update_cart' %}" class="d-flex align-items-center gap-2 form-item-{{ item.id }}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                                <button type="button" class="decrease-btn btn btn-sm" onclick="decreaseQuantity({{ item.id }})" {% if item.quantity <= 1 %} disabled {% endif %}>
+                                                    <i class="fas fa-minus" style="color: #453229;"></i>
+                                                </button>
+                                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="quantity-input form-control text-center" id="quantity-{{ item.id }}" style="width: 60px;">
+                                                <button type="submit" name="quantity" value="{{ item.quantity|add:1 }}" class="increase-btn btn btn-sm">
+                                                    <i class="fas fa-plus" style="color: #453229;"></i>
+                                                </button>
+                                            </form>
+                                        </div>  
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-md-6 col-sm-12 w-50 rem">
+                                        <form method="POST" action="{% url 'remove_from_cart' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                                            <button type="submit" class="remove-btn">
+                                                <i class="bi bi-trash"></i> Remove
+                                            </button>
+                                        </form>
+                                    </div>
+                                    </div>
+                            </div>
+                        </div><hr>
+                        {% endfor %}
+                        {% else %}
+                        <div class="text-center py-5">
+                            <h3>Your cart is empty</h3>
+                            <a href="{% url 'home' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+                        </div>
+                        {% endif %}
+                    </section>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <div class="promo-code">
+                        <form method="POST" action="{% url 'apply_voucher' %}">
+                            {% csrf_token %}
+                            <input type="text" name="voucher_code" maxlength="10" placeholder="ENTER PROMO CODE" class="form-control" required>
+                            <button type="submit" class="btn btn-dark w-100">Apply Promo Code</button>
+                            {% if discount_error %}
+                                <p class="text-danger">{{ discount_error }}</p>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹{{ total_price }}</span></div>
+                    <div class="summary-row"><span>Security deposit</span><span id="security">₹{{ total_security }}</span></div>
+                    <div class="summary-row"><span>Shipping cost</span><span id="shipping">₹10</span></div>
+                    <div class="summary-row"><span>Discount</span><span id="discount">-₹{{ discount }}</span></div>
+                    <div class="summary-row" style="font-weight: bold; font-size: 18px; margin-top: 20px; border-top: 2px solid #dee2e6; padding-top: 15px;">
+                        <span>Estimated Total</span><span>₹<span id="total">{{ Grand_total|floatformat:2 }}</span></span>
+                    </div>
+                    <form action="{% url 'checkout_cart' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="checkout-btn" {% if cart_items|length == 0 %} style="opacity: 0.5; background-color: #a89088; pointer-events: none;" disabled{% endif %}>Proceed to Checkout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+
+
+    function decreaseQuantity(itemId) {
+        const quantityInput = document.getElementById('quantity-' + itemId);
+        let newQuantity = parseInt(quantityInput.value) - 1;
+    
+        if (newQuantity >= 1) {
+            quantityInput.value = newQuantity; // Update the input field value
+            submitForm(itemId, newQuantity);   // Submit the form with updated quantity
+        }
+    }
+    
+    function submitForm(itemId, newQuantity) {
+        const form = document.querySelector(`.form-item-${itemId}`); // Select the correct form
+        const quantityInput = form.querySelector('input[name="quantity"]');
+        quantityInput.value = newQuantity;  // Update quantity field
+        form.submit();                      // Submit the form
+    }
+    
+    </script>
+{% endblock %}

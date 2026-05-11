@@ -1,0 +1,146 @@
+{% extends 'base1.html' %}
+
+{% block title %}StyleSurfer - Privacy Policy{% endblock %}
+{% block css %}
+    <style>
+        body {
+            /* font-size: 16px; */
+            line-height: 1.6;
+            color: #110808;
+            background-color: #f9f9f9;
+        }
+        header {
+            text-align: center;
+            margin-top: 5%;
+            color: #110808;
+        }
+        header h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            color: #110808;
+        }
+        header h1::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 3px;
+            background-color: #765341;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        .container-custom {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #110808;
+            font-size: 1em;
+            text-align: justify;
+            margin: 20px 0;
+        }
+        .container-custom h2 {
+            color: #110808;
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+        .container-custom ul {
+            padding-left: 25px;
+        }
+        .container-custom ul li {
+            margin-bottom: 10px;
+            list-style-type: square;
+            font-size: 1em;
+        }
+        .container-custom a {
+            color: #110808;
+            text-decoration: none;
+        }
+        .container-custom a:hover {
+            text-decoration: underline;
+        }
+        .container-custom hr {
+            border: none;
+            height: 5px;
+            background-image: linear-gradient(to right, #110808, #765341);
+            margin: 30px 0;
+            border-radius: 2px;
+        }
+       footer {
+            text-align: center;
+            padding: 15px;
+            color: #110808;
+            font-size: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<header>
+    <h1>StyleSurfer Privacy Policy</h1>
+</header>
+
+<div class="container-fluid mt-5">
+    <div class="container-custom">
+        <p>At <strong>StyleSurfer</strong>, your privacy is important to us, and we value the trust you place in our platform. We are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you use our services.</p>
+
+        <hr>
+        <h2>Information We Collect</h2>
+        <ul>
+            <li><strong>Personal Information:</strong> Your username, email, phone number, address, pincode, and account credentials (e.g., password).</li>
+            <li><strong>Transactional Information:</strong> Your rental history, payment details (e.g., credit card number, bank account information) are securely processed and stored through third-party payment providers.</li>
+        </ul>
+
+        <hr>
+        <h2>Where and How We Use Your Information</h2>
+        <ul>
+            <li><strong>Communications and Updates:</strong> Your email and phone number are used to send notifications, OTP verification for registration, order confirmations, shipping updates, and announcements about new features, sales, and exciting opportunities.</li>
+            <li><strong>Account Management:</strong> Your account credentials help us create and manage a secure account for you.</li>
+            <li><strong>Order Processing:</strong> Personal details like your name, email, and address are used to process your rental orders efficiently.</li>
+            <li><strong>Support and Issue Resolution:</strong> If you contact us with queries or issues, your information helps us resolve them effectively.</li>
+            <li><strong>Security:</strong> We use your information to prevent unauthorized access, fraud, and other security risks.</li>
+            <li><strong>Unique Custom Design:</strong><br>Your preferences and feedback are used to provide tailored design options that enhance your experience.</li>
+        </ul>
+
+        <hr>
+        <h2>Your Information Shared With</h2>
+        <ul>
+            <li><strong>Service Providers:</strong> Your information may be shared with third-party service providers for payment processing, order fulfillment, and delivery.</li>
+        </ul>
+
+        <hr>
+        <h2>Your Rights</h2>
+        <ul>
+            <li>You can update your personal information.</li>
+            <li>You can decline promotional emails or updates.</li>
+            <li>You can request the deletion of specific information, such as your credit card details.</li>
+        </ul>
+
+        <hr>
+        <h2>Third-Party Links</h2>
+        <p>Our website may contain links to third-party sites. We are not responsible for their privacy practices and encourage you to read their policies.</p>
+
+        <hr>
+        <h2>Policy Updates</h2>
+        <p>We may update this Privacy Policy monthly to reflect changes. Significant updates will be communicated via email or notification.</p>
+
+        <hr>
+        <h2>Contact Us</h2>
+        <p>If you have any questions about our Privacy Policy, please contact us:</p>
+        <ul>
+            <li>Email: <a href="mailto:stylesurfer3@gmail.com">stylesurfer3@gmail.com</a></li>
+            <li>Phone Number: +91 12345 67890</li>
+        </ul>
+
+        <p>By using StyleSurfer, you agree to this Privacy Policy. Thank you for trusting us!</p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 StyleSurfer. All rights reserved.</p>
+</footer>
+
+{% endblock %}

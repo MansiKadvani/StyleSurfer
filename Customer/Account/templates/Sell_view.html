@@ -1,0 +1,181 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    .btn-custom {
+        background-color: #3b2415;
+        color: white;
+        opacity: 0.85;
+    }
+    .btn-custom:hover {
+        background-color: #3b2415;
+        color: white;
+        opacity: 1;
+    }
+    @media (max-width: 576px) {
+        .btn-group .btn {
+            margin-bottom: 5px;
+            width: 100%;
+        }
+    }
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+    table th:nth-child(1), table td:nth-child(1) {
+        width: 25%;
+    }
+    table th:nth-child(2), table td:nth-child(2) {
+        width: 25%;
+    }
+    table th:nth-child(3), table td:nth-child(3) {
+        width: 25%;
+    }
+    table th:nth-child(4), table td:nth-child(4) {
+        width: 25%;
+    }
+
+    .head-work {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+    }
+
+    .head-work::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7%;
+        height: 2px;
+        background-color: #000;
+    }
+
+     /* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination li {
+    margin: 0 4px;
+}
+
+.pagination a, .pagination span {
+    display: block;
+    padding: 5px 10px;  /* Smaller button size */
+    font-size: 14px;    /* Smaller font size */
+    color: #3b2415;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #3b2415;
+    color: white;
+}
+
+/* Active Page Styling */
+.pagination .active a, .pagination .active span {
+    background-color: #3b2415;
+    color: white;
+    border: 1px solid #3b2415;
+    font-weight: bold;
+    box-shadow: 0 0 8px rgba(59, 36, 21, 0.5);
+}
+
+/* First/Last Page and Arrows Styling */
+.pagination .first, .pagination .last, 
+.pagination .prev, .pagination .next {
+    font-weight: bold;
+    background-color: white;
+    color: #3b2415;
+    /* border: 1px solid #ddd; */
+    transition: 0.3s;
+}
+
+.pagination .first:hover, .pagination .last:hover, 
+.pagination .prev:hover, .pagination .next:hover {
+    background-color: #3b2415;
+    color: white;
+}
+
+</style>
+{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item mx-5"><a href="{% url 'Sell' %}" style="text-decoration: none; color: #5b3e31;"><i class="bi bi-arrow-left"></i></a></li>
+    </ol>
+</nav>
+
+<h2 class="head-work">{{ product.name }} Orders</h2>
+
+<div id="ownProducts" class="section-visible my-4">
+        <div class="card p-3">
+            <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Rental Date</th>
+                        <th>Payment method</th>
+                        <th>Order Status</th>
+                    </tr>
+                </thead>
+               <tbody id="own-products-body">
+        {% for item in page_obj %}
+        <tr>
+            <td>{{ item.order.user.username }}</td>
+            <td>{{ item.date }} - {{ item.return_date }}</td>
+            <td>{{ item.order.payment_method }}</td>
+            <td>{{ item.order.order_status }}</td>    
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">No orders found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+    
+            </table>
+            </div>
+        </div>
+
+         <!-- Pagination Controls -->
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="first"><a href="?page=1">« First</a></li>
+            <li class="prev"><a href="?page={{ page_obj.previous_page_number }}">‹‹</a></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            <li class="{% if page_obj.number == num %}active{% endif %}">
+                <a href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if products.has_next %}
+            <li class="next"><a href="?page={{ page_obj.next_page_number }}">››</a></li>
+            <li class="last"><a href="?page={{ page_obj.paginator.num_pages }}">Last »</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

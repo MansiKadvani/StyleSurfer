@@ -1,0 +1,769 @@
+{% extends 'base1.html' %}
+
+{% load static %}
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/prod_desc.css' %}">
+<style>
+
+  .price-section{
+    font-weight: bold;
+    opacity: 90%;
+  }
+
+/* Improved Calendar Styling */
+.datepicker td, .datepicker th {
+    text-align: center;
+    width: 50px !important;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Selected Date - Light Brown */
+.datepicker td.active, .datepicker td.selected {
+    background-color: #c49a6c !important;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+/* Hover Effect */
+.datepicker td:hover {
+    background-color: #e2c6a8 !important;
+    color: black !important;
+}
+
+/* Today's Date */
+.datepicker table tr td.today {
+    background-color: white !important;
+    color: black !important;
+    font-weight: bold !important;
+    text-decoration: underline;
+}
+
+/* Disabled Past Dates */
+.datepicker td.disabled {
+    text-decoration: line-through;
+    color: grey !important;
+    pointer-events: none;
+}
+
+/* Calendar Container */
+.calendar-1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    /* padding: 15px; */
+}
+
+/* Calendar input styling */
+.calendar-type {
+    flex: 1 1 100%;
+    text-align: center;
+}
+
+@media (min-width: 350px) {
+    .calendar-type {
+        flex: 1 1 48%;
+    }
+}
+
+.calendar-type input {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid #c49a6c;
+    padding: 8px;
+    color: #453229;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+/* Calendar Button */
+#show-calendar-btn {
+    background-color: white;
+    border: 1px solid #453229;
+    font-size: 15px;
+    color: #453229;
+    /* padding: 10px; */
+    transition: all 0.3s ease-in-out;
+}
+
+#show-calendar-btn:hover {
+    background-color: #453229;
+    border: 1px solid #453229;
+    font-size: 15px;
+    color: white;
+    /* padding: 10px; */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Calendar Button - After Selection */
+#show-calendar-btn.selected::after {
+    content: " ✔"; /* Checkmark symbol */
+}
+
+/* Message Box */
+#message {
+    text-align: center;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    font-size: 15px;
+    /* background: #f9f9f9; */
+    /* padding: 10px;
+    border-radius: 5px; */
+    color: #453229;
+    
+           
+            
+            /* background-color: #fff; */
+            /* box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); */
+
+}
+#message ul{
+  margin: 0;
+  border:2px solid #3b2415;
+  background-color: #fff;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+#message li{
+  list-style-type: none;
+}
+
+  .filled-star {
+color: gold;
+font-size: 20px;
+}
+.empty-star {
+color: lightgray;
+font-size: 20px;
+}
+.product-details .sku {
+font-size: 15px;
+color: #453229;
+font-weight: bold;
+}
+
+.icon {
+        margin-right: 5px;
+        color: #3b2415;
+    }
+
+   
+#rent_now{
+  width: 100% !important;
+}
+
+#cart-message {
+    position: fixed; /* Stays in position even on scroll */
+    bottom: 7vh; /* Always stays at 40% of the viewport height */
+    left: 50%; /* Centers horizontally */
+    transform: translateX(-50%); /* Ensures text remains centered */
+    background-color: #110808;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 1000; /* Ensures it overlaps other content */
+    white-space: nowrap;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds slight shadow for better visibility */
+}
+
+
+
+
+</style>
+
+{% endblock %}
+
+{# breadcump #}
+{% block body %}
+
+<body>
+  <nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="">Products - {{ product.category }}</a></li>
+      <li class="breadcrumb-item active current" aria-current="page">{{ product.name }}</li>
+    </ol>
+  </nav>
+
+  {# images for normal screen #}
+
+  <div class="container">
+
+    <div class="container-1">
+      <img src="{{ product.image_front.url }}" alt="Thumbnail 1" onclick="changeImage('{{ product.image_front.url }}')">
+      <img src="{{ product.image_side.url }}" alt="Thumbnail 2" onclick="changeImage('{{ product.image_side.url }}')">
+      <img src="{{ product.image_back.url }}" alt="Thumbnail 3" onclick="changeImage('{{ product.image_back.url }}')">
+    </div>
+
+
+    <div class="container-2  ">
+      <div class="container-3 ">
+
+        <img id="mainProductImage" src="{{ product.image_front.url }}" class="main" alt="Main Image">
+
+        {# images for responsive side #}
+
+        <div id="carouselExampleFade" class="carousel slide " data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active"
+              aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="1"
+              aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="2"
+              aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img id="mainProductImage" src="{{ product.image_front.url }}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img id="mainProductImage" src="{{ product.image_side.url }}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img id="mainProductImage" src="{{ product.image_back.url }}" class="d-block w-100" alt="...">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="container-2">
+      <div class="container-3">
+        <div class="product-details">
+          {% if request.GET.success and "quantity" in request.GET.success|lower %}
+    <p id="success-message" style="color: green; margin-top: 0;">✅ {{ request.GET.success }}</p>
+{% endif %}
+          <h1 class="p_name">{{ product.name }}</h1>
+          <p class="b_name">{{ product.brand }}</p>
+          <div class="price-section">
+           Rental : <span class="rental-price" id="dynamicPrice">₹{{ product.rental_price }}</span>&nbsp;&nbsp;
+            <span class="original-price">Original Price :- ₹{{ product.price }}</span>
+            Security Deposit : <span class="security-deposit" id="securityDepositPrice">₹0.00</span>&nbsp;&nbsp;
+            <a href="#" data-bs-toggle="modal" data-bs-target="#depositModal">
+                <i class="bi bi-info-circle"></i>
+            </a>
+          </div>
+          <div class="row d-flex justify-content-between">
+            <div class="col-6">
+              <p class="sku"><i class="bi bi-palette icon fs-6"></i>Color :- {{ product.color }}</p>
+            </div>
+
+            <div class="col-6">
+    <p class="sku d-none">Stock: <span id="stock-display">{{ first_quantity }}</span></p>
+</div>
+
+<div class="sizes">
+    {% for size, quantity in size_quantity_dict.items %}
+    <label class="size-label">
+        <input type="radio" name="selectsize" value="{{ size }}"
+               data-quantity="{{ quantity }}" required>
+        <span>{{ size }}</span>
+    </label>
+    {% endfor %}
+</div>
+
+
+
+            <div class="iconss">
+                <p>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#sizeChartModal">
+                        <i class="bi bi-rulers icon"></i> Size Chart 
+                    </a>
+                </p>
+            </div>
+        
+            {% if request.GET.error and "size" in request.GET.error|lower %}
+    <p id="error-message" style="color: #ff0000; margin-top: 0;">⚠️ {{ request.GET.error }}</p>
+{% endif %}
+        </div>
+
+
+
+
+
+
+
+          <div class="calendar-1">
+    <div class="calendar-type">
+        <button id="show-calendar-btn" class="btn btn-primary" data-bs-toggle="popover" data-bs-html="true"
+            data-bs-content='<div id="datepicker" class="datepicker"></div>'>
+            Select Rental Date (Event Date) <i class="bi bi-calendar" style="font-size: 18px;"></i>
+        </button>
+    </div>
+
+</div>
+
+<div name="date" id="message"></div>
+
+          {% if request.GET.error and "price" in request.GET.error|lower or "rental duration" in request.GET.error|lower or "inavalid date format" in request.GET.error|lower %}
+    <p id="error-message" style="color: #ff0000; margin-top: 0;">⚠️ {{ request.GET.error }}</p>
+{% endif %}
+          <div class="actions">
+            <form method="POST" id="AddToCart" action="{% url 'add_to_cart' %}">
+    {% csrf_token %}
+    <input type="hidden" name="product_id" value="{{ product.id }}">
+    <input type="hidden" name="name" value="{{ product.name }}">
+    <input type="hidden" name="brand" value="{{ product.brand }}">
+    <input type="hidden" id="stock-input" name="stock" value=""> <!-- Updated to use selected size's quantity -->
+    <input type="hidden" id="price" name="price" data-base-price="{{ product.rental_price }}" value="{{ product.rental_price }}">
+    <input type="hidden" name="image" value="{{ product.image_front.url }}">
+    <input type="hidden" name="color" value="{{ product.color }}">
+    <input type="hidden" id="securityDeposit" name="security" value="">
+    <input type="hidden" name="selectsize" id="selectedSize">
+
+    <!-- Updated Date Fields -->
+    <input type="hidden" name="delivery_date" id="deliveryDate" value="">
+    <input type="hidden" name="rental_dates" id="rentalDates" value="">
+    <input type="hidden" name="return_date" id="returnDate" value="">
+    <input type="hidden" name="days" id="rentalDaysCount" value="">
+
+
+    <input type="hidden" name="ptype" id="ptype" value="{{ product.prod_type }}">
+
+    <button type="submit" id="rent_now" class="add-to-cart w-100" disabled>RENT NOW</button>
+</form>
+
+<!-- Display Area -->
+
+
+            {% if product.buyback == True %}
+            <a href="{% url 'Buydesc' product.id %}">
+            <button type="button" id="rent_now" class="add-to-cart">Buy Back</button>
+            </a>
+            {% endif %}
+
+
+
+
+          </div>
+
+          <div class="additional-info">
+            <button onclick="toggleAccordion(this)"> Details <i class="bi bi-plus icon"></i></button>
+            <div class="accordion-content">{{ product.description }}</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="depositModalLabel">Refundable Deposit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ol>
+            <li>Refundable Security deposit to be paid at the time of shipment and will be returned upon receiving the
+              outfit back in good condition.</li>
+            <li>Customers will have to provide the security deposit at the time of the shipment.</li>
+            <li>Online Deposit shall be refunded within 30 working days post return of the outfit.</li>
+            <li>Customers while renting an outfit are requested to inspect and point out any damage/spots/markings etc
+              upon receipt to avoid damage costs later.</li>
+            <li>Any modification/alteration will be considered as irreparable damage, and the security deposit will be
+              forfeited.</li>
+            <li>If a garment is returned in damaged or dirty condition, the amount of damage will be deducted from the
+              security deposit.</li>
+            <li>In case of loss or if the garment is irreparable, 30% of the MRP will be charged to the client.</li>
+          </ol>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+
+
+
+  <!-- Size Chart Modal -->
+  <div class="modal fade" id="sizeChartModal" tabindex="-1" aria-labelledby="sizeChartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="sizeChartModalLabel">Size Chart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="size-chart-table">
+            <thead>
+              <tr>
+                <th>Sizes</th>
+                <th>Bust/Chest (inches)</th>
+                <th>Waist (inches)</th>
+                <th>Hip (inches)</th>
+                <th>Length (inches)</th>
+                <th>Shoulder (inches)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td>32</td>
+                <td>26</td>
+                <td>36</td>
+                <td>28-44</td>
+                <td>32</td>
+              </tr>
+              <tr>
+                <td>S</td>
+                <td>34</td>
+                <td>28</td>
+                <td>38</td>
+                <td>28-44</td>
+                <td>14</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>36</td>
+                <td>30</td>
+                <td>40</td>
+                <td>28-44</td>
+                <td>14.5</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td>38</td>
+                <td>32</td>
+                <td>42</td>
+                <td>28-44</td>
+                <td>15</td>
+              </tr>
+              <tr>
+                <td>XL</td>
+                <td>40</td>
+                <td>34</td>
+                <td>44</td>
+                <td>28-44</td>
+                <td>15.5</td>
+              </tr>
+              <tr>
+                <td>XXL</td>
+                <td>42</td>
+                <td>36</td>
+                <td>46</td>
+                <td>28-44</td>
+                <td>16</td>
+              </tr>
+              <tr>
+                <td>3XL</td>
+                <td>44</td>
+                <td>38</td>
+                <td>48</td>
+                <td>28-44</td>
+                <td>16.5</td>
+              </tr>
+              <tr>
+                <td>4XL</td>
+                <td>46</td>
+                <td>40</td>
+                <td>50</td>
+                <td>28-34</td>
+                <td>17.5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+  </section>
+
+
+
+  <div class="container-fluid review-container">
+    <h2 class="mb-4 text-center">🌟 Customer Reviews 🌟</h2>
+
+    {% if reviews %}
+    <div class="row justify-content-center">
+      {% for review in reviews %}
+      <div class="col-md-4">
+        <div class="card review-card mb-4">
+          <div class="card-body text-center">
+            <h3 class="card-title">{{ review.user.username }}</h3>
+
+            <div class="stars mb-2">
+              {% for i in "12345"|make_list %}
+              <span class="{% if forloop.counter <= review.rating %}filled-star{% else %}empty-star{% endif %}">★</span>
+              {% endfor %}
+            </div>
+
+            <p class="review-text">({{ review.rating }}/5)</p>
+            <p class="review-text"><strong>Review:</strong> {{ review.review }}</p>
+            <p class="review-date">🕒 Reviewed on {{ review.created_at|date:"d M Y" }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-reviews">No reviews yet. Be the first to leave a review! 😊</p>
+    {% endif %}
+  </div>
+
+  {% if request.GET.success and request.GET.success == "Added to cart" %}
+  <div id="cart-message">✔ {{ request.GET.success }}</div>
+  <script>
+      setTimeout(function() {
+          // Hide the message
+          document.getElementById("cart-message").style.display = "none";
+
+          // Remove the 'success' query param from the URL without reloading
+          if (history.replaceState) {
+              const url = new URL(window.location);
+              url.searchParams.delete('success');
+              window.history.replaceState({}, document.title, url.pathname + url.search);
+          }
+      }, 5000); // Hide after 3 seconds
+  </script>
+{% endif %}
+
+
+
+
+
+  {% endblock %}
+
+  {% block js %}
+  <!-- JS Imports -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="{% static 'js/prod_desc.js' %}"></script>
+
+  <script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const priceInput = document.getElementById("price");
+    const securityDepositInput = document.getElementById("securityDeposit");
+    const selectedSizeInput = document.getElementById("selectedSize");
+    const stockInput = document.getElementById("stock-input");
+    const rentNowBtn = document.getElementById("rent_now");
+    const selectedSizeDisplay = document.getElementById("selectedSizeDisplay");
+    const stockDisplay = document.getElementById("stock-display");
+    const dynamicPrice = document.getElementById("dynamicPrice");
+    const securityDepositDisplay = document.getElementById("securityDepositPrice");
+    const messageContainer = document.getElementById("message");
+    const deliveryDateInput = document.getElementById("deliveryDate");
+    const rentalDatesInput = document.getElementById("rentalDates");
+    const returnDateInput = document.getElementById("returnDate");
+    const rentalDaysCountInput = document.getElementById("rentalDaysCount");
+
+    let basePrice = parseFloat(priceInput.dataset.basePrice) || 0;
+    let selectedDates = [];
+
+    const rentedDatesData = {
+        "S": { "2025-04-20": 1 },
+        "M": {},
+        "L": {}
+    };
+
+    document.querySelectorAll('input[name="selectsize"]').forEach(sizeInput => {
+        sizeInput.addEventListener('change', function () {
+            selectedSizeInput.value = this.value;
+            stockInput.value = this.dataset.quantity;
+            stockInput.dataset.originalStock = this.dataset.quantity;
+            stockDisplay.textContent = this.dataset.quantity;
+            selectedSizeDisplay.textContent = this.value;
+            updateStockDisplay();
+            validateForm();
+        });
+    });
+
+    const popoverTrigger = document.getElementById("show-calendar-btn");
+    const popover = new bootstrap.Popover(popoverTrigger, {
+        trigger: "click",
+        container: "body",
+        placement: "bottom",
+        html: true,
+        content: `<div id="datepicker"></div><button id="cancelDates" class="btn btn-danger mt-2 w-100">Cancel</button>`
+    });
+
+    popoverTrigger.addEventListener("shown.bs.popover", () => {
+        $('#datepicker').datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: false,
+            todayHighlight: true,
+            multidate: true,
+            startDate: new Date()
+        }).datepicker('clearDates').on('changeDate', function () {
+            let dates = $('#datepicker').datepicker('getDates');
+            if (dates.length === 2) {
+                const [start, end] = dates.sort((a, b) => a - b);
+                const range = [];
+                for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                    range.push(new Date(d));
+                }
+                selectedDates = range;
+            } else {
+                selectedDates = [...new Set(dates.map(d => +new Date(d)))].map(d => new Date(d)).sort((a, b) => a - b);
+            }
+            updateSelectedDates();
+        });
+
+        document.getElementById("cancelDates").addEventListener("click", () => {
+            clearDates();
+            $('#datepicker').datepicker("clearDates");
+        });
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!popoverTrigger.contains(event.target) && !document.querySelector(".popover")?.contains(event.target)) {
+            popover.hide();
+            if (selectedDates.length) submitDates();
+        }
+    });
+
+    function updateSelectedDates() {
+    if (!selectedDates.length) {
+        clearDates();
+        return;
+    }
+
+    selectedDates.sort((a, b) => a - b);
+
+    const earliestDate = new Date(selectedDates[0]);
+    const latestDate = new Date(selectedDates[selectedDates.length - 1]);
+
+    const deliveryDate = new Date(earliestDate);
+    deliveryDate.setDate(deliveryDate.getDate() - 1);
+
+    const returnDate = new Date(latestDate);
+    returnDate.setDate(returnDate.getDate() - 1); // ✅ your required logic
+
+    // Rental Dates: from deliveryDate to returnDate (inclusive)
+    const rentalDates = [];
+    for (let time = deliveryDate.getTime(); time <= returnDate.getTime(); time += 86400000) {
+        rentalDates.push(new Date(time));
+    }
+
+    const rentalDays = rentalDates.length;
+
+    deliveryDateInput.value = formatDate(deliveryDate);
+    returnDateInput.value = formatDate(returnDate);
+    rentalDatesInput.value = rentalDates.map(formatDate).join(", ");
+    rentalDaysCountInput.value = rentalDays;
+
+    updatePriceAndSecurity(rentalDays);
+    updateMessage(rentalDates, deliveryDate, returnDate, rentalDays);
+    updateStockDisplay();
+    validateForm();
+}
+
+
+    function updatePriceAndSecurity(rentalDays) {
+        const totalPrice = basePrice * rentalDays;
+        const securityDeposit = totalPrice * 0.5;
+        priceInput.value = totalPrice;
+        securityDepositInput.value = securityDeposit;
+        dynamicPrice.textContent = `₹${totalPrice}`;
+        securityDepositDisplay.textContent = `₹${securityDeposit}`;
+    }
+
+    function updateMessage(rentalDates = [], deliveryDate = "", returnDate = "", rentalDays = 0) {
+    if (rentalDates.length > 0) {
+        messageContainer.innerHTML = `<ul>
+            <li><i class="bi bi-calendar-check"></i> Delivery Date: <b>${formatDateForMessage(deliveryDate)}</b></li>
+            <li><i class="bi bi-calendar-event"></i> Rental Dates: <b>${rentalDates.map(formatDateForMessage).join(", ")}</b></li>
+            <li><i class="bi bi-calendar-x"></i> Return Date: <b>${formatDateForMessage(returnDate)}</b></li>
+            <li><i class="bi bi-hourglass-split"></i> Rental Days: <b>${rentalDays}</b></li>
+        </ul>`;
+    } else {
+        messageContainer.innerHTML = `<p>Please select rental dates.</p>`;
+    }
+}
+
+    function updateStockDisplay() {
+        const size = selectedSizeInput.value;
+        if (!size || selectedDates.length === 0) {
+            stockDisplay.textContent = stockInput.dataset.originalStock;
+            return;
+        }
+        const available = checkAvailability(size, selectedDates);
+        stockDisplay.textContent = available ? stockInput.dataset.originalStock : 0;
+    }
+
+    function checkAvailability(size, dates) {
+        const stock = parseInt(stockInput.dataset.originalStock);
+        const rented = rentedDatesData[size] || {};
+        for (let date of dates.map(formatDate)) {
+            if ((rented[date] || 0) >= stock) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function submitDates() {
+        console.log("Dates Submitted:", rentalDatesInput.value);
+    }
+
+    function clearDates() {
+        selectedDates = [];
+        deliveryDateInput.value = "";
+        returnDateInput.value = "";
+        rentalDatesInput.value = "";
+        rentalDaysCountInput.value = "";
+        updatePriceAndSecurity(1);
+        updateMessage();
+        stockDisplay.textContent = stockInput.dataset.originalStock;
+        validateForm();
+    }
+
+    function formatDate(date) {
+        return new Date(date).toISOString().split('T')[0];
+    }
+
+    function formatDateForMessage(date) {
+        return new Date(date).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'short', day: '2-digit'
+        });
+    }
+
+    function validateForm() {
+        rentNowBtn.disabled = !(selectedSizeInput.value && deliveryDateInput.value && selectedDates.length);
+    }
+});
+
+  </script>
+  {% endblock %}

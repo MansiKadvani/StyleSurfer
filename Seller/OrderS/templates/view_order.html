@@ -1,0 +1,286 @@
+{% extends 'base_seller.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    .btn-custom {
+        background-color: #3b2415;
+        color: white;
+        opacity: 0.85;
+    }
+    .btn-custom:hover {
+        opacity: 1;
+    }
+    .btn-outline-dark.active,
+    .btn-outline-secondary.active {
+        background-color: #3b2415;
+        color: white;
+        border-color: #3b2415;
+    }
+    @media (max-width: 576px) {
+        .btn-group .btn {
+            margin-bottom: 5px;
+            width: 100%;
+        }
+    }
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="section-visible my-4">
+    <div class="btn-group mb-3 d-flex flex-column flex-sm-row">
+        <button class="btn effect active mb-2 mb-sm-0" id="ownBtn">Own Products</button>
+        <button class="btn effect mb-2 mb-sm-0" id="resellBtn">Reselling Products</button>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mb-3" id="status-filters">
+        <button class="btn btn-outline-dark active" id="btn-pending">Pending</button>
+        <button class="btn btn-outline-dark" id="btn-delivered">Delivered</button>
+        <button class="btn btn-outline-dark" id="btn-returned">Returned</button>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mb-3" id="sub-status-filters"></div>
+
+
+    <div class="card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="btn mb-0 effect btn-custom">Order</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+
+                <!-- Own prodct  -->
+                <thead class="table-light" id="own-header">
+                    <tr>
+                        <th>No.</th>
+                        <th>Customer Name</th>
+                        <th>Product Name</th>
+                        <th>Rental Date</th>
+                        <th>order Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <!-- Resell product  -->
+                <thead class="table-light" id="resell-header" style="display: none;">
+                    <tr>
+                        <th>No.</th>
+                        <th>Buyer Name</th>
+                        <th>Product Name</th>
+                        <th>Delivery date</th>
+                        <th>Order Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    {% for item in order_items %}
+                        {% if item.prod_type == 'own_product' %}
+                            {% if item.order.order_status == 'Processing' %}
+                                {% if item.product_order_status == 'Pending' %}
+                                <tr class="own pending delivery">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.order.user.username }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.delivery_date }} - {{ item.return_date }}</td>
+                                    <td>Delivery Pending</td>
+                                    <td><a href="{% url 'order_detail' item.order.order_id %}" class="btn btn-custom btn-sm">View Detail</a></td>
+                                </tr>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if item.order.order_status == 'Processing' %}
+                                {% if item.product_order_status == 'delivered' %}
+                                <tr class="own pending return">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.order.user.username }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.delivery_date }} - {{ item.return_date }}</td>
+                                    <td>Return Pending</td>
+                                    <td><a href="{% url 'order_detail' item.order.order_id %}" class="btn btn-custom btn-sm">View Detail</a></td>
+                                </tr>
+                                {% endif %}
+                            {% endif %}
+                            {% if item.order.order_status == 'Processing' %}
+                                {% if item.product_order_status == 'delivered' %}
+                                <tr class="own delivered">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.order.user.username }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.delivery_date }} - {{ item.return_date }}</td>
+                                    <td>delivered</td>
+                                    <td><a href="{% url 'order_detail' item.order.order_id %}" class="btn btn-custom btn-sm">View Detail</a></td>
+                                </tr>
+                                {% endif %}
+                            {% endif %}
+                            {% if item.order.order_status == 'Processing' or 'Completed' %}
+                                {% if item.product_order_status == 'Returned' %}
+                                    <tr class="own returned">
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ item.order.user.username }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.delivery_date }} - {{ item.return_date }}</td>
+                                        <td>₹{{ item.price }}</td>
+                                        <td>Returned</td>
+                                        <td><a href="{% url 'order_detail' item.order.order_id %}" class="btn btn-custom btn-sm">View Detail</a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for item in rorder_items %}
+                        {% if item.prod_type == 'resell_product' %}
+                            {% if item.order.order_status == 'Processing' %}
+                                {% if item.product_order_status == 'Pending' %}
+                                    <tr class="resell pending">
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ item.order.user.username }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.delivery_date }}</td>
+                                        <td>Delivery Pending</td>
+                                        <td><a href="{% url 'detail_resell' item.order.order_id %}" class="btn btn-custom btn-sm">View Detail</a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                            {% if item.order.order_status == 'Processing' or 'Completed' %}
+                                {% if item.product_order_status == 'Completed' %}
+                                    <tr class="resell delivered">
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ item.order.user.username }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.delivery_date }}</td>
+                                        <td>Delivered</td>
+                                        <td><a href="{% url 'detail_resell' item.order.order_id %}" class="btn btn-custom btn-sm">View Detail</a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // Load from localStorage or set default
+let currentMain = localStorage.getItem("currentMain") || 'own';
+let currentStatus = localStorage.getItem("currentStatus") || 'pending';
+let currentSub = localStorage.getItem("currentSub") || 'delivery';
+
+function updateActiveButton(group, activeId) {
+    document.querySelectorAll(group).forEach(btn => btn.classList.remove("active"));
+    const btn = document.getElementById(activeId);
+    if (btn) btn.classList.add("active");
+}
+
+function filterTable() {
+    const isOwn = currentMain === "own";
+    const isPending = currentStatus === "pending";
+    const subFilter = document.getElementById("sub-status-filters");
+
+    subFilter.innerHTML = "";
+
+    // Own Product + Pending -> Show sub filters
+    if (isOwn && isPending) {
+        const btnDelivery = document.createElement("button");
+        btnDelivery.id = "btn-delivery";
+        btnDelivery.className = "btn btn-outline-secondary";
+        btnDelivery.innerText = "Delivery Pending";
+        btnDelivery.onclick = () => {
+            currentSub = "delivery";
+            localStorage.setItem("currentSub", currentSub);
+            updateActiveButton("#sub-status-filters .btn", "btn-delivery");
+            filterTable();
+        };
+
+        const btnReturn = document.createElement("button");
+        btnReturn.id = "btn-return";
+        btnReturn.className = "btn btn-outline-secondary";
+        btnReturn.innerText = "Return Pending";
+        btnReturn.onclick = () => {
+            currentSub = "return";
+            localStorage.setItem("currentSub", currentSub);
+            updateActiveButton("#sub-status-filters .btn", "btn-return");
+            filterTable();
+        };
+
+        subFilter.appendChild(btnDelivery);
+        subFilter.appendChild(btnReturn);
+
+        // Set active sub-filter based on currentSub
+        updateActiveButton("#sub-status-filters .btn", `btn-${currentSub}`);
+    }
+
+    document.getElementById("btn-returned").style.display = isOwn ? "inline-block" : "none";
+    document.getElementById("own-header").style.display = isOwn ? "" : "none";
+    document.getElementById("resell-header").style.display = !isOwn ? "" : "none";
+
+    document.querySelectorAll("tbody tr").forEach(row => {
+        const matchMain = row.classList.contains(currentMain);
+        const matchStatus = row.classList.contains(currentStatus);
+        const matchSub = isOwn && isPending ? row.classList.contains(currentSub) : true;
+        row.style.display = matchMain && matchStatus && matchSub ? "" : "none";
+    });
+
+    // Update active button visuals
+    updateActiveButton(".btn-group .btn", currentMain === "own" ? "ownBtn" : "resellBtn");
+    updateActiveButton("#status-filters .btn", `btn-${currentStatus}`);
+}
+
+// Button events
+document.getElementById("ownBtn").addEventListener("click", () => {
+    currentMain = "own";
+    currentStatus = "pending";
+    currentSub = "delivery";
+    localStorage.setItem("currentMain", currentMain);
+    localStorage.setItem("currentStatus", currentStatus);
+    localStorage.setItem("currentSub", currentSub);
+    filterTable();
+});
+
+document.getElementById("resellBtn").addEventListener("click", () => {
+    currentMain = "resell";
+    currentStatus = "pending";
+    currentSub = "";
+    localStorage.setItem("currentMain", currentMain);
+    localStorage.setItem("currentStatus", currentStatus);
+    localStorage.setItem("currentSub", currentSub);
+    filterTable();
+});
+
+document.getElementById("btn-pending").addEventListener("click", () => {
+    currentStatus = "pending";
+    currentSub = currentMain === "own" ? "delivery" : "";
+    localStorage.setItem("currentStatus", currentStatus);
+    localStorage.setItem("currentSub", currentSub);
+    filterTable();
+});
+
+document.getElementById("btn-delivered").addEventListener("click", () => {
+    currentStatus = "delivered";
+    localStorage.setItem("currentStatus", currentStatus);
+    filterTable();
+});
+
+document.getElementById("btn-returned").addEventListener("click", () => {
+    currentStatus = "returned";
+    localStorage.setItem("currentStatus", currentStatus);
+    filterTable();
+});
+
+// Initial Load
+filterTable();
+
+</script>
+{% endblock %}

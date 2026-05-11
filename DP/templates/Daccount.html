@@ -1,0 +1,69 @@
+{% extends 'base_dp.html' %}
+{% load static %}
+
+{% block title %} DP - Account {% endblock %}
+<link rel="icon" type="image/x-icon" href="{% static 'images/logo3_RW8_icon.ico' %}" sizes="128x128" class="favicon">
+{% block css %}
+<style>
+    .card {
+        border: none; /* Remove default border */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* More prominent shadow */
+        transition: transform 0.2s; /* Smooth transition on hover */
+        display: flex; /* Enable flexbox */
+        justify-content: space-between; /* Space between content */
+        align-items: center; /* Vertically align content */
+        padding: 15px; /* Adjust padding */
+    }
+
+    .card:hover {
+        transform: scale(1.05); /* Zoom effect on hover */
+    }
+
+    .card-title {
+        font-weight: bold; /* Make card titles bold */
+        margin: 0; /* Remove default margin */
+    }
+
+    .arrow-icon {
+        font-size: 20px; /* Set icon size */
+        color: #3b2415; /* Light gray color */
+        transition: color 0.3s ease; /* Smooth color transition on hover */
+    }
+
+    .arrow-icon:hover {
+        color: #a26f25; /* Change color to blue on hover */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <a href="{% url 'Dprofile' %}" class="text-decoration-none">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Personal Information</h5>
+                    </div>
+                    <i class="arrow-icon bi bi-arrow-right"></i> <!-- Bootstrap Icon -->
+                </div>
+            </a>
+        </div>
+        <div class="col-md-12 mb-4">
+            <a href="{% url 'Dpasword' %}" class="text-decoration-none">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Password & Security</h5>
+                    </div>
+                    <i class="arrow-icon bi bi-arrow-right"></i> <!-- Bootstrap Icon -->
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.js"></script>
+{% endblock %}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo3_RW8_icon.ico' %}" sizes="128x128" class="favicon">
+
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.css' %}">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+    <style>
+    .wrapper {
+        background-color: #d8c2b0;
+    }
+
+    .container {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    .inner {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 17px 17px 5px 5px #1108087c;
+        /* Softer shadow for depth */
+        transition: transform 0.3s ease;
+    }
+
+    .image-holder img {
+        width: 100%;
+        height: 100%;
+    }
+
+    button {
+        background-color: #5b3e31;
+        padding: 10px;
+        display: block;
+        margin: auto;
+        margin-top: 25px;
+        margin-bottom: 21px;
+        width: 100%;
+
+    }
+
+
+
+    .inner:hover {
+        transform: translateY(-5px);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        top: 20px;
+        right: 20px;
+        width: auto;
+        height: auto;
+        background-color: transparent;
+        /* No background for the overall modal */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: white;
+        /* Red background for error */
+        /* padding: 15px 20px; */
+        border-radius: 10px;
+        width: 230px;
+        box-shadow: 10px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .modal-content p {
+        color: red;
+        padding-top: 10%;
+        padding-left: 2%;
+        font-size: 15px;
+    }
+
+    /* The Close Button */
+    .close {
+        margin-left: auto;
+        margin-bottom: auto;
+        /* Push to the right */
+        padding-right: 5%;
+        color: #5b3e31;
+        font-size: 22px;
+        font-weight: bold;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    close:hover,
+    .close:focus {
+        color: #333;
+        text-decoration: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+        .modal {
+            height: 60%;
+        }
+
+        .modal-content {
+            width: 90%;
+            height: 15%;
+            /* Full width on smaller screens */
+            right: 5%;
+        }
+    }
+
+    .modal-content i {
+        color: red;
+        font-size: 20px;
+        padding-left: 5%;
+    }
+    .forgot{
+        font-size: 15px;
+        text-align: left;
+        margin-bottom: 5px;
+        margin-top: 10px;
+        padding-bottom: 5px;
+    }
+</style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <div id="login" class="modal">
+                <div class="modal-content">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <p id="message_login"></p>
+                    <span class="close">&times;</span>
+                </div>
+
+            </div>
+            <form action="" method="POST" id="wizard" class="login">
+                {% csrf_token %}
+                <div class="inner">
+                    <div class="image-holder">
+                        <img src="{% static 'images/login.jpg' %}" alt="">
+                    </div>
+                    <div class="form-content ">
+                        <div class="form-header">
+                            <h3 style="color: #5b3e31;">Login</h3>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-holder w-100">
+                                <input type="text" name="username" id="username" placeholder="User Name"
+                                    class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-holder w-100">
+                                <input type="password" placeholder="Password" name="password" id="password"
+                                    class="form-control">
+                                    <i class="fa fa-eye-slash toggle-password" id="togglePassword1" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                            </div>
+                        </div>
+                        <p class="forgot"><a href="{% url 'forgot_password' %}"><u>Forgot Password</u></a></p>
+                        <button type="submit" id="submit">Login</button>
+                        <p><a href="{% url 'Registration' %}">Dont have an account? <b><u>Create Account </u></b></a></p>
+
+
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JQUERY -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+
+    <!-- JQUERY STEP -->
+
+    <!-- Template created and distributed by Colorlib -->
+
+
+    <script>
+        document.getElementById('togglePassword1').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.classList.toggle('fa-eye'); // Toggle icon
+        });
+    
+    </script>
+
+</body>
+
+</html>

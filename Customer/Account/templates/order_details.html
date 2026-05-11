@@ -1,0 +1,750 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block css %}
+<style>
+    /* General Styling */
+    .head-work {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+    }
+
+    .head-work::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7%;
+        height: 2px;
+        background-color: #000;
+    }
+
+    /* Card header */
+    .card-header {
+        height: 50%;
+        background-color: #453229;
+        color: white;
+    }
+
+    /* Product Image */
+    .prod-img {
+        display: block;
+        width: 100%;
+        max-width: 250px;
+        height: 300px;
+        border-radius: 10px;
+        margin: 0 auto;
+    }
+
+    /* Card text details */
+    .p_name {
+        font-weight: bold;
+        color: #3b2415;
+        font-size: 20px;
+        margin-bottom: 0;
+    }
+
+    .b_name {
+        font-weight: bold;
+        color: #3b2415;
+        font-size: 15px;
+        opacity: 60%;
+        margin-top: 1px;
+    }
+
+    .icon {
+        margin-right: 5px;
+        color: #3b2415;
+    }
+
+    .txt {
+        color: #3b2415;
+        opacity: 90%;
+    }
+
+    /* Review Button */
+    .review-btn {
+        background-color: #453229;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+
+    }
+
+    .review-btn:hover {
+        background-color: #3b2415;
+    }
+
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        width: 50%;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .review-textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 100px;
+    }
+
+    .submit-review {
+        background-color: #453229;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .submit-review:hover {
+        background-color: #3b2415;
+    }
+
+
+    .stars {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .star {
+        font-size: 24px;
+        color: gray;
+    }
+
+    .star.selected {
+        color: gold;
+    }
+
+   
+    .stars {
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.star {
+    font-size: 30px;
+    color: gray;
+    margin: 0 5px;
+    transition: color 0.3s;
+}
+
+.star.selected {
+    color: gold;
+}
+
+.order-status-badge {
+    display: inline-block;
+    background-color: #453229; /* Brown shade */
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-transform: capitalize;
+}
+
+
+.summary {
+        width: 500px;
+        height: 321px;
+        /* background-color: #453229; */
+        opacity: 90%;
+        border: 2px solid #453229;
+        color: #453229;
+        border-radius: 5px;
+        margin-bottom: 8%;
+        margin-left: auto;
+        
+}
+
+.title {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .title::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7%;
+        height: 2px;
+        background-color: #453229;
+    }
+
+    .text{
+        margin-left: 20px;
+    }
+
+
+    @media (max-width: 576px) { 
+        .summary {
+            width: 100%;
+            height: 100%;
+            margin-left: 0;
+        }
+     }
+
+     .float-end{
+        padding: 0;
+        margin-left: auto;
+     }
+
+     .float-end a{
+        background-color: #453229;
+        color: white;
+        text-decoration: none;
+     }
+
+        .float-end a:hover{
+            background-color: #3b2415;
+            color: white;
+        }
+
+     .card{
+        border: none;
+     }
+
+
+
+
+     /* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: white;
+    width: 40%;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Success & Error Styles */
+.success {
+    color: green;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container-fluid pt-5">
+    <h2 class="head-work">Order Details</h2>
+    <div class="card mt-5">
+        <h5 class="card-header d-flex justify-content-between">
+            <span class="float-start">Order Id :- {{ order.order_id }} | {{ order.order_status }}</span>
+            <span class="float-end">{{ order.created_at|date:"d M Y" }}</span>
+        </h5>
+
+        <div class="card-body">
+            <section class="products">
+                {% for item in order.items.all %}
+                <div class="row">
+                    <div class="col-md-3">
+                            {% if item.prod_type == "own_product" or item.prod_type == "sell_with_us" %}
+                                <a href="{% url 'prod_desc' product_id=item.product_id %}">
+                                    <img src="{{ item.image }}" alt="order-product-image" class="prod-img">
+                                </a>
+                            {% elif item.prod_type == "Buy_back"  %}
+                                <a href="{% url 'Buydesc' item.id %}">
+                                    <img src="{{ item.image }}" alt="order-product-image" class="prod-img">
+                                </a>
+                            {% else %}
+                                <a href="{% url 'Rprod_desc' item.rid %}">
+                                    <img src="{{ item.image }}" alt="order-product-image" class="prod-img">
+                                </a>
+                            {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <p class="p_name">{{ item.name }} <span class="order-status-badge">{{ item.product_order_status }}</span></p>
+                        <p class="b_name">{{ item.brand }}</p>
+
+                        <div class="row two">
+                            <div class=" d-flex justify-content-between">
+                                <div class="col-md-6 col-sm-12 w-50">
+                                    <p class="txt"><i class="bi bi-tag icon"></i>Price : ₹{{ item.price }}</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 w-50">
+                                    <p class="txt"><i class="bi bi-boxes icon"></i>Quantity : {{ item.quantity }} </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row two">
+                            <div class=" d-flex justify-content-between">
+                                <div class="col-md-6 col-sm-12 w-50">
+                                    <p class="txt"><i class="bi bi-rulers icon"></i>Size : {{ item.size }}</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 w-50">
+                                    <p class="txt"><i class="bi bi-palette icon"></i>Color : {{ item.color }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% if item.security and item.security != "00" and item.days and item.days != "00" and item.delivery_date and item.delivery_date != "00" and item.return_date and item.return_date != "00" %}
+
+                        <div class="row two">
+                            <div class="d-flex justify-content-between">
+                                <div class="col-md-6 col-sm-12 w-50">
+                                    <p class="txt"><i class="bi bi-wallet icon"></i>Deposit Amount : ₹{{ item.security}}</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 w-50">
+                                    <p class="txt"><i class="bi bi-clock-history icon"></i>Days : {{ item.days }} days</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row two">
+                            <div class="d-flex justify-content-between flex-wrap">
+                              <div class="col-md-4 col-sm-12 mb-2">
+                                <p class="txt">
+                                  <i class="bi bi-truck icon"></i> Delivery Date: {{ item.delivery_date|date:"d M Y" }}
+                                </p>
+                              </div>
+                              <div class="col-md-4 col-sm-12 mb-2">
+                                <p class="txt">
+                                  <i class="bi bi-calendar-check icon"></i> Rental Date: {{ item.rental_date }}
+                                </p>
+                              </div>
+                              <div class="col-md-4 col-sm-12 mb-2">
+                                <p class="txt">
+                                  <i class="bi bi-arrow-counterclockwise icon"></i> Return Date: {{ item.return_date|date:"d M Y" }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          
+
+                        
+                        {% endif %}
+
+                       
+                        {% if item.product_order_status == "Completed" or item.product_order_status == "Returned" %}
+                        {% with review=existing_reviews|get_item:item.id %}
+                            {% if review %}
+                                <button class="review-btn d-flex w-md-auto" onclick="editReview('{{ item.id }}')">View/Edit Review</button>
+                            {% else %}
+                                <button class="review-btn d-flex w-md-auto" onclick="giveReview('{{ item.id }}')">Give Review</button>
+                            {% endif %}
+                        {% endwith %}
+                        {% endif %}
+                  
+                    
+                   
+                    
+                    
+
+                    </div>
+                </div>
+                <hr>
+
+
+                <!--Give Review Model-->
+  
+                <div id="reviewModal-{{ item.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="close_giveReview('{{ item.id }}')">&times;</span>
+                        <h3>Write a Review for {{ item.name }}</h3>
+                
+                        <!-- Star Rating -->
+                        <div class="stars" id="stars-{{ item.id }}">
+                            <span class="star" onclick="rateProduct('{{ item.id }}', 1)">★</span>
+                            <span class="star" onclick="rateProduct('{{ item.id }}', 2)">★</span>
+                            <span class="star" onclick="rateProduct('{{ item.id }}', 3)">★</span>
+                            <span class="star" onclick="rateProduct('{{ item.id }}', 4)">★</span>
+                            <span class="star" onclick="rateProduct('{{ item.id }}', 5)">★</span>
+                        </div>
+                        <p id="ratingValue-{{ item.id }}" class="txt">Rating: 0/5</p>
+                
+                        <!-- Review Text Area -->
+                        <textarea id="reviewText-{{ item.id }}" class="review-textarea" placeholder="Write your review here..."></textarea>
+
+                        <input type="hidden" id="productType-{{ item.id }}" name="product_type" value="{{ item.prod_type }}">
+                
+                        <!-- Submit Button -->
+                        <button class="submit-review" onclick="submitReview('{{ item.id }}')">Submit</button>
+                    </div>
+                </div>
+
+
+
+                <!-- View/Edit Review Modal -->
+                <div id="editReviewModal-{{ item.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="close_editReview('{{ item.id }}')">&times;</span>
+                        <h3>View/Edit Review for {{ item.name }}</h3>
+
+                        <!-- Star Rating -->
+                        <div class="stars" id="edit-stars-{{ item.id }}">
+                            <span class="star" onclick="editRateProduct('{{ item.id }}', 1)">★</span>
+                            <span class="star" onclick="editRateProduct('{{ item.id }}', 2)">★</span>
+                            <span class="star" onclick="editRateProduct('{{ item.id }}', 3)">★</span>
+                            <span class="star" onclick="editRateProduct('{{ item.id }}', 4)">★</span>
+                            <span class="star" onclick="editRateProduct('{{ item.id }}', 5)">★</span>
+                        </div>
+                        <p id="edit-ratingValue-{{ item.id }}" class="txt">Rating: 0/5</p>
+
+                        <!-- Review Text Area -->
+                        <textarea id="edit-reviewText-{{ item.id }}" class="review-textarea" placeholder="Write your review here..."></textarea>
+
+                        <input type="hidden" id="edit-productType-{{ item.id }}" name="product_type" value="{{ item.prod_type }}">
+
+                        <!-- Submit Button -->
+                        <button class="submit-review" onclick="updateReview('{{ item.id }}')">Update Review</button>
+                    </div>
+                </div>
+
+                
+                {% endfor %}
+            </section>
+        </div>
+
+        <div class="summary float-start w-100 h-100">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <h2 class="title"><strong>Shipping Address:</strong></h2>
+                            <p class="text">{{ order.address1 }}, {{ order.address2 }}<br>
+                            {{ order.city }}, {{ order.state }} - {{ order.zip_code }}<br>
+                            {{ order.country }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <h2 class="fw-bold title"></i> Order Summary</h2>
+                            <p class="text"><i class="bi bi-receipt fs-6"></i> <strong>Subtotal:</strong> ₹{{ order.total_price|default:0 }}</p>
+                            <p class="text"><i class="bi bi-shield-lock fs-6"></i> <strong>Security Deposit:</strong> ₹{{ order.total_security|default:0 }}</p>
+                            <p class="text"><i class="bi bi-truck fs-6"></i> <strong>Shipping:</strong> ₹10.00</p>
+                            <p class="text"><i class="bi bi-tag fs-6"></i> <strong>Discount:</strong> ₹{{ order.discount|default:0 }}</p>    
+                            <hr><hr>
+                            <h4 class="mt-2 text"><i class="bi bi-cash-stack fs-5"></i> <strong>Total: ₹{{ order.Grand_total|default:0|floatformat:2 }}</strong></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="float-end">
+            <a href="{% url 'order' %}" class="btn">Back to Orders</a>
+        </div>
+       
+        
+    </div>
+</div>
+
+
+<!-- Dynamic Modal -->
+<div id="messageModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle">Message</h3>
+        <p id="modalMessage">This is a sample message.</p>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+
+    // Store ratings in an object
+    let ratings = {};
+    
+    // Star Rating Function
+    function rateProduct(productId, rating) {
+        let stars = document.querySelectorAll(`#stars-${productId} .star`);
+        let ratingDisplay = document.getElementById(`ratingValue-${productId}`);
+    
+        // Highlight selected stars
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add("selected");
+            } else {
+                star.classList.remove("selected");
+            }
+        });
+    
+        // Update rating display
+        ratingDisplay.innerText = `Rating: ${rating}/5`;
+    
+        // Store the rating
+        ratings[productId] = rating;
+    }
+    
+    function submitReview(productId) {
+    let reviewText = document.getElementById(`reviewText-${productId}`).value;
+    let rating = ratings[productId] || 0; // Default to 0 if no rating is given
+    let productType = document.getElementById(`productType-${productId}`).value; // Get product type
+
+    if (!reviewText.trim()) {
+        alert("Please enter a review before submitting!");
+        return;
+    }
+
+    // Create FormData and append values
+    const reviewFormData = new FormData();
+    reviewFormData.append("product_id", productId);
+    reviewFormData.append("review", reviewText);
+    reviewFormData.append("rating", rating);
+    reviewFormData.append("product_type", productType); // Include product type
+
+    // Define the API URL
+    const reviewFormUrl = `${window.location.origin}/Account/submit_review/`;
+
+    // Send the data using fetch
+    fetch(reviewFormUrl, {
+        method: 'POST',
+        body: reviewFormData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // alert("Review Submitted Successfully!");
+            close_giveReview(productId);
+            
+            showModal('success', 'Review Submitted Successfully!');
+        } else {
+            showModal('error', 'Failed to submit review. Please try again later.');
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+       
+        showModal('error', 'Failed to submit review. Please try again later.');
+    });
+}
+
+    
+    // Open & Close Modal Functions
+    function giveReview(productId) {
+        document.getElementById(`reviewModal-${productId}`).style.display = "block";
+    }
+    
+    function close_giveReview(productId) {
+        document.getElementById(`reviewModal-${productId}`).style.display = "none";
+    }
+
+
+
+
+
+    // Store user ratings
+    let editRatings = {};
+
+    // Fetch existing review data
+    function editReview(productId) {
+        debugger;
+        // Define the API URL to fetch existing review
+        const fetchReviewUrl = `${window.location.origin}/Account/get_review/?product_id=${productId}`;
+
+        fetch(fetchReviewUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Populate the modal with existing review
+                    document.getElementById(`edit-reviewText-${productId}`).value = data.review;
+                    
+                    // Update stored rating and UI
+                    editRatings[productId] = data.rating;
+                    editRateProduct(productId, data.rating);
+
+                    // Show modal
+                    document.getElementById(`editReviewModal-${productId}`).style.display = "block";
+                } else {
+                    showModal('error', 'No existing review found!');
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching review:", error);
+                showModal('error', 'Failed to load review. Please try again.');
+            });
+    }
+
+    // Star Rating Function for Editing
+    function editRateProduct(productId, rating) {
+        let stars = document.querySelectorAll(`#edit-stars-${productId} .star`);
+        let ratingDisplay = document.getElementById(`edit-ratingValue-${productId}`);
+
+        // Highlight selected stars
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add("selected");
+            } else {
+                star.classList.remove("selected");
+            }
+        });
+
+        // Update rating display
+        ratingDisplay.innerText = `Rating: ${rating}/5`;
+
+        // Store the rating
+        editRatings[productId] = rating;
+    }
+
+    // Update Review Function
+    function updateReview(productId) {
+        let reviewText = document.getElementById(`edit-reviewText-${productId}`).value;
+        let rating = editRatings[productId] || 0;
+        let productType = document.getElementById(`edit-productType-${productId}`).value;
+
+        if (!reviewText.trim()) {
+            alert("Please enter a review before updating!");
+            return;
+        }
+
+        // Create FormData and append values
+        const reviewFormData = new FormData();
+        reviewFormData.append("product_id", productId);
+        reviewFormData.append("review", reviewText);
+        reviewFormData.append("rating", rating);
+        reviewFormData.append("product_type", productType);
+
+        // Define the API URL
+        const reviewUpdateUrl = `${window.location.origin}/Account/update_review/`;
+
+        // Send the data using fetch
+        fetch(reviewUpdateUrl, {
+            method: 'POST',
+            body: reviewFormData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                close_editReview(productId);
+                
+                showModal('success', 'Your Review Has Been updated Successfully!');
+            } else {
+                showModal('error', 'Failed to update review. Please try again later.');
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            showModal('error', 'Failed to update review. Please try again later.');
+        });
+    }
+
+    // Open & Close Modal Functions
+    function close_editReview(productId) {
+        document.getElementById(`editReviewModal-${productId}`).style.display = "none";
+    }
+
+
+
+    function showModal(type, message) {
+    let modal = document.getElementById("messageModal");
+    let title = document.getElementById("modalTitle");
+    let text = document.getElementById("modalMessage");
+
+    // Set message content
+    text.innerText = message;
+
+    // Set styles based on type
+    if (type === "success") {
+        title.innerText = "Success!";
+        title.className = "success";
+    } else if (type === "error") {
+        title.innerText = "Error!";
+        title.className = "error";
+    }
+
+    // Show modal
+    modal.style.display = "block";
+
+    // Auto-close after 3 seconds
+    setTimeout(closeModal, 9000);
+
+    // location.reload();
+}
+
+function closeModal() {
+    document.getElementById("messageModal").style.display = "none";
+}
+
+    </script>
+    
+{% endblock %}

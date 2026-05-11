@@ -1,0 +1,1807 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block css %}
+<style>
+    .head-work {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+    }
+
+    .head-work::after {
+        content: "";
+        position: absolute;
+        bottom: -3px; /* Adjust the position of the underline */
+        left: 50%; /* Move the underline to the center */
+        transform: translateX(-50%); /* Adjust for perfect centering */
+        width: 10%; /* Adjust the width of the underline */
+        height: 2px; /* Thickness of the underline */
+        background-color: #000; /* Color of the underline */
+    }
+    .card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .container-3 {
+        position: relative;
+        overflow: hidden;
+        /* Hide overflow to prevent the image from extending outside the container */
+    }
+
+    .container-3 img {
+        width: 400px;
+        /* Set main image size */
+    }
+
+    .container-4 {
+        padding: 20px 30px 5px 30px;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    h1 {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #3b2415;
+        opacity: 95%;
+    }
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        width: 100%;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .form-control:focus {
+        border-color: #3b2415;
+        box-shadow: 0 0 5px #3b2415;
+    }
+    .form-control:hover {
+        border-color: #3b2415;
+    }
+    button[type="submit"],
+    .btn-cancel {
+        width: 100%;
+        font-size: 18px;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    button[type="submit"] {
+        background-color: #3b2415;
+        opacity: 80%;
+        color: #fff;
+    }
+    button[type="submit"]:hover {
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+    button[type="submit"]:disabled {
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity:50%;
+        cursor: not-allowed;
+    }
+    .btn-cancel {
+        background-color: #ddd;
+        color: #3b2415;
+    }
+    .btn-cancel:hover {
+        background-color: #3b2415;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    
+    }
+    select,
+    input[type="file"],
+    .button-1 {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 12px;
+
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    select:focus,
+    input[type="file"]:focus,
+    .button-1:focus {
+        outline: none;
+        border-color: rgb(80, 124, 181);
+        box-shadow: 0 0 8px rgba(94, 140, 199, 0.3);
+    }
+
+    .button-1 {
+        background: #28a745;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 20px;
+        border: none;
+    }
+
+    .button-1:hover {
+        background: #218838;
+        transform: translateY(-2px);
+    }
+
+    .preview {
+        width: 100%;
+        height: 200px;
+        background: #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        border-radius: 10px;
+        margin-top: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .preview img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 10px;
+    }
+
+    .preview::before {
+        content: "Preview Image Here";
+        position: absolute;
+        color: #888;
+        font-size: 18px;
+    }
+
+    .preview img {
+        display: none;
+    }
+
+    .preview.has-image::before {
+        display: none;
+    }
+
+    .preview.has-image img {
+        display: block;
+    }
+
+
+    .upload-container {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        background: #fafafa;
+        position: relative;
+    }
+
+    .upload-container input {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .upload-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .upload-icons button {
+        border: none;
+        background: #ddd;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .upload-icons button:hover {
+        background: #ccc;
+    }
+
+    .preview-container {
+        margin-top: 10px;
+        justify-content: space-between;
+        /* Push elements apart */
+        display: none;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        background: #fff;
+    }
+
+    .preview-container img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        object-fit: cover;
+
+    }
+
+    .remove-btn {
+        background: transparent;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+
+    }
+
+    .button-3 {
+        width: 100%;
+        margin-top: 10px;
+        background-color: transparent;
+        padding: 10px;
+        border-radius: 8px;
+        transition: 0.5s;
+        text-transform: uppercase;
+    }
+
+    .button-3:hover {
+        background: #3b2415;
+        opacity: 80%;
+        border: none;
+        color: white;
+    }
+
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+        flex-direction: row;
+        padding: 0px;
+        margin: 0px;
+
+
+    }
+
+
+    .container-1 {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+
+
+    }
+
+    .container-1 img {
+        width: 127px;
+        /* Set image size */
+        cursor: pointer;
+    }
+
+    .container-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container-3 {
+        position: relative;
+        overflow: hidden;
+        /* Hide overflow to prevent the image from extending outside the container */
+
+    }
+
+    #mainProductImage {
+        transition: transform 0.5s ease;
+        /* Smooth transition for zoom effect */
+    }
+
+    .container-3 img {
+        width: 400px;
+        /* Set main image size */
+    }
+
+    .price-section {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        color: #453229;
+        font-weight: bold;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+    }
+
+    .selected-image {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+
+    .original-price {
+        font-size: 18px;
+        color: #453229;
+        opacity: 70%;
+        text-decoration: line-through;
+        margin-right: 10px;
+    }
+
+    .rental-price,
+    .security-deposit,
+    .price-section {
+        font-size: 18px;
+        font-weight: bold;
+        color: #453229;
+        opacity: 90%;
+    }
+
+    .brand {
+        color: #888;
+        font-size: 14px;
+    }
+
+    .button-group .btn {
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    .btn-dark {
+        background-color: #333;
+        color: white;
+    }
+
+    .btn-warning2 {
+        background-color: #110808;
+        color: white;
+        border: none;
+    }
+
+    .btn-warning2:hover,
+    .btn-warning2:active {
+        background-color: #110808;
+        color: white;
+        border: none;
+    }
+
+    .modal-body {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .detailed-description {
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        margin-top: 30px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .related-products h2 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .related-products .card {
+        border: none;
+        text-align: center;
+        border-radius: 8px;
+    }
+
+    .related-products .card img {
+        border-radius: 8px;
+    }
+
+    .product-details {
+        width: 450px;
+        padding: 15px;
+
+    }
+
+    .product-details h1 {
+        font-size: 25px;
+        font-weight: bolder;
+    }
+
+    .product-details p {
+        font-size: 18px;
+    }
+
+    .product-details .price {
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .product-details .sku {
+        font-size: 18px;
+        color: #453229;
+        font-weight: bold;
+    }
+
+    .product-details .sizes {
+        display: flex;
+        gap: 10px;
+        /* margin: 10px 0; */
+        flex-wrap: wrap;
+    }
+
+    .product-details .sizes button {
+        border: 1px solid #000;
+        background-color: transparent;
+        border-radius: 50%;
+        border: 1px solid black;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .product-details .sizes button.active {
+        background-color: #453229;
+        color: #fff;
+    }
+
+    .product-details .delivery {
+        margin: 10px 0;
+    }
+
+    .product-details .actions {
+
+        gap: 10px;
+        margin: 10px 0;
+        flex-wrap: wrap;
+    }
+
+    .product-details .actions button {
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .product-details .actions .buy-now {
+        background-color: #453229;
+        color: white;
+    }
+
+    .product-details .actions .add-to-cart {
+        background-color: #453229;
+        color: white;
+        font-size: 15px;
+    }
+
+    .add-to-cart {
+        width: 100%;
+    }
+
+
+
+    .product-details .actions .date-select {
+        background-color: #453229;
+        border: 1px solid white;
+        font-size: 15px;
+        width: 50%;
+    }
+
+
+    .product-details .additional-info button {
+        width: 100%;
+        text-align: left;
+        background-color: transparent;
+        border: none;
+        padding: 10px 0;
+        border-bottom: 2px solid #453229;
+        cursor: pointer;
+        font-size: 16px;
+
+    }
+
+
+
+
+    /* Styling the dropdown */
+    .rentalDuration {
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Accordion styling */
+    .additional-info button i {
+        float: right;
+    }
+
+    .accordion-content {
+        display: none;
+        padding: 10px;
+        border-bottom: 2px solid #453229;
+    }
+
+    @media (max-width: 468px) {
+        .size-chart-table {
+            font-size: 12px;
+        }
+
+        .size-chart-table th,
+        .size-chart-table td {
+            padding: 3px;
+        }
+
+        .size-chart-container {
+            margin: 5px;
+        }
+
+        .modal-body {
+            padding: 2px !important;
+
+        }
+    }
+
+    .size-chart-container {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin: 20px;
+    }
+
+
+    .size-chart-table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ccc;
+    }
+
+    .size-chart-table th,
+    .size-chart-table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .size-chart-table th {
+        background-color: #f4f4f4;
+    }
+
+    .size-chart-table td {
+        background-color: #ffffff;
+    }
+
+    .product {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container-1 {
+            display: none;
+        }
+
+        .product-details {
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container-3 img {
+            width: 100%;
+        }
+
+
+    }
+
+    .product-details h1 {
+        font-size: 21px;
+        font-weight: bold;
+    }
+
+    .product-details .price {
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+
+
+    .product-details .sizes button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .bi-plus {
+        font-size: 20px;
+        font-weight: bolder;
+        margin-right: 2px;
+    }
+
+    .iconss {
+        margin: 0px !important;
+    }
+
+    .iconss a {
+        text-decoration: none;
+        color: #000;
+        margin-left: 7px;
+        font-size: 16px;
+    }
+
+
+    .recommend {
+        padding: 5%;
+        padding-bottom: 0%;
+
+    }
+
+    .recommend_slider {
+        padding: 45px 0;
+        margin-bottom: 1%;
+    }
+
+    .rent-by-recommend {
+        font-size: xx-large;
+        text-align: center;
+        color: black;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: .1em;
+
+    }
+
+    .img_box img {
+        width: 100%;
+        height: 75%;
+        transition: all 3s;
+    }
+
+    .img_box :hover {
+        transform: scale(1.1);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: white;
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.611);
+        text-align: center;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 17px;
+    }
+
+    .swiper-pagination-bullet {
+        background-color: black;
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: black;
+    }
+
+    @media (max-width: 576px) {
+        .rent-by-recommend {
+            font-size: 20px;
+        }
+
+        .carousel-control-prev {
+            display: none;
+        }
+
+        .carousel-control-next {
+            display: none;
+        }
+
+    }
+
+    .carousel-inner {
+        width: 400px;
+        height: 600px;
+    }
+
+
+    @media screen and (max-width: 767px) {
+        #carouselExampleFade {
+            display: block;
+
+        }
+
+        .main {
+            display: none;
+        }
+    }
+
+    @media (max-width: 990px) {
+        .container {
+            gap: 5px;
+        }
+
+    }
+
+    @media screen and (min-width: 1024px) {
+        #carouselExampleFade {
+            display: none;
+        }
+
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+        #carouselExampleFade {
+            display: none;
+        }
+
+    }
+
+
+    .bi-calendar {
+        float: right;
+    }
+
+    .btn-primary {
+        background-color: #fff !important;
+        border: 1px solid #000 !important;
+        font-size: 15px !important;
+        color: black !important;
+    }
+
+
+    .btn-secondary {
+        background-color: #000 !important;
+    }
+
+
+
+
+    .calendar-type .btn-primary {
+        width: 97%;
+    }
+
+
+    .calendar-type {
+        flex: 1 1 100%;
+    }
+
+    @media (min-width: 350px) {
+        .calendar-type {
+            flex: 1 1 48%;
+        }
+    }
+
+    .calendar-type select,
+    .calendar-type .btn-primary {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #days {
+        height: 50px;
+        border: 2px solid #453229;
+    }
+
+    /* Default styles */
+    .form-select option {
+        background-color: white;
+        /* Default background */
+        color: #453229;
+        /* Default text color */
+    }
+
+    /* Custom active style */
+    .form-select option:checked {
+        background-color: #453229;
+        /* Blue background for selected option */
+        color: white;
+        /* White text for better contrast */
+        font-weight: bold;
+    }
+
+    .form-select option:hover {
+        background-color: #453229;
+        /* Blue background for selected option */
+        color: white;
+        /* White text for better contrast */
+        font-weight: bold;
+    }
+
+
+    .form-select option:active {
+        background-color: #453229;
+        /* Blue background for selected option */
+        color: white;
+        /* White text for better contrast */
+        font-weight: bold;
+    }
+
+
+    .sizes {
+        display: flex;
+        gap: 10px;
+    }
+
+    .size-label {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .size-label input[type="radio"] {
+        display: none;
+        /* Hide the radio button */
+    }
+
+    .size-label span {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 360px;
+        color: #333;
+        text-align: center;
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    .size-label input[type="radio"]:checked+span {
+        background-color: #453229;
+        border-color: #453229;
+        color: #fff;
+    }
+
+    .breadcrumb {
+        margin: 30px;
+        color: #5b3e31;
+    }
+
+    .breadcrumb-item a {
+        text-decoration: none;
+        color: #5b3e31;
+    }
+
+    #rent_now {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 100% !important;
+    }
+
+
+    .stars {
+        font-size: 24px;
+        color: #ccc;
+        /* Default color for empty stars */
+    }
+
+    .star {
+        display: inline-block;
+        color: #ccc;
+        /* Default gray color for empty stars */
+        transition: color 0.3s ease-in-out;
+    }
+
+    .star.filled {
+        color: #FFD700;
+        /* Gold color for filled stars */
+    }
+
+
+    #show-calendar-btn {
+        border: 2px solid #453229;
+        width: 100%;
+    }
+
+
+    .p_name {
+        font-weight: bolder;
+        color: #453229;
+        font-size: 23px;
+        margin-bottom: 0;
+        text-transform: capitalize;
+    }
+
+    .b_name {
+        font-weight: bold;
+        color: #453229;
+        font-size: 15px;
+        opacity: 60%;
+        margin-top: 1px;
+        text-transform: capitalize;
+
+    }
+
+
+
+
+    .reviews-section {
+        padding: 20px;
+        background-color: #f5e6da;
+        /* Light brown background */
+        border-radius: 8px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .review {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #fff6f0;
+        /* Softer brown tint */
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .stars {
+        font-size: 18px;
+        color: #d4a373;
+        /* Warm brown star color */
+    }
+
+    .star.filled {
+        color: #a65e2e;
+        /* Darker brown for filled stars */
+    }
+
+    .review strong {
+        color: #6b4226;
+        /* Rich brown for usernames */
+        font-size: 16px;
+    }
+
+    .review p {
+        margin: 5px 0;
+        color: #4d3220;
+        font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+        .reviews-section {
+            padding: 15px;
+        }
+
+        .review {
+            padding: 10px;
+        }
+
+        .stars {
+            font-size: 16px;
+        }
+    }
+
+
+
+    .title {
+        text-align: center;
+        margin-top: 20px;
+        color: #453229;
+        position: relative;
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    .title::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 7%;
+        height: 2px;
+        background-color: #453229;
+    }
+
+
+    .review-container {
+        background-color: #f8f9fa;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+    .review-card {
+        border: none;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        border-radius: 12px;
+    }
+
+    .review-card:hover {
+        transform: scale(1.03);
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .stars {
+        color: #ffcc00;
+        font-size: 1.3rem;
+    }
+
+    .empty-star {
+        color: #ddd;
+    }
+
+    .review-text {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .review-description {
+        font-size: 0.95rem;
+        color: #777;
+        font-style: italic;
+    }
+
+    .review-date {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .no-reviews {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #888;
+        font-style: italic;
+    }
+
+    .stock-section {
+        color: #4d3220;
+    }
+    .work{
+        margin-top: 10px;
+        margin-bottom: 15px;
+        border : 2px solid #3b2415;
+        border-style: dashed;
+        padding: 10px;
+
+}
+.work h5{
+    font-size: 20px;
+    text-align: center; 
+}
+#cart-message {
+    position: fixed; /* Stays in position even on scroll */
+    bottom: 7vh; /* Always stays at 40% of the viewport height */
+    left: 50%; /* Centers horizontally */
+    transform: translateX(-50%); /* Ensures text remains centered */
+    background-color: #110808;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 1000; /* Ensures it overlaps other content */
+    white-space: nowrap;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds slight shadow for better visibility */
+}
+</style>
+{% endblock %}
+
+{# breadcump #}
+{% block body %}
+<nav aria-label="breadcrumb" class="mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'buy_back_prod' %}">Buy Back Products</a></li>
+        <li class="breadcrumb-item active current" aria-current="page">{{ product.name }}</li>
+    </ol>
+</nav>
+<div class="container">
+    <!-- Vertical Image Thumbnails in Container-1 -->
+
+    <div class="container-1">
+        <img src="{{ product.image_front.url }}" alt="Thumbnail 1"
+            onclick="changeImage('{{ product.image_front.url }}')">
+        <img src="{{ product.image_side.url }}" alt="Thumbnail 2" onclick="changeImage('{{ product.image_side.url }}')">
+        <img src="{{ product.image_back.url }}" alt="Thumbnail 3" onclick="changeImage('{{ product.image_back.url }}')">
+
+    </div>
+
+    <!-- Main Image in Container-2 -->
+    <div class="container-2  ">
+
+        <div class="container-3 ">
+
+            <div class="main">
+                <img id="mainProductImage" src="{{ product.image_front.url }}" class="main" alt="Main Image">
+            </div>
+            <div id="carouselExampleFade" class="carousel slide " data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img id="mainProductImage" src="{{ product.image_front.url }}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img id="mainProductImage" src="{{ product.image_side.url }}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img id="mainProductImage" src="{{ product.image_back.url }}" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    {% load static %}
+    <div class="container-2">
+        <div class="container-3">
+            
+
+
+                <div class="product-details">
+                    <h1 class="p_name">{{ product.name }}</h1>
+                    <p class="b_name">{{ product.brand }}</p>
+                    <div class="price-section">
+                        <span class="rental-price d-none"> ₹{{ product.rental_price }}</span> &nbsp;&nbsp;
+                        <span class="original-price d-none">Original Price : ₹{{ product.price }}</span>
+                    </div>
+
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-6">
+                            <p class="sku"><i class="bi bi-palette icon fs-6"></i>Color :- {{ product.color }}</p>
+                        </div>
+                    </div>
+
+                    <div class="sizes">
+                        {% for size, quantity in size_quantity_dict.items %}
+                        <label class="size-label">
+                            <input type="radio" name="selectsize" value="{{ size }}" data-quantity="{{ quantity }}"
+                                required>
+                            <span>{{ size }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+
+
+
+                    <div class="iconss">
+                        <p><i class="bi bi-rulers icon"></i><a href="#" data-bs-toggle="modal"
+                                data-bs-target="#sizeChartModal">Size Chart</a></p>
+                    </div>
+                    <div id="message"></div>
+
+
+                    <div id="message"></div>
+
+                    <div class="work">
+                        <h5>Dont know how it works ? </h5>
+                        <p style="font-size: 15px; text-align: center; ">
+                            Dont worry! Click on the icon to see the process .
+                            <i class="bi bi-info-circle" style="font-size: 20px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#depositModal" title="Learn How Buy Back Works"></i>
+                    </p>
+                        <p style="font-size: 15px; text-align: center; ">Want to see the example video click on this icon. <i class="bi bi-camera-video" style="font-size: 20px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#videoModal" title="Learn How Buy Back Works"></i>
+                        </p>                    </div>
+
+                    <div class="additional-info">
+                        <button onclick="toggleAccordion(this)"> Details <i class="bi bi-plus"></i></button>
+                        <div class="accordion-content">{{ product.description }}</div>
+
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="depositModalLabel">Buy: Customized Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ol>
+                    <li><strong>Customer selects a product</strong> from the website that supports customization.</li>
+                    <li>On the product page, the customer fills out a customization form, specifying what kind of customizations they want (e.g., fabric, design, etc.).</li>
+                    <li>Once the form is submitted, a customization request is sent to the seller who owns the product.</li>
+                    
+                    <li><strong>Seller Side:</strong>
+                        <ul>
+                            <li>The seller receives the request in their dashboard.</li>
+                            <li>The seller reviews all the customization details and either:</li>
+                            <ul>
+                                <li><strong>Rejects the request:</strong> An email is sent to the customer, and the status on the customer site is shown as Rejected.</li>
+                                <li><strong>Approves the request:</strong> The seller enters the total price (including customization costs) and approves it.
+                                    <ul>
+                                        <li>A confirmation email is sent to the customer.</li>
+                                        <li>The status is updated on the customer’s side as Approved.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>After Approval (Customer Side):</strong>
+                        <ul>
+                            <li>The customer will now see the approved customized product.</li>
+                            <li>Status will show "In Progress" until the product is ready.</li>
+                            <li>Once ready, a confirmation message and email are sent to the customer.</li>
+                            <li>The "Rent Now" button becomes available on the product page.</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Rental Process:</strong>
+                        <ul>
+                            <li>Fixed rental period of 20 days.</li>
+                            <li>The customer selects a delivery date, and the system calculates the return date.</li>
+                            <li>The customer proceeds with the rental and order process as usual.</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Buy Back Option (After Rental):</strong>
+                        <ul>
+                            <li>5 days before the return date, a "Request for Purchase" button becomes visible.</li>
+                            <li>If the customer clicks it:
+                                <ul>
+                                    <li>A request is sent to the seller.</li>
+                                    <li>If the seller approves, they set the final purchase price.</li>
+                                    <li>An email is sent, and the approval is reflected on the customer's side.</li>
+                                </ul>
+                            </li>
+                            <li>If not clicked before the return date, the product must be returned and cannot be purchased afterward.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="videoModalLabel">How It Works?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <video controls style="width: 100%; height: auto;">
+                    <source src="{% static 'images/BuyBack.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-4">
+
+    <form id="designForm" method="POST" action="{% url 'submit_custom_design' %}"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- Product Details -->
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="hidden" name="name" value="{{ product.name }}">
+        <input type="hidden" name="brand" value="{{ product.brand }}">
+        <input type="hidden" name="price" id="price" value="{{ product.rental_price }}">
+        <input type="hidden" name="fimage" value="{{ product.image_front.url }}">
+        <input type="hidden" name="simage" value="{{ product.image_side.url }}">
+        <input type="hidden" name="bimage" value="{{ product.image_back.url }}">
+        <input type="hidden" name="color" value="{{ product.color }}">
+        <input type="hidden" name="selectsize" id="selectedSize">
+        <input type="hidden" id="stock-input">
+
+        <h2 class="head-work">Customization Options</h2>
+        <!-- Stock Display -->
+        <div class="stock-section">
+            <strong>Available Stock:</strong> <span id="stock-display">-</span>
+        </div>
+
+        <!-- Hidden Inputs -->
+        <input type="hidden" id="selectedGender" name="gender"
+            value="{{ product.category.main_category|lower }}">
+        <input type="hidden" id="selectedCategory" name="category"
+            value="{{ product.category.sub_category|lower }}">
+        <input type="hidden" id="selectedEmbroideryType" name="embroidery_type">
+        <input type="hidden" id="selectedPlacement" name="placement">
+        <input type="hidden" id="selectedThreadOption" name="thread_option">
+        <input type="hidden" id="selectedDensity" name="density">
+        <input type="hidden" id="selectedAddons" name="addons">
+        <input type="hidden" id="selectedMirrorShape" name="shape">
+        <input type="hidden" id="selectedMirrorSize" name="mirror_size">
+        <input type="hidden" id="selectedBorderColor" name="border_color">
+        <input type="hidden" id="selectedDesignStyle" name="design_style">
+
+        <div class="card">
+        <!-- Embroidery Type Selector -->
+        <label for="embroideryType">Choose Embroidery Style:</label>
+        <select class="form-control" id="embroideryType">
+            <option value="" disabled selected>Select Style</option>
+            <option value="hand">Hand Embroidery</option>
+            <option value="zari">Zari Work</option>
+            <option value="mirror">Mirror Work</option>
+            <option value="thread">Thread Work</option>
+        </select>
+        <br>
+
+        <!-- Dynamic Customization Fields -->
+        <div id="customizationFields"></div>
+
+        <!-- Size Selection (example radio buttons) -->
+
+        <!-- Upload Design (optional) -->
+        <label for="upload">Upload Your Design:</label>
+        <div class="upload-container">
+            <p style="color: #4d3220;">Drag & Drop or Click to Upload</p>
+            <input type="file" id="upload" name="upload" accept="image/*">
+            <div class="upload-icons">
+                <button type="button"><i class="bi bi-camera"></i></button>
+            </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-container" id="preview-container" style="display:none;">
+            <img id="preview-image" src="" alt="Preview">
+            <span id="file-name"></span>
+            <button type="button" class="remove-btn" id="removeImage"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <!-- Submit -->
+        <!-- Refresh Button to clear form -->
+        <button type="button" onclick="resetForm()" class="button-3" style="margin-top: 20px;"> Reset
+            Form</button>
+
+        <button type="submit" id="rent_now" class="button-3" disabled>Submit Design</button>
+    </div>
+    </form>
+</div>
+
+
+
+<!-- Size Chart Modal -->
+<div class="modal fade" id="sizeChartModal" tabindex="-1" aria-labelledby="sizeChartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sizeChartModalLabel">Size Chart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="size-chart-table">
+                    <thead>
+                        <tr>
+                            <th>Sizes</th>
+                            <th>Bust/Chest (inches)</th>
+                            <th>Waist (inches)</th>
+                            <th>Hip (inches)</th>
+                            <th>Length (inches)</th>
+                            <th>Shoulder (inches)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>XS</td>
+                            <td>32</td>
+                            <td>26</td>
+                            <td>36</td>
+                            <td>28-44</td>
+                            <td>32</td>
+                        </tr>
+                        <tr>
+                            <td>S</td>
+                            <td>34</td>
+                            <td>28</td>
+                            <td>38</td>
+                            <td>28-44</td>
+                            <td>14</td>
+                        </tr>
+                        <tr>
+                            <td>M</td>
+                            <td>36</td>
+                            <td>30</td>
+                            <td>40</td>
+                            <td>28-44</td>
+                            <td>14.5</td>
+                        </tr>
+                        <tr>
+                            <td>L</td>
+                            <td>38</td>
+                            <td>32</td>
+                            <td>42</td>
+                            <td>28-44</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>XL</td>
+                            <td>40</td>
+                            <td>34</td>
+                            <td>44</td>
+                            <td>28-44</td>
+                            <td>15.5</td>
+                        </tr>
+                        <tr>
+                            <td>XXL</td>
+                            <td>42</td>
+                            <td>36</td>
+                            <td>46</td>
+                            <td>28-44</td>
+                            <td>16</td>
+                        </tr>
+                        <tr>
+                            <td>3XL</td>
+                            <td>44</td>
+                            <td>38</td>
+                            <td>48</td>
+                            <td>28-44</td>
+                            <td>16.5</td>
+                        </tr>
+                        <tr>
+                            <td>4XL</td>
+                            <td>46</td>
+                            <td>40</td>
+                            <td>50</td>
+                            <td>28-34</td>
+                            <td>17.5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+     
+</div>
+  </div>
+
+
+
+</div>
+
+</div>
+
+</div>
+
+{% if request.GET.success %}
+<div id="cart-message">✔ {{ request.GET.success }}</div>
+<script>
+    setTimeout(function() {
+        document.getElementById("cart-message").style.display = "none";
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        window.history.replaceState({}, document.title, url);
+    }, 4000); // Hide after 3 seconds
+</script>
+{% endif %}
+
+
+
+{% endblock %}
+
+{% block js %}
+
+
+<!-- Include Swiper and Bootstrap JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+
+    function changeImage(imageUrl) {
+        document.getElementById("mainProductImage").src = imageUrl;
+    }
+
+    // Toggle Accordion
+    function toggleAccordion(button) {
+        var content = button.nextElementSibling;
+        var icon = button.querySelector("i");
+        if (content.style.display === "block") {
+            content.style.display = "none";
+            icon.classList.remove("fa-chevron-up");
+            icon.classList.add("fa-chevron-down");
+        } else {
+            content.style.display = "block";
+            icon.classList.remove("fa-chevron-down");
+            icon.classList.add("fa-chevron-up");
+        }
+    }
+
+
+
+    // ---------------------------------------------------------------------------
+
+    // Zoom Effect
+    const mainImage = document.getElementById("mainProductImage");
+
+    mainImage.addEventListener("mouseenter", () => {
+        mainImage.style.transform = "scale(1.5)";
+    });
+
+    mainImage.addEventListener("mouseleave", () => {
+        mainImage.style.transform = "scale(1)";
+    });
+
+    mainImage.addEventListener("mousemove", (event) => {
+        const rect = mainImage.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const xPercent = (x / rect.width) * 100;
+        const yPercent = (y / rect.height) * 100;
+        mainImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+        mainImage.style.transform = "scale(1.9)";
+    });
+
+
+    // --------------------------------------------------------------------------
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const rentNowBtn = document.getElementById("rent_now");
+        const selectedSizeInput = document.getElementById("selectedSize");
+        const stockInput = document.getElementById("stock-input");
+        const stockDisplay = document.getElementById("stock-display");
+        const embroideryTypeInput = document.getElementById("selectedEmbroideryType");
+
+        // Handle embroidery type change
+        document.getElementById("embroideryType").addEventListener("change", updateEmbroideryOptions);
+
+        // Size selection
+        document.querySelectorAll('input[name="selectsize"]').forEach(input => {
+            input.addEventListener("change", function () {
+                selectedSizeInput.value = this.value;
+                stockInput.value = this.dataset.quantity;
+                stockDisplay.textContent = this.dataset.quantity;
+                validateForm();
+            });
+        });
+
+        // Image preview
+        document.getElementById("upload").addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById("preview-image").src = reader.result;
+                document.getElementById("preview-container").style.display = "block";
+            };
+            reader.readAsDataURL(file);
+            validateForm();
+        });
+
+        // Remove image
+        document.getElementById("removeImage").addEventListener("click", function () {
+            const input = document.getElementById("upload");
+            input.value = "";
+            document.getElementById("preview-container").style.display = "none";
+            validateForm();
+        });
+
+        function updateEmbroideryOptions() {
+            const type = document.getElementById("embroideryType").value;
+            embroideryTypeInput.value = type;
+
+            const gender = document.getElementById("selectedGender").value;
+            const category = document.getElementById("selectedCategory").value;
+            const container = document.getElementById("customizationFields");
+
+            const placements = {
+                men: {
+                    kurta_jacket: ["Neckline", "Sleeves", "Chest Area", "Back"]
+                },
+                women: {
+                    saree: ["Border/Hemline", "Dupatta Edges", "All Over"],
+                    lehenga: ["Waistline", "Border", "Blouse Front", "Back"],
+                    kurti: ["Neckline", "Sleeves", "Front Panel"]
+                }
+            };
+
+            const validPlacements = (placements[gender] && placements[gender][category]) || ["Neckline", "Sleeves"];
+            let html = "";
+
+            if (type === "hand") {
+                html = `
+                ${selectField("selectedPlacement", "placement", "Placement", validPlacements)}
+                ${selectField("selectedThreadOption", "thread_option", "Thread Type", ["Silk Thread", "Cotton Thread", "Metallic Thread"])}
+                ${selectField("selectedDensity", "density", "Density", ["Light", "Medium", "Heavy"])}
+                ${checkboxGroup("selectedAddons", "addons", ["Beads", "Sequins", "Pearls"])}
+            `;
+            } else if (type === "zari") {
+                html = `
+                ${selectField("selectedPlacement", "placement", "Placement", validPlacements)}
+                ${selectField("selectedThreadOption", "thread_option", "Thread Color", ["Gold", "Silver", "Copper"])}
+                ${selectField("selectedDesignStyle", "design_style", "Design Style", ["Floral", "Paisley", "Geometric"])}
+                ${selectField("selectedDensity", "density", "Density", ["Simple Border", "Full Panel"])}
+            `;
+            } else if (type === "mirror") {
+                html = `
+                ${selectField("selectedPlacement", "placement", "Placement", validPlacements)}
+                ${selectField("selectedMirrorShape", "shape", "Mirror Shape", ["Round", "Square", "Diamond"])}
+                ${selectField("selectedMirrorSize", "mirror_size", "Mirror Size", ["Small", "Medium", "Large"])}
+                ${selectField("selectedDensity", "density", "Density", ["Sparse", "Clustered", "Heavy"])}
+                ${selectField("selectedBorderColor", "border_color", "Border Color", ["Multi-color", "Single-color"])}
+            `;
+            } else if (type === "thread") {
+                html = `
+                ${selectField("selectedPlacement", "placement", "Placement", validPlacements)}
+                ${selectField("selectedThreadOption", "thread_option", "Thread Type", ["Contrast", "Tone-on-Tone", "Multicolor"])}
+                ${selectField("selectedDesignStyle", "design_style", "Design Type", ["Nature Inspired", "Traditional", "Modern"])}
+                ${selectField("selectedDensity", "density", "Density", ["Minimal", "Medium", "Full"])}
+            `;
+            }
+
+            container.innerHTML = html;
+            attachListenersToSelects();
+            validateForm();
+        }
+
+        function selectField(id, name, label, options) {
+            return `
+            <label>${label}</label>
+            <select class="form-control" id="${id}">
+                <option value="">Select</option>
+                ${options.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
+            </select><br>
+            <input type="hidden" id="hidden-${id}" name="${name}">
+        `;
+        }
+
+        function checkboxGroup(id, name, options) {
+            return `
+            <div id="${id}-container">
+                <label>Add-ons:</label><br>
+                ${options.map(opt => `
+                    <label><input type="checkbox" value="${opt}" onchange="updateAddons('${id}')"> ${opt}</label><br>
+                `).join("")}
+            </div><br>
+            <input type="hidden" id="${id}" name="${name}">
+        `;
+        }
+
+        window.updateAddons = function (id) {
+            const selected = Array.from(document.querySelectorAll(`#${id}-container input:checked`)).map(cb => cb.value);
+            document.getElementById(id).value = selected.join(",");
+            validateForm();
+        };
+
+        function attachListenersToSelects() {
+            document.querySelectorAll("#customizationFields select").forEach(select => {
+                select.addEventListener("change", function () {
+                    const hidden = document.getElementById("hidden-" + select.id);
+                    if (hidden) hidden.value = select.value;
+                    validateForm();
+                });
+            });
+        }
+
+        function validateForm() {
+            const sizeSelected = selectedSizeInput.value.trim() !== "";
+            const type = embroideryTypeInput.value;
+
+            let requiredHiddenIds = [];
+
+            if (type === "hand") {
+                requiredHiddenIds = ["hidden-selectedPlacement", "hidden-selectedThreadOption", "hidden-selectedDensity"];
+            } else if (type === "zari") {
+                requiredHiddenIds = ["hidden-selectedPlacement", "hidden-selectedThreadOption", "hidden-selectedDesignStyle", "hidden-selectedDensity"];
+            } else if (type === "mirror") {
+                requiredHiddenIds = ["hidden-selectedPlacement", "hidden-selectedMirrorShape", "hidden-selectedMirrorSize", "hidden-selectedDensity", "hidden-selectedBorderColor"];
+            } else if (type === "thread") {
+                requiredHiddenIds = ["hidden-selectedPlacement", "hidden-selectedThreadOption", "hidden-selectedDesignStyle", "hidden-selectedDensity"];
+            } 
+
+            const allFilled = requiredHiddenIds.every(id => {
+                const el = document.getElementById(id);
+                return el && el.value.trim() !== "";
+            });
+
+
+            rentNowBtn.disabled = !(sizeSelected && type && allFilled);
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function resetForm() {
+        document.getElementById("designForm").reset();
+
+        // Hide preview image if any
+        document.getElementById("preview-container").style.display = "none";
+
+        // Clear customization fields
+        document.getElementById("customizationFields").innerHTML = "";
+
+        // Reset hidden values
+        [
+            "selectedEmbroideryType", "selectedPlacement", "selectedThreadOption", "selectedDensity",
+            "selectedAddons", "selectedMirrorShape", "selectedMirrorSize", "selectedBorderColor", "selectedDesignStyle",
+            "selectedSize", "stock-input"
+        ].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = "";
+        });
+
+        // Clear stock display
+        document.getElementById("stock-display").textContent = "-";
+
+        // Disable submit again
+        document.getElementById("rent_now").disabled = true;
+    }
+
+
+</script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+{% endblock %}

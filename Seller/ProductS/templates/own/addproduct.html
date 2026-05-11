@@ -1,0 +1,438 @@
+{% extends 'base_seller.html' %}
+
+{% block css %}
+
+<style>
+    .card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #3b2415;
+        opacity: 95%;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        width: 100%;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3b2415;
+        box-shadow: 0 0 5px #3b2415;
+    }
+
+    .form-control:hover {
+        border-color: #3b2415;
+    }
+
+    button[type="submit"],
+    .btn-cancel {
+        width: 100%;
+        font-size: 18px;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button[type="submit"] {
+        background-color: #3b2415;
+        opacity: 80%;
+        color: #fff;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+
+    .btn-cancel {
+        background-color: #ddd;
+        color: #3b2415;
+    }
+
+    .btn-cancel:hover {
+        background-color: #3b2415;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control-file {
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        font-size: 14px;
+    }
+
+    .form-control-file-label {
+        font-weight: 600;
+        color: #3b2415;
+        opacity: 95%;
+    }
+
+    #id_quantity {
+        width: 100%;
+    }
+
+    .modal-header {
+        background-color: #3b2415;
+        opacity: 70%;
+        color: white;
+    }
+
+    .modal-body {
+        font-size: 16px;
+        color: #3b2415;
+    }
+
+    .modal-footer button {
+        background-color: #3b2415;
+        color: white;
+    }
+
+    .modal-footer button:hover {
+        background-color: #f9f9f9;
+        color: #3b2415;
+    }
+
+    .btn-close {
+        color: white;
+    }
+
+    .radio-group {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: 600;
+        color: #3b2415;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .radio-group input[type="radio"] {
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #3b2415;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        position: relative;
+    }
+
+    .radio-group input[type="radio"]::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background-color: #3b2415;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .radio-group input[type="radio"]:checked {
+        background-color: #3b2415;
+        border-color: #3b2415;
+    }
+
+    .radio-group input[type="radio"]:checked::before {
+        transform: scale(1);
+    }
+
+    .radio-group input[type="radio"]:hover {
+        border-color: #5c3a21;
+    }
+
+    .close{
+        padding: 0.5rem 1rem;
+        color: #fff;
+        background-color: #3b2415;
+        opacity: 80%;
+        font-size: 20px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+    }
+    .close:hover{
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+    .add{
+        background-color: #3b2415;
+        opacity: 80%;
+        display: block;
+        margin: auto;
+        width: 30%;
+        border: none;
+
+    }
+    .add:hover{
+        background-color: #3b2415;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="main">
+    <main role="main" class="container-fluid p-3">
+        <div class="container">
+            <div class="card">
+                <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="id_name">Product Name</label>
+                            <input type="text" class="form-control" id="id_name" name="name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="id_brand">Brand</label>
+                            <input type="text" class="form-control" id="id_brand" name="brand">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Description -->
+                        <div class="form-group col-md-12">
+                            <label for="id_description">Description</label>
+                            <textarea class="form-control" id="id_description" name="description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Actual Price -->
+                        <div class="form-group col-md-6">
+                            <label for="id_price">Actual Price</label>
+                            <input type="number" class="form-control" id="id_price" name="price">
+                        </div>
+
+                        <!-- Rental Price -->
+                        <div class="form-group col-md-6">
+                            <label for="id_rental_price">Rental Price</label>
+                            <input type="number" class="form-control" id="id_rental_price" name="rental_price">
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-md-12">
+                            <label>Size and Quantity</label>
+                            <div id="size-quantity-container">
+                                <div class="row size-quantity-entry mb-2">
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="size[]">
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                            <option value="XXXL">XXXL</option>
+                                            <option value="Free Size">Free Size</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="number" class="form-control" name="quantity[]" placeholder="Enter quantity" min="1">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="close btn btn-danger remove-size ">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="add btn btn-success mt-2" id="add-size">Add Size </button>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <!-- color -->
+
+                        <div class="form-group col-md-6">
+                            <label for="id_color">Color</label>
+                            <input type="text" class="form-control" id="id_color" name="color">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="id_quantity">Discount Percentage(for reselling)</label>
+                            <input type="number" class="form-control" id="id_discount" name="discount_percentage">
+                        </div>
+                        
+                    </div>
+
+                    <!-- Image fields -->
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="id_image_front">Front View Image</label>
+                            <input type="file" class="form-control-file" id="id_image_front" name="image_front">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="id_image_side">Side View Image</label>
+                            <input type="file" class="form-control-file" id="id_image_side" name="image_side">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="id_image_back">Back View Image</label>
+                            <input type="file" class="form-control-file" id="id_image_back" name="image_back">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12 d-flex gap-5">
+                            <label>Do you want this product as a buy-back?</label>
+                            <div class="radio-group">
+                                <label for="id_buyback">Buy Back</label>
+                                <input type="checkbox" name="buyback" id="id_buyback" {% if form.buyback.value %}checked{% endif %}>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+
+                    <!-- Buttons -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <button class="btn btn-primary" type="submit">Add Product</button>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <a href="{% url 'ProductS/ownproduct' category_id=category.id %}"
+                                class="btn btn-cancel">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Validation -->
+<script>
+
+document.getElementById('add-size').addEventListener('click', function () {
+    let container = document.getElementById('size-quantity-container');
+    let newEntry = document.createElement('div');
+    newEntry.classList.add('row', 'size-quantity-entry');
+    newEntry.innerHTML = `
+        <div class="col-md-6">
+            <select class="form-control" name="size[]">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+                <option value="XXXL">XXXL</option>
+                <option value="Free Size">Free Size</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="form-control" name="quantity[]" placeholder="Enter quantity" min="1">
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close btn btn-danger remove-size">X</button>
+        </div>
+    `;
+    container.appendChild(newEntry);
+});
+
+document.getElementById('size-quantity-container').addEventListener('click', function (event) {
+    if (event.target.classList.contains('remove-size')) {
+        event.target.closest('.size-quantity-entry').remove();
+    }
+});
+
+
+    function validateForm() {
+        const name = document.getElementById("id_name").value.trim();
+        const description = document.getElementById("id_description").value.trim();
+        const price = document.getElementById("id_price").value;
+        const rentalPrice = document.getElementById("id_rental_price").value;
+        const quantity = document.getElementById("id_quantity").value;
+        const image_front = document.getElementById("id_image_front").value;
+        const image_back = document.getElementById("id_image_back").value;
+        const image_side = document.getElementById("id_image_side").value;
+        let errorMessage = "";
+
+        if (!name) {
+            errorMessage = "Product name is required.";
+        } else if (!description) {
+            errorMessage = "Description is required.";
+        } else if (!price || price <= 0) {
+            errorMessage = "Actual price must be greater than zero.";
+        } else if (!rentalPrice || rentalPrice <= 0) {
+            errorMessage = "Rental price must be greater than zero.";
+        } else if (!price >= rentalPrice) {
+            errorMessage = "Rental price must be smaller than actual price.";
+        }
+        else if (!quantity || quantity <= 0) {
+            errorMessage = "Quantity must be greater than zero.";
+        } else if (!document.querySelector('input[name="size"]:checked')) {
+            errorMessage = "At least one size must be selected.";
+        } else if (!image_front && !image_back || !image_side) {
+            errorMessage = "At least two pic must be upload of product";
+        }
+
+        if (errorMessage) {
+            document.getElementById("modalMessage").innerText = errorMessage;
+            const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            modal.show();
+            return false;
+        }
+
+        return true;
+    }
+
+
+</script>
+{% endblock %}

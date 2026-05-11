@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #693f26;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            border: 2px solid #3b2415;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #ecd8b1;
+            background: linear-gradient(135deg, #3b2415, #693f26);
+        }
+        .header div {
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .content {
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 22px;
+            color: #3b2415;
+            margin-bottom: 15px;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .highlight {
+            color: #3b2415;
+            font-weight: bold;
+        }
+        .details-box {
+            /* background-color: #f5e6d3; */
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 16px;
+            margin: 15px auto;
+            width: 80%;
+        }
+        .details-box p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #3b2415;
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            width: 90%;
+        }
+        .btn:hover {
+            background-color: #693f26;
+        }
+        .footer {
+            background: linear-gradient(135deg, #3b2415, #693f26);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #ecd8b1;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div>StyleSurfer</div>
+            Order Confirmed! 🎉
+        </div>
+        <div class="content">
+            <h1>Hey <span class="highlight">{{ username }}</span>,</h1>
+            <p>Great news! Your order has been successfully placed. Below are your order details:</p>
+            <div class="details-box">
+                <p>🛒 Order ID: <span class="highlight">{{ order_id }}</span></p>
+                <p>💳 Payment Method: <span class="highlight">{{ payment_method }}</span></p>
+                <p>💰 Total Price: <span class="highlight">₹{{ total_price }}</span></p>
+            </div>
+            <p>You can see the detailes of your order fron your account.</p>
+            <a href="http://127.0.0.1:8000/Account/order/" class="btn">See Detailes</a>
+            <p>Thank you for choosing <span class="highlight">StyleSurfer</span>! We hope you love your fashion picks. 😊</p>
+        </div>
+        <div class="footer">
+            &copy; 2025 StyleSurfer. All rights reserved.<br>
+            Need help? <a href="mailto:support@stylesurfer.com">Contact Us</a>
+        </div>
+    </div>
+</body>
+</html>

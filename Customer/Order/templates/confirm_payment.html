@@ -1,0 +1,6 @@
+<h2>Order Confirmation</h2>
+<p>Total Price: ₹{{ order.get_total_price }}</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirm Payment</button>
+</form>

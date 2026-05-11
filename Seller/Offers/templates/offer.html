@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+{% extends 'base_seller.html' %}
+
+{% block css %}
+
+<style>
+    .btn-custom {
+        background-color: #3b2415;
+        color: white;
+        opacity: 0.85;
+    }
+    .btn-custom:hover {
+        background-color: #3b2415;
+        color: white;
+        opacity: 1; 
+    }
+    @media (max-width: 576px) {
+        .btn-group .btn {
+            margin-bottom: 5px;
+            width: 100%;
+        }
+    }
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+    table th:nth-child(1), table td:nth-child(1) {
+        width: 20%; 
+    }
+    table th:nth-child(2), table td:nth-child(2) {
+        width: 40%; 
+    }
+    table th:nth-child(3), table td:nth-child(3) {
+        width: 40%; 
+    }
+
+    /*search */
+    .search-wrapper {
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    .search-box1 {
+        position: relative;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        border: 1px solid #3b2415;;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .search-box1:focus-within {
+        box-shadow: 0 3px 20px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+
+    .search-input1 {
+        border-radius: 50px;
+        border-color: #3b2415;
+        padding-left: 45px;
+        padding-right: 20px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        height: 50px;
+    }
+
+    .search-input1:focus {
+        border-color: #3b2415;
+        box-shadow: none;
+    }
+
+    .search-icon1 {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+        z-index: 10;
+    }
+
+    .search-button1 {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 50px;
+        padding: 8px 20px;
+        transition: all 0.3s ease;
+        background-color: #3b2415;
+        color: white;
+    }
+
+    .search-button1:hover {
+        background-color: #3b2415;
+        color: white;
+        transform: translateY(-50%) scale(1.05);
+    }
+
+     /* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination li {
+    margin: 0 4px;
+}
+
+.pagination a, .pagination span {
+    display: block;
+    padding: 5px 10px;  /* Smaller button size */
+    font-size: 14px;    /* Smaller font size */
+    color: #3b2415;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #3b2415;
+    color: white;
+}
+
+/* Active Page Styling */
+.pagination .active a, .pagination .active span {
+    background-color: #3b2415;
+    color: white;
+    border: 1px solid #3b2415;
+    font-weight: bold;
+    box-shadow: 0 0 8px rgba(59, 36, 21, 0.5);
+}
+
+/* First/Last Page and Arrows Styling */
+.pagination .first, .pagination .last, 
+.pagination .prev, .pagination .next {
+    font-weight: bold;
+    background-color: white;
+    color: #3b2415;
+    /* border: 1px solid #ddd; */
+    transition: 0.3s;
+}
+
+.pagination .first:hover, .pagination .last:hover, 
+.pagination .prev:hover, .pagination .next:hover {
+    background-color: #3b2415;
+    color: white;
+}
+
+table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+    table th:nth-child(1), table td:nth-child(1) {
+        width: 33%; 
+    }
+    table th:nth-child(2), table td:nth-child(2) {
+        width: 33%; 
+    }
+    table th:nth-child(3), table td:nth-child(3) {
+        width: 33%; 
+    }
+
+
+
+
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="btn-group mb-3 d-flex flex-column flex-sm-row">
+    <a href="" class="btn effect active btn-custom mb-2 mb-sm-0">Discount</a>
+    <!-- <a href="" class="btn effect  mb-2 mb-sm-0">Brand</a>
+    <a href="" class="btn effect  mb-2 mb-sm-0">Category</a> -->
+</div>
+
+<div id="catProducts" class="section-visible my-4">
+    <div class="card p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="btn mb-0 effect btn-custom">Discount On - </h5>
+        </div>
+        
+       <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="cat-products-body">
+                    <tr>
+                        <td>1</td>
+                        <td>Brand</td>
+                        <td>
+                            <div class="btn-group-sm d-flex justify-content-center">
+                                <a href="{% url 'brand' %}" class="btn btn-custom btn-sm me-2 mb-2">Go</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Category</td>
+                        <td>
+                            <div class="btn-group-sm d-flex justify-content-center">
+                                <a href="{% url 'category' %}" class="btn btn-custom btn-sm me-2 mb-2">Go</a>
+                            </div>
+                        </td>
+                    </tr>
+                  
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+  <!-- Pagination Controls -->
+   <!-- Pagination Controls -->
+   <nav>
+    <ul class="pagination">
+        {% if category.has_previous %}
+            <li class="first"><a href="?page=1">« First</a></li>
+            <li class="prev"><a href="?page={{ category.previous_page_number }}">‹‹</a></li>
+        {% endif %}
+
+        {% for num in category.paginator.page_range %}
+            <li class="{% if category.number == num %}active{% endif %}">
+                <a href="?page={{ num }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+
+        {% if category.has_next %}
+            <li class="next"><a href="?page={{ category.next_page_number }}">››</a></li>
+            <li class="last"><a href="?page={{ category.paginator.num_pages }}">Last »</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+</div>
+
+{% endblock %}

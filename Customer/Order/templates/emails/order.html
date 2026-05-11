@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Status Update</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #693f26;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            border: 2px solid #3b2415;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #ecd8b1;
+            background: linear-gradient(135deg, #3b2415, #693f26);
+        }
+        .header div {
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .content {
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .content h1 {
+            font-size: 22px;
+            color: #3b2415;
+            margin-bottom: 15px;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .highlight {
+            color: #3b2415;
+            font-weight: bold;
+        }
+        .details-box {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 16px;
+            margin: 15px auto;
+            width: 80%;
+        }
+        .details-box p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #3b2415;
+            color: #ffffff;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            width: 90%;
+        }
+        .btn:hover {
+            background-color: #693f26;
+        }
+        .footer {
+            background: linear-gradient(135deg, #3b2415, #693f26);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #ecd8b1;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div>StyleSurfer</div>
+            Product Status Update 📢
+        </div>
+        <div class="content">
+            <h1>Hey <span class="highlight">{{ seller_name }}</span>,</h1>
+            <p>We have an update regarding your product listing:</p>
+            <div class="details-box">
+                <p>👗 Product Name: <span class="highlight">{{ product_name }}</span></p>
+                <p>✅ Status: <span class="highlight">{{ status }}</span></p>
+            </div>
+            <p>Your product status has been updated on StyleSurfer. You can manage your listings from your dashboard.</p>
+            <a href="https://stylesurfer.com/dashboard" class="btn">Manage My Products</a>
+            <p>Thank you for being a part of <span class="highlight">StyleSurfer</span>! 🚀</p>
+        </div>
+        <div class="footer">
+            &copy; 2025 StyleSurfer. All rights reserved.<br>
+            Need help? <a href="mailto:support@stylesurfer.com">Contact Us</a>
+        </div>
+    </div>
+</body>
+</html>

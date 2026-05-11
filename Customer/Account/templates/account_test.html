@@ -1,0 +1,311 @@
+
+
+{% extends 'base1.html' %}
+{% load custom_filters %}
+
+
+
+{% block css %}
+
+
+<style>
+    .bg-brown { background-color: #6D4C41; color: white; }
+    .text-brown { color: #6D4C41; }
+    .btn-cancel { background-color: #8B4513; color: white; transition: 0.3s; padding: 10px 20px; }
+    .btn-cancel:hover { background-color: #5a2d12; }
+    .order-card { border-radius: 10px; overflow: hidden; background-color: #fff8f0; padding: 20px; }
+    .img-container {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+    .img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .product-info { flex: 2; padding-left: 15px; }
+    @media (max-width: 768px) {
+        .img-container { width: 120px; height: 120px; }
+        .btn-cancel { font-size: 14px; padding: 8px 12px; }
+        .product-info { padding-left: 10px; }
+        .row { flex-direction: column; }
+    }
+
+
+    .bg-brown { background-color: #6D4C41; color: white; }
+    .text-brown { color: #6D4C41; }
+    .btn-cancel { background-color: #8B4513; color: white; transition: 0.3s; padding: 10px 20px; }
+    .btn-cancel:hover { background-color: #5a2d12; }
+    .order-card { border-radius: 10px; overflow: hidden; background-color: #fff8f0; padding: 20px; }
+    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+    .modal.active { display: block; }
+    .stars { display: flex; cursor: pointer; }
+    .star { font-size: 24px; color: gray; }
+    .star.selected { color: gold; }
+
+
+    .text-warning {
+    color: gold;
+    font-size: 20px;
+}
+
+
+</style>
+
+{% endblock %}
+{% block body %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 text-brown">Order Details: {{ order.order_id }}</h2>
+
+    <div class="card shadow-sm mb-4 border-0 order-card p-4">
+        <div class="card-header bg-brown p-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-white">Order ID: <strong>{{ order.order_id }}</strong></h5>
+            <span class="badge badge-light px-3 py-2">{{ order.order_status }}</span>
+            <span class="small">{{ order.created_at|date:"d M Y" }}</span>
+        </div>
+        <div class="card-body p-4">
+            <!-- Product and Shipping Info Layout -->
+            <div class="row g-4">
+                {% for item in order.items.all %}
+                <div class="col-md-6 mb-4 d-flex align-items-center">
+                    <div class="img-container">
+                        <img src="{{ item.image }}" alt="Product Image" class="img-fluid">
+                    </div>
+                    <div class="product-info ms-3">
+                        <h6 class="card-title">{{ item.name }}</h6>
+                        <h3 class="card-title">Product order status : {{ item.product_order_status }}</h3>
+                        <p class="card-text">
+                            <strong>Brand:</strong> {{ item.brand }}<br>
+                            <strong>Price:</strong> ₹{{ item.price }}<br>
+                            <strong>Quantity:</strong> {{ item.quantity }}<br>
+                            {% if item.security and item.security != "00" and item.days and item.days != "00" and item.date and item.date != "00" and item.return_date and item.return_date != "00" %}
+                            <strong>Security Deposit:</strong> ₹{{ item.security }}<br>
+                            <strong>Rental Period:</strong> {{ item.date|date:"d M Y" }} - {{ item.return_date|date:"d M Y" }}<br>
+                            <strong>Rental Days:</strong> {{ item.rental_days }} days
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="col-md-6 mb-4">
+                    <h6><strong>Shipping Address:</strong></h6>
+                    <p>{{ order.address1 }}, {{ order.address2 }}<br>
+                    {{ order.city }}, {{ order.state }} - {{ order.zip_code }}<br>
+                    {{ order.country }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4 g-4">
+                <div class="col-md-6 mb-4">
+                    <h5><strong>Order Summary</strong></h5>
+                    <p><strong>Subtotal:</strong> ₹{{ order.total_price|default:0 }}</p>
+                    <p><strong>Security Deposit:</strong> ₹{{ order.total_security|default:0 }}</p>
+                    <p><strong>Shipping:</strong> ₹10.00</p>
+                    <p><strong>Discount:</strong> ₹{{ order.discount|default:0 }}</p>
+                    <h4 class="mt-2"><strong>Total: ₹{{ order.Grand_total|default:0|floatformat:2 }}</strong></h4>
+                </div>
+                <div class="col-md-6 text-right mt-3">
+                    {% if order.can_cancel %}
+                        <form method="POST" action="{% url 'cancel_order' order.order_id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-cancel">Cancel Order</button>
+                        </form>
+                    {% else %}
+                        <button class="btn btn-secondary" disabled>Cancel Order</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <h2>Customer Reviews</h2>-->
+<!--    {% if review %}-->
+<!--       <p>Your rating:</p>-->
+<!--    <div>-->
+<!--    {% for _ in review.rating|times %}-->
+<!--        <i class="fas fa-star text-warning"></i>-->
+<!--    {% endfor %}-->
+<!--    {% for _ in 5|times|slice:review.rating %}-->
+<!--        <i class="far fa-star"></i>-->
+<!--    {% endfor %}-->
+<!--</div>-->
+
+
+<!--    <p>Comment: {{ review.review }}</p>-->
+<!--    {% else %}-->
+
+<!--    <button id="write" onclick="document.getElementById('reviewModal').classList.add('active')">Write a Review</button>-->
+<!--    {% endif %}-->
+<!--    <div id="reviewModal" class="modal">-->
+<!--        <h3>Rate this product</h3>-->
+<!--        <div class="stars">-->
+<!--            <span class="star" onclick="rateProduct(1)">★</span>-->
+<!--            <span class="star" onclick="rateProduct(2)">★</span>-->
+<!--            <span class="star" onclick="rateProduct(3)">★</span>-->
+<!--            <span class="star" onclick="rateProduct(4)">★</span>-->
+<!--            <span class="star" onclick="rateProduct(5)">★</span>-->
+<!--        </div>-->
+<!--        <form id="reviewForm" method="POST" action="">-->
+<!--            {% csrf_token %}-->
+<!--            <input type="hidden" id="orderid" name="orderid" value="{% for item in order.items.all %}{{ item.order.order_id }}, {% endfor %}">-->
+<!--            <input type="hidden" id="productnameInput" name="product_name" value="{% for item in order.items.all %}{{ item.name }}, {% endfor %}">-->
+<!--            <input type="hidden" id="ratingInput" name="rating" value="0">-->
+<!--            <textarea id="reviewText" name="review" placeholder="Write your review..." rows="4" style="width:100%; margin-top:10px;"></textarea>-->
+<!--            <button type="submit">Submit Review</button>-->
+<!--            <button type="button" onclick="document.getElementById('reviewModal').classList.remove('active')">Close</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <div id="reviews" class="review-container">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="review-card">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="review-header">&ndash;&gt;-->
+<!--&lt;!&ndash;                <span>John Doe</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span>Feb 5, 2025</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div>★★★★☆</div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>Amazing outfit! Perfect fit.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--</div>-->
+    <h2>Customer Reviews</h2>
+
+{% for item in order.items.all %}
+<div class="product-review mb-4">
+    <h5><strong>Review for {{ item.name }}</strong></h5>
+
+    {% with item.review as review %}
+    {% if review %}
+        <p>Your rating:</p>
+        <div>
+            {% for _ in review.rating|times %}
+                <i class="fas fa-star text-warning"></i>
+            {% endfor %}
+            {% for _ in 5|times|slice:review.rating %}
+                <i class="far fa-star"></i>
+            {% endfor %}
+        </div>
+        <p>Comment: {{ review.review }}</p>
+    {% else %}
+        <button class="btn btn-primary" onclick="document.getElementById('reviewModal-{{ item.id }}').classList.add('active')">Write a Review</button>
+
+        <div id="reviewModal-{{ item.id }}" class="modal">
+            <h3>Rate this product</h3>
+            <div class="stars" data-product="{{ item.id }}">
+                <span class="star" onclick="rateProduct({{ item.id }}, 1)">★</span>
+                <span class="star" onclick="rateProduct({{ item.id }}, 2)">★</span>
+                <span class="star" onclick="rateProduct({{ item.id }}, 3)">★</span>
+                <span class="star" onclick="rateProduct({{ item.id }}, 4)">★</span>
+                <span class="star" onclick="rateProduct({{ item.id }}, 5)">★</span>
+            </div>
+
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="hidden" id="ratingInput-{{ item.id }}" name="rating" value="0">
+                <textarea name="review" placeholder="Write your review..." rows="4" style="width:100%; margin-top:10px;"></textarea>
+                <button type="submit">Submit Review</button>
+                <button type="button" onclick="document.getElementById('reviewModal-{{ item.id }}').classList.remove('active')">Close</button>
+            </form>
+        </div>
+    {% endif %}
+    {% endwith %}
+</div>
+{% endfor %}
+
+
+{% endblock %}
+
+
+
+
+{% block js %}
+<!--    <script>-->
+<!--        function rateProduct(rating) {-->
+<!--            document.getElementById('ratingInput').value = rating;-->
+<!--            let stars = document.querySelectorAll('.star');-->
+<!--            stars.forEach((star, index) => {-->
+<!--                star.classList.toggle('selected', index < rating);-->
+<!--            });-->
+<!--        }-->
+<!--        function submitReview() {-->
+<!--            let rating = document.getElementById('ratingInput').value;-->
+<!--            let reviewText = document.getElementById('reviewText').value;-->
+<!--            if (!rating || !reviewText.trim()) {-->
+<!--                alert('Please provide both rating and review.');-->
+<!--                return;-->
+<!--            }-->
+
+
+<!--&lt;!&ndash;            let reviewSection = document.getElementById('reviews');&ndash;&gt;-->
+<!--&lt;!&ndash;            let newReview = `<div class="review-card">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="review-header">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <span>You</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <span>${new Date().toLocaleDateString()}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div>${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <p>${reviewText}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                             </div>`;&ndash;&gt;-->
+<!--&lt;!&ndash;            reviewSection.innerHTML = newReview + reviewSection.innerHTML;&ndash;&gt;-->
+<!--&lt;!&ndash;            document.getElementById('reviewText').value = '';&ndash;&gt;-->
+<!--        }-->
+<!--    </script>-->
+
+
+<script>
+    function rateProduct(rating) {
+        document.getElementById('ratingInput').value = rating;
+        document.querySelectorAll('.star').forEach((star, index) => {
+            star.classList.toggle('selected', index < rating);
+        });
+    }
+
+    debugger;
+    document.getElementById("reviewForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let rating = document.getElementById("ratingInput").value;
+        let reviewText = document.getElementById("reviewText").value;
+        if (!rating || !reviewText.trim()) {
+            alert("Please provide both rating and review.");
+        }
+        else {
+           const reviewFormData = new FormData(reviewForm); // Use the correct FormData object
+        const reviewFormUrl = window.location.origin + "/Account/submit_review/";
+        fetch(reviewFormUrl, {
+            method: 'POST',
+            body: reviewFormData, // Correct FormData object used here
+        })
+        .then(response => response.url)
+        .then(url => {
+            const params = new URLSearchParams(url.split('?')[1]);
+<!--            const error = params.get('error');-->
+            const success = params.get('success');
+<!--            if (error) {-->
+<!--                // document.getElementById('error-message').value = error;-->
+<!--                showModal(error , "error");-->
+<!--                // Displaying alert message instead of error in the HTML-->
+<!--                // alert(error); // This will show an alert with the error message-->
+<!--            }-->
+<!--            else if(success){-->
+<!--                showModal(success,"success");-->
+<!--            }-->
+
+                if (success){
+
+
+                alert(success);
+                document.getElementById('reviewModal').classList.remove('active'); // Close modal
+<!--                document.getElementById('write').style.display = "none";-->
+
+
+                }
+<!--            else {-->
+<!--                window.location.href = window.location.origin + ""; // Redirect if login is successful-->
+<!--            }-->
+        });
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,223 @@
+{% extends 'base_seller.html' %}
+{% load static %}
+
+{% block css %}
+<!-- Font Awesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    .container { max-width: 1000px; margin: auto; }
+
+    /* Card Styling */
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .card {
+        border: 1px solid #5a3d2b; /* Dark brown border */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: white;
+        color: #110808;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+        background-color: #5a3d2b;
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 12px;
+        color: white;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .card-header:hover {
+        background-color: #6b4c37;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-body p {
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .card-body span {
+        font-weight: bold;
+        color: #110808;
+    }
+
+    /* Set same height for all cards */
+    .equal-height {
+        min-height: 320px;
+    }
+
+    /* Product Image Styling */
+    .product-img {
+        max-width: 100%;
+        height: 270px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 2px solid #d9a074;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .product-img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Subtle Divider */
+    .card-body hr {
+        border: 0;
+        height: 1px;
+        background: linear-gradient(to right, #5a3d2b, transparent);
+        margin: 12px 0;
+    }
+
+
+    @media (max-width: 576px) {
+    .card-body p {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+    .card-body span {
+        display: block;
+
+        font-weight: bold;
+    }
+}
+
+
+     .back-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+        background-color: #5a3d2b; /* Dark brown */
+        border-radius: 8px;
+        border: 2px solid #d9a074; /* Gold border */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .back-btn i {
+        margin-right: 8px;
+    }
+
+    .back-btn:hover {
+        background-color: #6b4c37; /* Slightly lighter brown */
+        color: #fff;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 576px) {
+        .back-btn {
+            font-size: 1em;
+            padding: 8px 16px;
+        }
+    }
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-4">
+    <div class="card-container row">
+        <!-- Order Details Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card equal-height">
+                <div class="card-header"><i class="fas fa-receipt"></i> Order Details</div>
+                <div class="card-body">
+                    <p><span><i class="fas fa-hashtag mr-3"></i> Order ID:</span> #{{ order.order_id }}</p>
+                    <p><span><i class="far fa-calendar-alt mr-3"></i> Order Date:</span> {{ order.updated_at }}</p>
+                    <p><span><i class="fas fa-box mr-3"></i> Order Status:</span> {{ order.order_status }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Info Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card equal-height">
+                <div class="card-header"><i class="fas fa-user"></i> Customer Information</div>
+                <div class="card-body">
+                    <p class="col-sm-12"><span><i class="fas fa-user-circle mr-3"></i> Name:</span> {{ order.user.username }}</p>
+                    <p><span><i class="fas fa-phone mr-3"></i> Phone:</span> {{ order.user.number }}</p>
+                    <p class="text-break"><span><i class="fas fa-envelope mr-3"></i>Email:</span> {{ order.user.email }}</p>
+                    <p><span><i class="fas fa-map-marker-alt mr-3"></i> Address:</span> {{ order.address1 }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card equal-height">
+                <div class="card-header"><i class="fas fa-shopping-bag"></i> Product Details</div>
+                <div class="card-body">
+                    {% if resell_order_items %}
+                    {% for item in resell_order_items %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="{{ item.image }}" alt="Product Image" class="product-img">
+                        </div>
+
+                        <div class="col-md-8">
+                            <p><span><i class="fas fa-tag mr-3"></i> Product Name:</span> {{ item.name }}</p>
+                            <p><span><i class="fas fa-industry mr-3"></i> Brand:</span> {{ item.brand }}</p>
+                            <p><span><i class="fas fa-th mr-3"></i> Category:</span> {{ item.category }}</p>
+                            <p><span><i class="fas fa-ruler mr-3"></i> Size:</span> {{ item.size }}</p>
+                            <p><span><i class="fas fa-palette mr-3"></i> Color:</span> {{ item.color }}</p>
+                            <p><span><i class="fas fa-box mr-3"></i> Quantity:</span> {{ item.quantity }}</p>
+                            <p><span><i class="fas fa-rupee-sign mr-3"></i> Price:</span> ₹{{ item.price }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Details Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card equal-height">
+                <div class="card-header"><i class="fas fa-credit-card"></i> Payment Details</div>
+                <div class="card-body">
+                    <p><span><i class="fas fa-money-check-alt mr-3"></i> Payment Method:</span> {{ order.payment_method }}</p>
+                    <p><span><i class="fas fa-check-circle mr-3"></i> Payment Status:</span> {{ order.payment_status }}</p>
+                    <p><span><i class="far fa-calendar-alt mr-3"></i> Payment Date:</span> {{ order.payment_date }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Back Button -->
+<div class="text-center mt-4">
+    <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+</div>
+</div>
+{% endblock %}
