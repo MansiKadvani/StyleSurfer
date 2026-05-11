@@ -1,23 +1,27 @@
-# 👗 StyleSurfer
+# StyleSurfer
 ### Sustainable Fashion Rental & Resale Platform
 
 > Transforming fashion accessibility through rentals, resale, customization, and smart digital experiences.
 
 ---
 
-## ✨ Overview
-
-StyleSurfer is a full-stack fashion rental ecosystem designed to make premium fashion affordable, reusable, and sustainable.
-
-The platform enables users to rent outfits, purchase resold garments, customize clothing through buy-back workflows, and enjoy an interactive shopping experience — all within a modern multi-role system.
-
-Built with scalability, usability, and sustainability in mind, StyleSurfer combines fashion and technology into a single digital platform.
+![StyleSurfer Banner](screenshots/banner.png)
 
 ---
 
-# 🚀 Core Features
+## ✦ Overview
 
-## 🛍 Customer Features
+StyleSurfer is a full-stack fashion rental ecosystem designed to make premium fashion affordable, reusable, and sustainable.
+
+The platform enables users to rent outfits, purchase resold garments, customize clothing through buy-back workflows, and enjoy an interactive shopping experience through a modern multi-role architecture.
+
+Built with scalability, usability, and sustainability in mind, StyleSurfer combines fashion and technology into a unified digital platform.
+
+---
+
+## ✦ Core Features
+
+### Customer Module
 - Outfit rental system
 - Advanced product browsing & filtering
 - Cart & checkout workflow
@@ -29,7 +33,7 @@ Built with scalability, usability, and sustainability in mind, StyleSurfer combi
 
 ---
 
-## 🧵 Seller Features
+### Seller Module
 - Product listing & management
 - Rental inventory control
 - Order management
@@ -38,7 +42,7 @@ Built with scalability, usability, and sustainability in mind, StyleSurfer combi
 
 ---
 
-## 🚚 Delivery Partner Features
+### Delivery Partner Module
 - Delivery dashboard
 - Pickup & return management
 - Order status updates
@@ -46,7 +50,7 @@ Built with scalability, usability, and sustainability in mind, StyleSurfer combi
 
 ---
 
-## 🛠 Admin Features
+### Admin Module
 - User & seller management
 - Product moderation
 - Refund/dispute handling
@@ -54,7 +58,7 @@ Built with scalability, usability, and sustainability in mind, StyleSurfer combi
 
 ---
 
-# 🏗 Tech Stack
+## ✦ Tech Stack
 
 | Category | Technologies |
 |---|---|
@@ -66,44 +70,47 @@ Built with scalability, usability, and sustainability in mind, StyleSurfer combi
 
 ---
 
-# 📸 Project Preview
+## ✦ Live Demo
 
-## Customer Interface
-- Authentication System
-- Rental Marketplace
-- Cart & Checkout
-- Spin & Reward System
-- Buy-Back Module
-
-## Seller Dashboard
-- Product Management
-- Order Monitoring
-- Earnings Tracking
-
-## Delivery Module
-- Pickup & Delivery Workflow
-- Order Status Management
-
-## Admin Panel
-- User Monitoring
-- Platform Control
-- Analytics & Operations
+> Coming Soon
 
 ---
 
-# 🧠 Unique Highlights
+## ✦ Project Screenshots
 
-✨ Flexible rental durations  
-✨ Sustainable fashion ecosystem  
-✨ Reselling integrated into rental workflow  
-✨ Buy-back customization model  
-✨ Gamified shopping experience  
-✨ Multi-role enterprise architecture  
-✨ Fully responsive UI/UX  
+### Home Page
+![Home Page](screenshots/home.png)
+
+### Product Page
+![Product Page](screenshots/product.png)
+
+### Checkout System
+![Checkout](screenshots/checkout.png)
+
+### Seller Dashboard
+![Seller Dashboard](screenshots/seller-dashboard.png)
+
+### Delivery Dashboard
+![Delivery Dashboard](screenshots/delivery-dashboard.png)
+
+### Admin Panel
+![Admin Panel](screenshots/admin-dashboard.png)
 
 ---
 
-# 📑 System Design & Documentation
+## ✦ Unique Highlights
+
+- Flexible rental durations
+- Sustainable fashion ecosystem
+- Reselling integrated into rental workflow
+- Buy-back customization model
+- Gamified shopping experience
+- Multi-role enterprise architecture
+- Fully responsive UI/UX
+
+---
+
+## ✦ System Design & Documentation
 
 The project includes:
 - Use Case Diagram
@@ -117,9 +124,7 @@ The project includes:
 
 ---
 
-# 📜 Patent Publication
-
-### 🏅 Indian Patent Publication
+## ✦ Patent Publication
 
 **Title:** Automated Clothing Rental Kiosk  
 **Application No:** 202521070250 A  
@@ -129,7 +134,7 @@ Published in the Indian Patent Office Journal under Marwadi University.
 
 ---
 
-# 🏆 Achievements
+## ✦ Achievements
 
 - Patent Published by Government of India
 - Presented at Project Fair 2025
@@ -137,7 +142,30 @@ Published in the Indian Patent Office Journal under Marwadi University.
 
 ---
 
-# 🔮 Future Enhancements
+## ✦ Key Responsibilities
+
+### Mansi Kadvani & Harshad Soyaliya
+- Core backend development
+- System architecture
+- Multi-role workflow management
+- Authentication & authorization
+- Frontend-backend integration
+- Database management
+- Feature integration & testing
+
+---
+
+## ✦ Additional Team Contributions
+
+| Member | Contribution |
+|---|---|
+| Purav Chauhan | Frontend UI development and responsive page design |
+| Bhumika Kanzariya | Minor frontend development support and product image collection |
+| Jay Kaneriya | Minor frontend development support and product image collection |
+
+---
+
+## ✦ Future Enhancements
 
 - AR-based Virtual Try-On
 - 360° Outfit Visualization
@@ -147,46 +175,13 @@ Published in the Indian Patent Office Journal under Marwadi University.
 
 ---
 
-# 👩‍💻 Contributors
+## ✦ Project Vision
 
-- Mansi Kadvani
-- Harshad Soyaliya
-- Purav Chauhan
-- Bhumika Kanzariya
-- Jay Kaneriya
-
-# 🚀 Key Responsibilities Handled
-
-### Mansi Kadvani & Harshad Soyaliya
-- Core backend development
-- System architecture implementation
-- Multi-role workflow management
-- Authentication & authorization system
-- Frontend-backend integration
-- Database design and handling
-- Feature integration and testing
-
-### Additional Team Support
-- Frontend page design
-- UI responsiveness
-- Documentation & presentation preparation
-- Testing and validation
-- 
----
-
-# 📌 Project Vision
-
-StyleSurfer aims to redefine fashion consumption by promoting:
-- affordability
-- sustainability
-- accessibility
-- circular fashion practices
-
-through technology-driven solutions.
+StyleSurfer aims to redefine fashion consumption by promoting affordability, sustainability, accessibility, and circular fashion practices through technology-driven solutions.
 
 ---
 
-# ⭐ Repository Goals
+## ✦ Repository Goals
 
 This repository demonstrates:
 - Full-stack development
@@ -197,15 +192,27 @@ This repository demonstrates:
 
 ---
 
-## 📬 Contact
+## ✦ Contributors
+
+- Mansi Kadvani
+- Harshad Soyaliya
+- Purav Chauhan
+- Bhumika Kanzariya
+- Jay Kaneriya
+
+---
+
+## ✦ Contact
 
 ### Mansi Kadvani
 B.Tech Computer Engineering  
 Marwadi University  
 
-GitHub: [your-github-link](https://github.com/MansiKadvani)  
-LinkedIn: [your-linkedin-link](https://www.linkedin.com/in/mansi-kadvani-583059318/)
+GitHub: [MansiKadvani](https://github.com/MansiKadvani)  
+LinkedIn: [Mansi Kadvani](https://www.linkedin.com/in/mansi-kadvani-583059318/)
 
 ---
 
-## 💚 Built for sustainable fashion innovation.
+<p align="center">
+  Built for sustainable fashion innovation.
+</p>
