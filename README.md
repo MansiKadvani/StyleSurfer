@@ -127,7 +127,7 @@ The project includes:
 ## ✦ Patent Publication
 
 **Title:** Automated Clothing Rental Kiosk  
-**Application No:** 202521070250 A  
+**Application No:** 202521070250
 **Publication Date:** 08 August 2025  
 
 Published in the Indian Patent Office Journal under Marwadi University.
